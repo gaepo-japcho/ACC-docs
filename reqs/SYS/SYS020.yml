@@ -1,0 +1,15 @@
+active: true
+asil: B
+category: 성능
+derived: false
+header: |
+  제어 응답 시간
+level: 20.0
+links:
+- STK004: 1FDDdm4Nv2bxROGL99fUT2I34b8WjBQmlN-vxd0AmNQ=
+normative: true
+ref: ''
+reviewed: x4FlJOgj4wY__61eR64g5Jn0Z87v0AfJwYvRrFaeRLI=
+text: |
+  전방 차량 감지에서 제어 명령 출력까지의 종단간 지연은 100ms 이내여야 한다.
+verification: T

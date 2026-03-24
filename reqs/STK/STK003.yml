@@ -1,0 +1,13 @@
+active: true
+category: 기능
+derived: false
+header: |
+  차간거리 측정
+level: 3.0
+links: []
+normative: true
+priority: 필수
+ref: ''
+reviewed: XhqmD2R9wqLBu4TA1FvN7rQXOikh2aqCjzYm09HB4ZI=
+text: |
+  시스템은 LiDAR 센서를 사용하여 인식된 전방 차량까지의 거리를 실시간으로 측정해야 한다.

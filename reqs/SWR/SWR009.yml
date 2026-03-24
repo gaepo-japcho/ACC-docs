@@ -1,0 +1,17 @@
+active: true
+asil: QM
+category: 기능
+derived: false
+header: |
+  PID 제어기 구현
+level: 9.0
+links:
+- SYS014: wZj3woEc9arb45Uqr4WK74HpEJ5PUeApFy4MVu74tA8=
+- SYS024: 7laFt9dZbTuTkN5oNhffv6prfaFikbSdnbnI_KmVXh4=
+normative: true
+ref: ''
+reviewed: 5FG8km1eNGsxWNDNht6TKBa20UrEILtmuTupZrrmdTQ=
+swc: DistanceControl
+text: |
+  Simulink MBD에서 생성된 PID 제어 코드를 실행한다. 입력: 목표 거리/속도와 실측값의 오차. 출력: 모터 제어 명령. 제어 주기: 10ms. Anti-windup 기능을 포함한다.
+verification: T

@@ -1,0 +1,16 @@
+active: true
+asil: B
+category: 안전
+derived: false
+header: |
+  ACC 상태 전이 - FAULT
+level: 5.0
+links:
+- STK009: dgF7jUPx5-ZTMvPHjylNTgY_vA1yMDz5izGLannYmb4=
+- STK010: 1kmABCGJXt1Pg5zvC2qyCKSREAniCe_ALCMJKxDRZ_M=
+normative: true
+ref: ''
+reviewed: aTSZBF9cg8GDPj8kJjIqRItZF0WiVUOrx9l0Y9ndWEs=
+text: |
+  FAULT 상태: 센서 고장, CAN 통신 단절, 제어 이상 등 감지 시 진입. 안전하게 감속 후 OFF 상태로 전이한다. FAULT 진입 시 운전자에게 경고를 표시한다.
+verification: T

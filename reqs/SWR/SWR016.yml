@@ -1,0 +1,17 @@
+active: true
+asil: B
+category: 안전
+derived: false
+header: |
+  고장 감지 및 FAULT 전이 요청
+level: 16.0
+links:
+- SYS005: AW38VdDqD-CHYKxsbCiu5Tm74Goq7NNzQi-NuheE0us=
+- SYS025: MGYC0_jByqU4WBXmxLqW9ZJ7VAR3utDhA0N6783G5uw=
+normative: true
+ref: ''
+reviewed: ePpVTNy75K97GgHevUjMsT-BoR22dcAf9HjNv_UD92s=
+swc: Diagnostics
+text: |
+  센서 이상, CAN 타임아웃, 제어 이상(제어 출력 포화 지속) 등을 감지하면 StateMachine에 FAULT 전이를 요청한다.
+verification: T

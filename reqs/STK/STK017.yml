@@ -1,0 +1,13 @@
+active: true
+category: 기능
+derived: false
+header: |
+  전방 차량 속도 추정
+level: 17.0
+links: []
+normative: true
+priority: 필수
+ref: ''
+reviewed: GVUeDtLMVSXcjBjGeovuFV8v2AC7_fjC-Qsx8VxRTKI=
+text: |
+  LiDAR 거리 데이터의 시간 미분과 자차 속도를 조합하여 전방 차량의 속도를 추정해야 한다.

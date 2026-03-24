@@ -1,0 +1,13 @@
+active: true
+category: 제약조건
+derived: false
+header: |
+  제약 조건 - 개발 표준
+level: 14.0
+links: []
+normative: true
+priority: 필수
+ref: ''
+reviewed: 9Rj2F3Z96ueuM_tl-Hi7j7B1WzCht6qMif3rDtVVI2M=
+text: |
+  ASPICE 및 ISO 26262 프로세스를 준수하여 개발한다. AUTOSAR 아키텍처를 적용하고 mobilgene 및 MATLAB/Simulink MBD를 활용한다.

@@ -1,0 +1,20 @@
+active: true
+asil: B
+category: 기능
+derived: false
+header: |
+  ACC 상태 머신 구현
+level: 1.0
+links:
+- SYS001: 6SsZafrpOy36J5ei2Dsbx1sdauBLOmP6Vzyr9CNBa2k=
+- SYS002: w7x4LA26XXOMb3S7R7zR1IWZEEJDj1BFOnP68vqK8uw=
+- SYS003: _jXyHG7yT6GK_auJ-yT2-aMAm9ayuHIXvlR4NIfMVYQ=
+- SYS004: k8BAztLPG_0zTyVjGDGGaDC1BA6ZYz1WWdfFH_fRuUU=
+- SYS005: AW38VdDqD-CHYKxsbCiu5Tm74Goq7NNzQi-NuheE0us=
+normative: true
+ref: ''
+reviewed: zqjdm2F8qlDeHXsJEQuSFJ9FviQlWLUrY66bKcV7DHM=
+swc: AccStateMachine
+text: |
+  ACC StateMachine SWC는 OFF, STANDBY, CRUISE, FOLLOWING, FAULT 5개 상태를 관리한다. 각 상태 전이 조건과 전이 시 수행 액션을 구현한다.
+verification: T

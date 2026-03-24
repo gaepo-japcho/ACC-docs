@@ -1,0 +1,17 @@
+active: true
+asil: B
+category: FSR
+derived: false
+header: |
+  FSR-02: 센서 고장 시 안전 상태 전이
+level: 5.0
+links:
+- SYS005: AW38VdDqD-CHYKxsbCiu5Tm74Goq7NNzQi-NuheE0us=
+- SYS025: MGYC0_jByqU4WBXmxLqW9ZJ7VAR3utDhA0N6783G5uw=
+normative: true
+ref: ''
+reviewed: vGCIUmTSOfbWriR1lPqoC-ATP_PrLS5Uj6jb_vVGz3c=
+safety_goal: SAF002
+text: |
+  [ASIL B] LiDAR 또는 카메라 데이터 손실(CAN 타임아웃) 감지 시 200ms 이내에 FAULT 상태로 전이하고 감속을 시작한다.
+verification: T

@@ -1,0 +1,17 @@
+active: true
+asil: B
+category: 기능
+derived: false
+header: |
+  LiDAR 거리 데이터 수신
+level: 4.0
+links:
+- SYS015: Y5H5VnQQPlbvZSvoeheAM_TqsKsxkh5wUIHKVm3075g=
+- SYS025: MGYC0_jByqU4WBXmxLqW9ZJ7VAR3utDhA0N6783G5uw=
+normative: true
+ref: ''
+reviewed: APTwp-NCTs9mheNkc80MlplFuWu20cDtIdNShv6FYkw=
+swc: SensorProcessing
+text: |
+  CAN RX로 수신된 LiDAR 거리값(16bit, mm 단위)을 내부 변수에 저장한다. 메시지 타임아웃(60ms 미수신) 시 센서 이상 플래그를 설정한다.
+verification: T

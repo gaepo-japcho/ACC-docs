@@ -1,0 +1,16 @@
+active: true
+asil: B
+category: FSR
+derived: false
+header: |
+  FSR-01: 브레이크 입력 시 모터 즉시 중지 (→ STANDBY)
+level: 4.0
+links:
+- SYS006: _4nHNk8GEBthpjJE6xBvN7SQApgRhEJEoWYRbg13rs4=
+normative: true
+ref: ''
+reviewed: CqTad4xnBrjgLUx2GT6w38St94Bk-YnXfFEITDuI_3Q=
+safety_goal: SAF001, SAF003
+text: |
+  [ASIL B] 브레이크 페달 신호 감지 시 50ms 이내에 모터 구동을 중지하고 ACC를 STANDBY 상태로 전환한다. STANDBY 상태에서는 모터 제어 출력이 0이어야 한다. 이는 SG1, SG3을 만족하기 위한 안전 메커니즘이다.
+verification: T

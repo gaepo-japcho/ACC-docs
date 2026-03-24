@@ -1,0 +1,13 @@
+active: true
+category: 기능
+derived: false
+header: |
+  자차 속도 측정
+level: 16.0
+links: []
+normative: true
+priority: 필수
+ref: ''
+reviewed: y99J5tl9KYSpM0tCORd2EXCWG33LepGjdGxTXjIg0nI=
+text: |
+  시스템은 자차의 현재 속도를 알아내야 한다. 인코더 모터 값 또는 SLAM 추정값 등을 활용할 수 있다.

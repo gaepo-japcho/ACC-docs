@@ -1,0 +1,17 @@
+active: true
+asil: B
+category: Safety Goal
+derived: false
+hara: S2/E3/C2 → ASIL B
+header: |
+  Safety Goal 1 - 의도치 않은 가속 방지
+level: 1.0
+links:
+- SYS006: _4nHNk8GEBthpjJE6xBvN7SQApgRhEJEoWYRbg13rs4=
+- SYS007: oWfuA8leYHkcyzFGzkHTuwZonlROyHiEdY0Nj7SoMiY=
+normative: true
+ref: ''
+reviewed: 6jb3_cL0TAxs3iLkjOKZY8xctg2HBQRfR9a4rCBuMWc=
+text: |
+  [ASIL B] ACC 시스템은 의도치 않은 가속을 야기해서는 안 된다. Safe State: 모터 구동 중지 (ACC OFF). FTTI(Fault Tolerant Time Interval): 100ms.
+verification: T

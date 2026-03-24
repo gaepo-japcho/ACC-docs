@@ -1,0 +1,13 @@
+active: true
+category: 기능
+derived: false
+header: |
+  시스템 목적
+level: 1.0
+links: []
+normative: true
+priority: 필수
+ref: ''
+reviewed: OlGr56ePYNM3GbySZOAgPgo7LFIv_Yq3Zt4wJLWxpcc=
+text: |
+  1/10 스케일 RC카 기반 Adaptive Cruise Control(ACC) 시스템을 개발한다. 전방 차량을 인식하고 차간거리 및 속도를 자동으로 제어하여 안전한 추종 주행을 수행한다.

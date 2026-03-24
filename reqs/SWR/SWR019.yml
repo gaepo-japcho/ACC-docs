@@ -1,0 +1,17 @@
+active: true
+asil: QM
+category: 안전
+derived: false
+header: |
+  FAULT 경고 표시
+level: 19.0
+links:
+- SYS005: AW38VdDqD-CHYKxsbCiu5Tm74Goq7NNzQi-NuheE0us=
+- SYS019: loEp48UbbXz8WXOEr5qAAnsUrh43pBW5OZ7w_bTZDOM=
+normative: true
+ref: ''
+reviewed: WRC_rmLOCXu0fjsClvEEdiNscjsQ5aHa5qWcteXRs_w=
+swc: HmiManager
+text: |
+  FAULT 상태 진입 시 HMI에 경고 메시지를 표시한다. 경고는 FAULT 해제(OFF 전이) 시까지 유지된다.
+verification: T

@@ -1,0 +1,16 @@
+active: true
+asil: B
+category: 안전
+derived: false
+header: |
+  CAN 통신 고장 감지
+level: 25.0
+links:
+- STK010: 1kmABCGJXt1Pg5zvC2qyCKSREAniCe_ALCMJKxDRZ_M=
+- STK012: 8UUDwOl1yJKu1xvA6TsisowWSL7KTn_7n3UcSFykv4c=
+normative: true
+ref: ''
+reviewed: fmG7DlImIDIwZ94x_ZOZM_iMBgCeKilkUvw2HqoeqM8=
+text: |
+  CAN 메시지 타임아웃(예: 3주기 연속 미수신) 시 해당 노드 통신 이상으로 판단하고 FAULT 상태로 전이한다.
+verification: T

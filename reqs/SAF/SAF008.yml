@@ -1,0 +1,16 @@
+active: true
+asil: B
+category: FSR
+derived: false
+header: |
+  FSR-05: 제어 출력 범위 제한
+level: 8.0
+links:
+- SYS014: wZj3woEc9arb45Uqr4WK74HpEJ5PUeApFy4MVu74tA8=
+normative: true
+ref: ''
+reviewed: nKugCcduKDW_WMemdLaECKPaBupp0SKCStR3GoW17-c=
+safety_goal: SAF001
+text: |
+  [ASIL B] PID 제어기 출력은 물리적으로 허용 가능한 범위로 클램핑한다. 최대 가속도 및 최대 감속도 제한값을 초과하는 명령을 출력하지 않는다.
+verification: T

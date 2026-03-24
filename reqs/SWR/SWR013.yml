@@ -1,0 +1,16 @@
+active: true
+asil: QM
+category: 인터페이스
+derived: false
+header: |
+  CAN RX - 센서 데이터 수신
+level: 13.0
+links:
+- SYS015: Y5H5VnQQPlbvZSvoeheAM_TqsKsxkh5wUIHKVm3075g=
+normative: true
+ref: ''
+reviewed: 3I5lGq2-I_GWLFdNk70nj8T1usRFE4bcg3b-0KfrDa8=
+swc: CanCommunication
+text: |
+  카메라+LiDAR 처리 유닛으로부터 전방 차량 정보(감지 여부, 거리, 상대속도) CAN 메시지를 수신한다. 수신 주기: 20ms. 타임아웃: 60ms.
+verification: T

@@ -1,0 +1,17 @@
+active: true
+asil: QM
+category: 기능
+derived: false
+header: |
+  카메라+LiDAR 처리 유닛
+level: 3.0
+links:
+- SYS011: 8Btky5TjiP_SmI5_suQkyPwnjxsjEwXMGVqF-eW3Qa0=
+- SYS013: ghgWAWBRVFctCA_1DnENRZAYfCVGVdbfxR-wtXXeteY=
+- SYS015: Y5H5VnQQPlbvZSvoeheAM_TqsKsxkh5wUIHKVm3075g=
+normative: true
+ref: ''
+reviewed: gMflKYb4nJ6_tXViFZDLKu2uu8JxcmZSN7SpRSBpKS0=
+text: |
+  Raspberry Pi 또는 Jetson 보드를 사용한다. 카메라로 전방 차량 인식, LiDAR로 거리 측정을 수행하고 연산 결과를 CAN 인터페이스로 메인 ECU에 전송한다.
+verification: T

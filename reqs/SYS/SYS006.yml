@@ -1,0 +1,15 @@
+active: true
+asil: B
+category: 안전
+derived: false
+header: |
+  브레이크 오버라이드 (→ STANDBY)
+level: 6.0
+links:
+- STK007: 4lMIQWOd9Xq3pIzFKKekWZ-jQ2ANb1KzYex3m022lNY=
+normative: true
+ref: ''
+reviewed: Z3V6o034wXVTge1zbnrktVT7QDOBCPeGcPEB4cC6rRo=
+text: |
+  브레이크 입력 감지 시, 현재 상태와 무관하게 ACC를 즉시 STANDBY 상태로 전이한다. 브레이크 오버라이드 응답 시간은 50ms 이내여야 한다. STANDBY 전이 시 설정 속도 및 안전거리 단계 값을 보존한다.
+verification: T

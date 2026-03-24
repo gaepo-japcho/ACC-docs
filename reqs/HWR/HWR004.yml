@@ -1,0 +1,16 @@
+active: true
+asil: QM
+category: 성능
+derived: false
+header: |
+  LiDAR 센서
+level: 4.0
+links:
+- SYS011: 8Btky5TjiP_SmI5_suQkyPwnjxsjEwXMGVqF-eW3Qa0=
+- SYS021: xmz4wCAY02rkj-VXOgIRho2ojwkEPxHxre0u3HRZM28=
+normative: true
+ref: ''
+reviewed: YLY36ND1Hi0Xjzc3xjJHyFODDAyP2kTGUaWOlAe_DTM=
+text: |
+  전방 차량까지의 거리를 측정하는 LiDAR 센서를 장착한다. 측정 범위: 최소 2m 이상 (1/10 스케일 기준). 측정 주기: 50ms 이하. 정확도: ±2cm.
+verification: T

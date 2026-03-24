@@ -1,0 +1,13 @@
+active: true
+category: 안전
+derived: false
+header: |
+  고장 안전
+level: 10.0
+links: []
+normative: true
+priority: 필수
+ref: ''
+reviewed: 1kmABCGJXt1Pg5zvC2qyCKSREAniCe_ALCMJKxDRZ_M=
+text: |
+  센서 고장, 통신 이상 등 이상 상황 발생 시 시스템은 안전 상태(감속 후 정지 또는 ACC OFF)로 전환되어야 한다.

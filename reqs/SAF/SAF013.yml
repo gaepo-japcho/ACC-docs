@@ -1,0 +1,16 @@
+active: true
+asil: B
+category: TSR
+derived: false
+header: |
+  TSR-05: RAM 무결성 테스트
+level: 13.0
+links:
+- SYS005: AW38VdDqD-CHYKxsbCiu5Tm74Goq7NNzQi-NuheE0us=
+normative: true
+ref: ''
+reviewed: UTH22RKc1wF8I1ghrseQhQjla6B-epQHDativoOVFLM=
+safety_mechanism: RAM test
+text: |
+  [ASIL B] 초기화 시 및 주기적으로 안전 관련 RAM 영역에 대해 무결성 테스트를 수행한다. 테스트 실패 시 FAULT 전이.
+verification: T

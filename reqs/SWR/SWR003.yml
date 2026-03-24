@@ -1,0 +1,16 @@
+active: true
+asil: QM
+category: 기능
+derived: false
+header: |
+  가속 오버라이드 처리
+level: 3.0
+links:
+- SYS007: oWfuA8leYHkcyzFGzkHTuwZonlROyHiEdY0Nj7SoMiY=
+normative: true
+ref: ''
+reviewed: RGX4HoNQg5anmUWl7AgmfJV3xcX9q8J7zyV0UvEVEgM=
+swc: AccStateMachine
+text: |
+  액셀 페달 신호가 Active이면 ACC 제어 출력을 비활성화하고 운전자 가속 명령을 통과시킨다. 액셀 해제 시 이전 ACC 모드(CRUISE/FOLLOWING)로 자동 복귀한다.
+verification: T

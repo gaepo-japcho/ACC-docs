@@ -1,0 +1,16 @@
+active: true
+asil: B
+category: FSR
+derived: false
+header: |
+  FSR-04: 절대 최소거리 위반 시 비상 제동
+level: 7.0
+links:
+- SYS022: NkvdxY7YnTD8OkR0AITHk3a3m7j9Vnvmeau3gTm_qRg=
+normative: true
+ref: ''
+reviewed: WarRTO3YxMgUPBW-ehoE8oGECGt7eUz--B7JnSCrRg8=
+safety_goal: SAF002
+text: |
+  [ASIL B] 전방 차량과의 거리가 절대 최소거리(10cm) 이하로 감소하면 즉시(50ms 이내) 비상 제동을 수행한다.
+verification: T

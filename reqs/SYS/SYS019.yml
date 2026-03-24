@@ -1,0 +1,15 @@
+active: true
+asil: QM
+category: 인터페이스
+derived: false
+header: |
+  HMI 출력 인터페이스
+level: 19.0
+links:
+- STK009: dgF7jUPx5-ZTMvPHjylNTgY_vA1yMDz5izGLannYmb4=
+normative: true
+ref: ''
+reviewed: dJaWRQokZhd_q3c1qU0CnzSf_05b06tqFavdR6u-jZY=
+text: |
+  시스템은 운전자에게 다음 정보를 표시한다: 현재 ACC 상태, 설정 속도, 현재 안전거리 단계, 전방 차량 감지 여부, 현재 자차 속도, FAULT 발생 시 경고 표시.
+verification: I

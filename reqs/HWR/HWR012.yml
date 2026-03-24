@@ -1,0 +1,15 @@
+active: true
+asil: QM
+category: 기능
+derived: false
+header: |
+  전원 공급
+level: 12.0
+links:
+- SYS001: 6SsZafrpOy36J5ei2Dsbx1sdauBLOmP6Vzyr9CNBa2k=
+normative: true
+ref: ''
+reviewed: WKoXfmeaQmcxVaXc3BK0krMN7RXYD7VWI3nBYF_S4T0=
+text: |
+  배터리(LiPo 등)로 전원을 공급한다. 5V(RPi/Jetson, 센서), 3.3V(MCU), 모터 구동 전압을 안정적으로 공급하는 레귤레이터를 포함한다.
+verification: T

@@ -1,0 +1,15 @@
+active: true
+asil: QM
+category: 성능
+derived: false
+header: |
+  PID 속도 제어
+level: 14.0
+links:
+- STK004: 1FDDdm4Nv2bxROGL99fUT2I34b8WjBQmlN-vxd0AmNQ=
+normative: true
+ref: ''
+reviewed: aPqwnNJT1vVpZUcyLzhOGgT6lTiaibul0nzV2shnKN0=
+text: |
+  Simulink MBD로 설계된 PID 제어기를 통해 목표 속도/거리를 추종한다. 제어 주기는 10ms, 정상 상태 오차는 목표 속도의 5% 이내여야 한다.
+verification: T

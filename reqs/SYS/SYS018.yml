@@ -1,0 +1,18 @@
+active: true
+asil: QM
+category: 인터페이스
+derived: false
+header: |
+  운전자 입력 인터페이스
+level: 18.0
+links:
+- STK005: XMG2-6DIg8HG1C2kJJtLYoBro2JktcgZ4XEhfNIm5UM=
+- STK006: k__gBe2GjP9WoLGCeNFv7QR_E0JSBRLcOuHKpJppU2c=
+- STK007: 4lMIQWOd9Xq3pIzFKKekWZ-jQ2ANb1KzYex3m022lNY=
+- STK008: RInv_jX-W-IplSCaLM_4h3d_aoedhKCU9f6ZMscFEIQ=
+normative: true
+ref: ''
+reviewed: SYGZHTqcOJV8ADhFpb9u53zJ66LBtXhfc7EhJiM3VWw=
+text: |
+  시스템은 다음 운전자 입력을 수신한다: ACC ON/OFF 버튼, Resume 버튼, 설정 속도 증가/감소 버튼, 안전거리 단계 변경 버튼, 브레이크 페달 신호(디지털), 액셀 페달 신호(아날로그 또는 디지털).
+verification: T

@@ -1,0 +1,15 @@
+active: true
+asil: QM
+category: 성능
+derived: false
+header: |
+  자차 속도 측정
+level: 12.0
+links:
+- STK016: y99J5tl9KYSpM0tCORd2EXCWG33LepGjdGxTXjIg0nI=
+normative: true
+ref: ''
+reviewed: TRvWhQQVqp0fcYpZMDmKW_exTwK3DsdAdnhyM8IAIY8=
+text: |
+  인코더 모터의 펄스 카운트를 기반으로 자차 속도를 계산한다. 속도 측정 주기는 10ms 이하, 속도 분해능은 0.01 m/s 이상이어야 한다.
+verification: T

@@ -1,0 +1,15 @@
+active: true
+asil: B
+category: 안전
+derived: false
+header: |
+  최소 안전거리
+level: 22.0
+links:
+- STK010: 1kmABCGJXt1Pg5zvC2qyCKSREAniCe_ALCMJKxDRZ_M=
+normative: true
+ref: ''
+reviewed: HKb_uaq0cw7OcHEwTMiPkk-qTiXtZ-bVshC8U4If4tA=
+text: |
+  어떤 안전거리 단계에서도 절대 최소 차간거리(예: 10cm, 1/10 스케일 기준)를 유지해야 한다. 이 거리 이하로 접근 시 비상 정지를 수행한다.
+verification: T

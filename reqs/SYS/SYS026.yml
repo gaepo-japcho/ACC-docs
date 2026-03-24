@@ -1,0 +1,15 @@
+active: true
+asil: QM
+category: 기능
+derived: false
+header: |
+  직진 전용 차량
+level: 26.0
+links:
+- STK011: 4FW-apIBd_6ReA75rcgaBjTikV8rCb0gysuYQ_72cEg=
+normative: true
+ref: ''
+reviewed: 5AQAnXu0mW0H288GJoSBHTuxAllBvwdOsazVo2tbeLk=
+text: |
+  차량은 조향 없이 직진만 가능하도록 설계된다. 차선 유지(LKAS) 기능은 본 시스템 범위에 포함되지 않는다.
+verification: I

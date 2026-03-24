@@ -1,0 +1,15 @@
+active: true
+asil: QM
+category: 기능
+derived: false
+header: |
+  가속 오버라이드
+level: 7.0
+links:
+- STK008: RInv_jX-W-IplSCaLM_4h3d_aoedhKCU9f6ZMscFEIQ=
+normative: true
+ref: ''
+reviewed: _64jUTUQUIL83WuSmj7KptWNTY1tBoOICxW2oBHzkoA=
+text: |
+  액셀 입력 감지 시, ACC 설정 속도 및 안전거리 제한을 무시하고 운전자의 가속 명령을 수행한다. 액셀 해제 시 이전 ACC 상태(CRUISE 또는 FOLLOWING)로 복귀한다.
+verification: T

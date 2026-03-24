@@ -1,0 +1,13 @@
+active: true
+category: 기능
+derived: false
+header: |
+  ACC 상태 관리
+level: 9.0
+links: []
+normative: true
+priority: 필수
+ref: ''
+reviewed: dgF7jUPx5-ZTMvPHjylNTgY_vA1yMDz5izGLannYmb4=
+text: |
+  시스템은 명확한 상태 머신으로 관리되어야 한다. 최소 OFF, STANDBY, CRUISE, FOLLOWING, FAULT 상태를 포함한다.

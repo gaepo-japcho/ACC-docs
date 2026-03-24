@@ -1,0 +1,16 @@
+active: true
+asil: QM
+category: 기능
+derived: false
+header: |
+  Resume 버튼 처리
+level: 26.0
+links:
+- SYS027: ImBCs9I3PxatQZfsP7WGG4F2OsrrhH9IfOuySeNsaSs=
+normative: true
+ref: ''
+reviewed: WQMMCpmCv4khHS1_q4E0y6-E4w2nrGZdYcUHuF3aC-4=
+swc: AccStateMachine
+text: |
+  STANDBY 상태에서 Resume 버튼 입력 시, 보존된 설정 속도로 ACC를 재활성화한다. 전방 차량 감지 여부에 따라 CRUISE 또는 FOLLOWING 상태로 전이한다. Resume 버튼은 STANDBY 상태에서만 유효하며, 다른 상태에서는 무시한다.
+verification: T

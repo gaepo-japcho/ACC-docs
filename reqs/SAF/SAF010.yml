@@ -1,0 +1,18 @@
+active: true
+asil: B
+category: TSR
+derived: false
+header: |
+  TSR-02: CAN 메시지 CRC/카운터 검증
+level: 10.0
+links:
+- SYS015: Y5H5VnQQPlbvZSvoeheAM_TqsKsxkh5wUIHKVm3075g=
+- SYS016: A26w-TqafZiFeiCWQiQ-_fuUktf5qFIGFPW-Qv4xScQ=
+- SYS017: 29taTN2MpctOMrWbcG8IwtmzwO-oUOPObACbolDZab8=
+normative: true
+ref: ''
+reviewed: 4iwHSKjFEaUOL7Qfb09yatBrDxJpboBy0fmxaVW3OqY=
+safety_mechanism: E2E protection
+text: |
+  [ASIL B] 안전 관련 CAN 메시지에 Rolling Counter(4bit)와 CRC(8bit)를 포함한다. 수신 측에서 검증 실패 시 해당 메시지를 무효 처리한다.
+verification: T

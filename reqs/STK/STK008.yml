@@ -1,0 +1,13 @@
+active: true
+category: 안전
+derived: false
+header: |
+  운전자 오버라이드 (가속)
+level: 8.0
+links: []
+normative: true
+priority: 필수
+ref: ''
+reviewed: RInv_jX-W-IplSCaLM_4h3d_aoedhKCU9f6ZMscFEIQ=
+text: |
+  운전자가 액셀을 밟으면 ACC 설정 속도 및 안전거리와 무관하게 가속이 수행되어야 한다. 운전자의 가속 의지가 ACC 제어보다 우선한다.

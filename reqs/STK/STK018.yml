@@ -1,0 +1,13 @@
+active: true
+category: 기능
+derived: false
+header: |
+  ACC Resume 기능
+level: 18.0
+links: []
+normative: true
+priority: 필수
+ref: ''
+reviewed: R-sDP8yrdjqQQHMTFUon-wUxvKKaTqV2uCgfZLH12To=
+text: |
+  운전자는 Resume 버튼을 눌러 STANDBY 상태에서 ACC를 재활성화할 수 있어야 한다. 재활성화 시 이전 설정 속도와 안전거리 단계가 그대로 적용된다.

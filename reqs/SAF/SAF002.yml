@@ -1,0 +1,17 @@
+active: true
+asil: B
+category: Safety Goal
+derived: false
+hara: S2/E3/C2 → ASIL B
+header: |
+  Safety Goal 2 - 충돌 위험 시 감속 보장
+level: 2.0
+links:
+- SYS004: k8BAztLPG_0zTyVjGDGGaDC1BA6ZYz1WWdfFH_fRuUU=
+- SYS022: NkvdxY7YnTD8OkR0AITHk3a3m7j9Vnvmeau3gTm_qRg=
+normative: true
+ref: ''
+reviewed: SORR_soAsxQ3x7nU0X36hZYHse7I2IOoFTRmlHYau6M=
+text: |
+  [ASIL B] 전방 차량 접근 시 시스템은 적절한 감속을 수행해야 한다. Safe State: 감속 후 정지. FTTI: 200ms.
+verification: T

@@ -1,0 +1,15 @@
+active: true
+asil: QM
+category: 인터페이스
+derived: false
+header: |
+  HMI 표시 장치
+level: 10.0
+links:
+- SYS019: loEp48UbbXz8WXOEr5qAAnsUrh43pBW5OZ7w_bTZDOM=
+normative: true
+ref: ''
+reviewed: 7w1jt58pLL2UCbVkPKWJhUuINKtNOyKDuUzbtaFWuTo=
+text: |
+  ACC 상태, 설정 속도, 안전거리 단계, 경고 등을 표시할 디스플레이(LCD/LED 등)를 구비한다.
+verification: I

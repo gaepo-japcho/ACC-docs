@@ -1,0 +1,13 @@
+active: true
+category: 안전
+derived: false
+header: |
+  운전자 오버라이드 (브레이크)
+level: 7.0
+links: []
+normative: true
+priority: 필수
+ref: ''
+reviewed: 4lMIQWOd9Xq3pIzFKKekWZ-jQ2ANb1KzYex3m022lNY=
+text: |
+  운전자가 브레이크를 밟으면 ACC는 즉시 대기(STANDBY) 상태로 전환되어야 한다. STANDBY 전환 시 이전 설정 속도 및 안전거리 단계를 유지한다. 어떠한 상황에서도 운전자의 제동 제어가 ACC보다 우선한다.

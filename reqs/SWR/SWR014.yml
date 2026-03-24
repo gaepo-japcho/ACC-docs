@@ -1,0 +1,16 @@
+active: true
+asil: QM
+category: 인터페이스
+derived: false
+header: |
+  CAN RX - 모터 피드백 수신
+level: 14.0
+links:
+- SYS017: 29taTN2MpctOMrWbcG8IwtmzwO-oUOPObACbolDZab8=
+normative: true
+ref: ''
+reviewed: M-5jeHuZb-t7pZ3INwF6qAgGenK5uWylggv0B9lWPkg=
+swc: CanCommunication
+text: |
+  모터 제어기(STM32)로부터 실측 속도, 모터 상태 CAN 메시지를 수신한다. 수신 주기: 10ms. 타임아웃: 30ms.
+verification: T

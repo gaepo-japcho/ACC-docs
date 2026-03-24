@@ -1,0 +1,15 @@
+active: true
+asil: QM
+category: 성능
+derived: false
+header: |
+  인코더
+level: 8.0
+links:
+- SYS012: loj_SvNIJ23iJEQbQcWngF73aszKy7pC2b8mvQRy7qM=
+normative: true
+ref: ''
+reviewed: 6gdr6spn8s5X9j7IsXESLiFrVJTJta8MdlHA1RHNE2E=
+text: |
+  모터 또는 휠에 장착된 로터리 인코더. 분해능: 속도 0.01m/s 이상 측정 가능한 PPR. 출력: A/B상 Quadrature.
+verification: T

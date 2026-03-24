@@ -1,0 +1,15 @@
+active: true
+asil: QM
+category: 기능
+derived: false
+header: |
+  모터 및 모터 드라이버
+level: 7.0
+links:
+- SYS016: A26w-TqafZiFeiCWQiQ-_fuUktf5qFIGFPW-Qv4xScQ=
+normative: true
+ref: ''
+reviewed: KsnA-Jy6V7srZpYpSW_Ww90uy8IqkD8HpkMh1j9yrO4=
+text: |
+  1/10 스케일카 구동용 DC 모터 및 모터 드라이버(H-Bridge). 전진/후진/제동 제어 가능. PWM 주파수: 10kHz 이상.
+verification: T

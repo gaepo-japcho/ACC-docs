@@ -1,0 +1,15 @@
+active: true
+asil: QM
+category: 인터페이스
+derived: false
+header: |
+  CAN 통신 - 센서 → 메인 ECU
+level: 15.0
+links:
+- STK012: 8UUDwOl1yJKu1xvA6TsisowWSL7KTn_7n3UcSFykv4c=
+normative: true
+ref: ''
+reviewed: g6No1aGQjDJRt7Qz2CrCSWJxZfsdkfj4_kIgzPdXy-g=
+text: |
+  카메라+LiDAR 처리 유닛(RPi/Jetson)은 CAN 메시지로 다음 정보를 메인 ECU(MPC5606B)에 전송한다: 전방 차량 감지 여부(1bit), 차간거리(16bit, mm), 상대속도(16bit, 0.01m/s). 전송 주기: 20ms.
+verification: T

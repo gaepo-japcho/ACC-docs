@@ -1,0 +1,16 @@
+active: true
+asil: QM
+category: 기능
+derived: false
+header: |
+  전방 차량 상대속도 산출
+level: 13.0
+links:
+- STK012: 8UUDwOl1yJKu1xvA6TsisowWSL7KTn_7n3UcSFykv4c=
+- STK017: GVUeDtLMVSXcjBjGeovuFV8v2AC7_fjC-Qsx8VxRTKI=
+normative: true
+ref: ''
+reviewed: 6D6ZSRn1HRF6fM_Uz_MrFM-sdr2P7nKaiUTrymNxYng=
+text: |
+  LiDAR 거리 측정값의 시간 미분과 자차 속도를 조합하여 전방 차량의 상대속도를 산출한다. 산출된 상대속도는 CAN 메시지로 메인 ECU에 전송한다.
+verification: T

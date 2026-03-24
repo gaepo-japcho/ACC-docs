@@ -1,0 +1,13 @@
+active: true
+category: 제약조건
+derived: false
+header: |
+  제약 조건 - MCU
+level: 13.0
+links: []
+normative: true
+priority: 필수
+ref: ''
+reviewed: M5CFl7tUqEAl25vm-7XoS4u2gW8SxAf_QYniDjo3vr4=
+text: |
+  메인 제어기는 NXP MPC5606B 보드를 사용한다. 모터 제어 보드는 STM32F439ZI를 사용하여 CAN 통신으로 연결한다.

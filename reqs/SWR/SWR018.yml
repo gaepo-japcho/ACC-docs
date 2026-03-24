@@ -1,0 +1,16 @@
+active: true
+asil: QM
+category: 기능
+derived: false
+header: |
+  HMI 상태 표시
+level: 18.0
+links:
+- SYS019: loEp48UbbXz8WXOEr5qAAnsUrh43pBW5OZ7w_bTZDOM=
+normative: true
+ref: ''
+reviewed: ACmRpVFyYh6aAEYkfYK8OGu7qelndjM4IhbaOxLcyRM=
+swc: HmiManager
+text: |
+  현재 ACC 상태, 설정 속도, 안전거리 단계, 전방 차량 감지, 자차 속도를 주기적(100ms)으로 HMI 장치에 출력한다.
+verification: I

@@ -1,0 +1,13 @@
+active: true
+category: 제약조건
+derived: false
+header: |
+  제약 조건 - 개발 일정
+level: 15.0
+links: []
+normative: true
+priority: 필수
+ref: ''
+reviewed: dp9qV3gNmIM1RcbT9dso55YfA41k0k2A4taaWPoAKyE=
+text: |
+  개발 기간은 ~2026.05.01까지이며, 팀원은 4명이다. 형상관리는 Git/GitHub, 프로젝트 관리는 Jira/Confluence를 사용한다.

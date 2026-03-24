@@ -1,0 +1,19 @@
+active: true
+asil: B
+category: 기능
+derived: false
+header: |
+  안전거리 목표값 계산
+level: 8.0
+links:
+- SYS008: yHNqZAJIP1MI7nineLi8KQq4rUkm86qV3GuzE3T9hBM=
+- SYS009: dFJirSpuB2VqUcLLnkhSLcHjdYbDhRGk2EP4iJxMMFk=
+- SYS010: zikKwCeJkbP9TPZmv_PfT1FkKl8br14T4K9bWREcj_w=
+- SYS022: NkvdxY7YnTD8OkR0AITHk3a3m7j9Vnvmeau3gTm_qRg=
+normative: true
+ref: ''
+reviewed: eSCJysB3myzN6MBCQRrHjsL_aaK_DnLXnDKSAJG1Szc=
+swc: DistanceControl
+text: |
+  현재 선택된 안전거리 단계(1~3)와 자차 속도를 기반으로 목표 차간거리를 계산한다. 단계별 Time-gap 계수: 1단계=0.8s, 2단계=1.2s, 3단계=1.6s. 절대 최소거리(10cm) 이하 시 비상 제동 명령을 출력한다.
+verification: T

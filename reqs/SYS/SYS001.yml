@@ -1,0 +1,15 @@
+active: true
+asil: QM
+category: 기능
+derived: false
+header: |
+  ACC 상태 전이 - OFF
+level: 1.0
+links:
+- STK009: dgF7jUPx5-ZTMvPHjylNTgY_vA1yMDz5izGLannYmb4=
+normative: true
+ref: ''
+reviewed: PJbkzTKja0VL3Dm37lkoiErKWIS3br6-PWFlScRDVk0=
+text: |
+  OFF 상태: ACC 기능이 비활성. 운전자가 ACC 활성화 버튼을 누르면 STANDBY로 전이한다.
+verification: T

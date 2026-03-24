@@ -1,0 +1,16 @@
+active: true
+asil: QM
+category: 기능
+derived: false
+header: |
+  운전자 입력 디바운싱
+level: 20.0
+links:
+- SYS018: KG7iIec1JkuU3P1pxYrYTb1KKf4BS_gTBQ7GZutrfTY=
+normative: true
+ref: ''
+reviewed: 2l1qan6iEV5bwwIkflfeoEYDIsjhFeEy4MAzcRArTJM=
+swc: DriverInput
+text: |
+  버튼 입력(ACC ON/OFF, 속도 설정, 안전거리)에 대해 20ms 디바운싱을 적용한다. 브레이크/액셀 페달은 디바운싱 없이 즉시 처리한다.
+verification: T

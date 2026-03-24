@@ -1,0 +1,15 @@
+active: true
+asil: QM
+category: 기능
+derived: false
+header: |
+  차체 프레임
+level: 11.0
+links:
+- SYS026: KB67iDkaOxKiGyDrsEkwv74ffnansuuC5R3NV3hd8ec=
+normative: true
+ref: ''
+reviewed: yZx7irNIE4JKPEqPzmf6VeRGn-ee2NfZ4U6dzVWgFhQ=
+text: |
+  1/10 스케일 차량 차체는 아크릴판 등으로 제작한다. 직진 전용 구조이며 조향 메커니즘은 포함하지 않는다. 센서, ECU, 모터 등 모든 부품을 안정적으로 탑재할 수 있는 강성을 확보한다.
+verification: I
