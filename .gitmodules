@@ -1,0 +1,3 @@
+[submodule "acc_requirements"]
+	path = acc_requirements
+	url = https://github.com/gaepo-japcho/ACC-reqs.git
