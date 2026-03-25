@@ -1,0 +1,20 @@
+active: true
+asil: B
+category: 안전
+derived: false
+header: |
+  ACC ON 자가진단
+level: 29.0
+links:
+- SYS001: tTP8LA9U-PBRJrvv-GOUOh26868PdqQjUwnNgGoKrXU=
+- SYS005: ugP2_vVE4SiYK2JPjv7VkHEWkQKDYMAcZaaPUQAAjec=
+normative: true
+ref: ''
+reviewed: N5EZaW0n4HO9apGpNZJg-QfLb38Buh7WD0TufzReQB0=
+swc: AccStateMachine
+text: |
+  ACC ON/OFF 토글 수신 시 (OFF→ON 방향), 다음 자가진단을 수행한다:
+  - CAN 통신 상태 확인 (각 노드 정상 응답)
+  - 센서 데이터 유효성 확인 (LiDAR, 카메라, 인코더)
+  자가진단 실패 시 ACC를 켜지 않고 OFF 상태를 유지하며, HMI에 진단 실패 메시지를 표시한다.
+verification: T
