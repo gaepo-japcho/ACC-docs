@@ -3,13 +3,15 @@ asil: QM
 category: 인터페이스
 derived: false
 header: |
-  HMI 표시 장치
+  HMI 표시 장치 (GUI 겸용)
 level: 10.0
 links:
 - SYS019: loEp48UbbXz8WXOEr5qAAnsUrh43pBW5OZ7w_bTZDOM=
 normative: true
 ref: ''
-reviewed: 7w1jt58pLL2UCbVkPKWJhUuINKtNOyKDuUzbtaFWuTo=
+reviewed: lUkwMLRfJ4sU_rEwexN5WH_9AKaScanGIOToerbqFBE=
 text: |
-  ACC 상태, 설정 속도, 안전거리 단계, 경고 등을 표시할 디스플레이(LCD/LED 등)를 구비한다.
+  HMI 표시 장치는 RPi/Jetson GUI 화면으로 대체한다.
+  GUI 화면에 현재 속도, ACC 상태, 설정 최고속도, 거리설정 단계, FAULT 경고를 표시한다.
+  별도 LCD/LED 패널은 제작하지 않으며, RPi/Jetson의 HDMI 또는 연결된 디스플레이를 사용한다.
 verification: I
