@@ -3,14 +3,14 @@ asil: B
 category: 안전
 derived: false
 header: |
-  CAN 통신 고장 감지
+  CAN 통신 고장 감지 (→ FAULT)
 level: 25.0
 links:
 - STK010: 1kmABCGJXt1Pg5zvC2qyCKSREAniCe_ALCMJKxDRZ_M=
 - STK012: 8UUDwOl1yJKu1xvA6TsisowWSL7KTn_7n3UcSFykv4c=
 normative: true
 ref: ''
-reviewed: fmG7DlImIDIwZ94x_ZOZM_iMBgCeKilkUvw2HqoeqM8=
+reviewed: Um0KLjYzyOu5lMtrGl87SSZwvOgJJzghtspNPouNJ7Y=
 text: |
-  CAN 메시지 타임아웃(예: 3주기 연속 미수신) 시 해당 노드 통신 이상으로 판단하고 FAULT 상태로 전이한다.
+  CAN 메시지 타임아웃(예: 3주기 연속 미수신) 시 해당 노드 통신 이상으로 판단하고 FAULT 상태로 전이한다. FAULT 전이 시 모터 출력을 0으로 설정하고 HMI에 경고를 표시한다. 능동 감속은 수행하지 않는다.
 verification: T
