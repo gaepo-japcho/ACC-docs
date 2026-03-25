@@ -1,0 +1,22 @@
+active: true
+asil: QM
+category: 기능
+derived: false
+header: |
+  버튼 가용성 관리
+level: 29.0
+links:
+- STK021: pHqXm-oSEoLcD8Yp-QdqDs9dGawKmw5-Yefz5sCSMPw=
+normative: true
+ref: ''
+reviewed: 1oOKFhZJHlirVNhBC_3EC1oVRJhKo2h_xQbL7RINk_o=
+text: |
+  시스템은 현재 ACC 상태에 따라 각 버튼의 활성/비활성 상태를 관리한다.
+  비활성 버튼 입력은 무시하며, HMI GUI에서 그레이아웃 표시한다.
+  | 상태 | 활성 버튼 | 비활성 버튼 |
+  | OFF | ACC ON/OFF | SET, RES, 속도+/-, 거리설정, 일시정지 |
+  | STANDBY | ACC ON/OFF, SET, RES, 거리설정 | 속도+/-, 일시정지 |
+  | CRUISING | ACC ON/OFF, 속도+/-, 거리설정, 일시정지 | SET, RES |
+  | FOLLOWING | ACC ON/OFF, 속도+/-, 거리설정, 일시정지 | SET, RES |
+  | FAULT | ACC ON/OFF | 나머지 전부 |
+verification: T
