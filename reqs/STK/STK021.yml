@@ -1,0 +1,17 @@
+active: true
+category: 기능
+derived: false
+header: |
+  버튼 가용성 규칙
+level: 21.0
+links: []
+normative: true
+priority: 필수
+ref: ''
+reviewed: pHqXm-oSEoLcD8Yp-QdqDs9dGawKmw5-Yefz5sCSMPw=
+text: |
+  ACC 상태에 따라 사용 불가능한 버튼은 그레이아웃(비활성) 처리한다:
+  - STANDBY: 속도+, 속도-, 일시정지 버튼 비활성
+  - CRUISING/FOLLOWING: SET, RES 버튼 비활성
+  - OFF: SET, RES, 속도+, 속도-, 일시정지, 거리설정 버튼 비활성
+  - FAULT: ACC ON/OFF 버튼만 활성 (OFF로 전환 용도)
