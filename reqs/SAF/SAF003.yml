@@ -4,14 +4,14 @@ category: Safety Goal
 derived: false
 hara: S2/E4/C1 → ASIL B
 header: |
-  Safety Goal 3 - 운전자 오버라이드 보장
+  Safety Goal 3 - 운전자 오버라이드 보장 (→ STANDBY)
 level: 3.0
 links:
 - SYS006: _4nHNk8GEBthpjJE6xBvN7SQApgRhEJEoWYRbg13rs4=
 - SYS007: oWfuA8leYHkcyzFGzkHTuwZonlROyHiEdY0Nj7SoMiY=
 normative: true
 ref: ''
-reviewed: 5En8qCCFyvGrTxi-lClNUSbLGUsSfteqeo-rVBuThHE=
+reviewed: 9TdM_vlQ8_Xxpj0_Xirbvcrfvq8bZ3ktRrhCEO_tINw=
 text: |
-  [ASIL B] 운전자의 브레이크/액셀 입력은 어떠한 상황에서도 ACC보다 우선해야 한다. Safe State: 브레이크 시 STANDBY(모터 출력 0, 설정값 보존), 운전자 직접 제어 모드.
+  [ASIL B] 운전자의 브레이크/액셀 입력은 어떠한 상황에서도 ACC보다 우선해야 한다. 브레이크 또는 액셀 입력 시 즉시 STANDBY로 전이 (모터 출력 0, 설정값 보존). Safe State: 운전자 직접 제어 모드 (STANDBY).
 verification: T
