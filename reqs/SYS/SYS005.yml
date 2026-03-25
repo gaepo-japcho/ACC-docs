@@ -6,11 +6,18 @@ header: |
   ACC 상태 전이 - FAULT
 level: 5.0
 links:
-- STK009: dgF7jUPx5-ZTMvPHjylNTgY_vA1yMDz5izGLannYmb4=
-- STK010: 1kmABCGJXt1Pg5zvC2qyCKSREAniCe_ALCMJKxDRZ_M=
+- STK009: GX45hIEydlfqArqYbEBaYFwX8_9BSOPxl7Iyez6paA4=
+- STK010: Rmo0beHCrlJUdcxGYZrTTBwoYDHxhF_nIq5SIXXKq38=
+- STK022: n4BJoTc6nISshTSOr4ye-k2Zw3WxHM8VlgemfNyZ4I4=
 normative: true
 ref: ''
-reviewed: aTSZBF9cg8GDPj8kJjIqRItZF0WiVUOrx9l0Y9ndWEs=
+reviewed: Frrze1Ct0sa4vpa0tR7aRNjzp644qBTKD3u0Smk0oR0=
 text: |
-  FAULT 상태: 센서 고장, CAN 통신 단절, 제어 이상 등 감지 시 진입. 안전하게 감속 후 OFF 상태로 전이한다. FAULT 진입 시 운전자에게 경고를 표시한다.
+  FAULT 상태: 센서 고장, CAN 통신 단절, 제어 이상 등 감지 시 진입.
+  - 모터 제어 출력을 0으로 설정 (능동 감속 없음, 자연 감속)
+  - HMI에 FAULT 경고를 즉시 표시 (시간 여유 시 경고음 추가)
+  - 운전자가 ACC ON/OFF 토글 버튼을 눌러야 OFF로 전이
+  - FAULT에서 ACC ON/OFF 외의 모든 버튼은 비활성(무시)
+  - 운전자는 FAULT 발생 시 즉시 직접 개입하여 차량을 제어해야 한다
+  ACC OFF 상태에서 자가진단 실패 시 ACC를 켤 수 없다 (FAULT 상태로 시작 불가).
 verification: T
