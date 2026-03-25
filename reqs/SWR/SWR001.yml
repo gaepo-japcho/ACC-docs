@@ -13,8 +13,15 @@ links:
 - SYS005: AW38VdDqD-CHYKxsbCiu5Tm74Goq7NNzQi-NuheE0us=
 normative: true
 ref: ''
-reviewed: zqjdm2F8qlDeHXsJEQuSFJ9FviQlWLUrY66bKcV7DHM=
+reviewed: TRcv9Fblp2ks98yXkbYHCXRYbEDyfc4N6dcRvN_gxns=
 swc: AccStateMachine
 text: |
-  ACC StateMachine SWC는 OFF, STANDBY, CRUISE, FOLLOWING, FAULT 5개 상태를 관리한다. 각 상태 전이 조건과 전이 시 수행 액션을 구현한다.
+  ACC StateMachine SWC는 OFF, STANDBY, CRUISING, FOLLOWING, FAULT 5개 상태를 관리한다.
+  OFF→CRUISING/FOLLOWING: ACC ON + 자가진단 통과 (현재 속도를 최고속도로 설정)
+  STANDBY→CRUISING/FOLLOWING: SET 또는 RES 버튼
+  CRUISING↔FOLLOWING: 전방 차량 감지/소멸
+  CRUISING/FOLLOWING→STANDBY: 브레이크, 액셀, 일시정지
+  Any Active→FAULT: 고장 감지
+  FAULT→OFF: ACC ON/OFF 토글
+  Any→OFF: ACC ON/OFF 토글
 verification: T
