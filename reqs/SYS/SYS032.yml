@@ -1,0 +1,16 @@
+active: true
+asil: QM
+category: 기능
+derived: false
+header: |
+  최소 설정 속도 제한
+level: 32.0
+links:
+- STK022: n4BJoTc6nISshTSOr4ye-k2Zw3WxHM8VlgemfNyZ4I4=
+- STK024: 7zxNSSm3JLvHCZ52bUb-_nEEWY0z77YM63_vKWsS_VY=
+normative: true
+ref: ''
+reviewed: suWOG4DNf4lAe1qkFRlzLECZkdxB0WHo4EcGStto9Ro=
+text: |
+  ACC 활성화(OFF→CRUISING/FOLLOWING) 또는 STANDBY에서 SET 복귀 시, 현재 자차 속도가 최소 설정 속도(파라미터, 기본값 TBD) 미만이면 최소 설정 속도를 최고속도로 자동 설정한다. RES 복귀 시에는 이전 설정 속도가 이미 최소값 이상이므로 별도 처리 불필요.
+verification: T
