@@ -3,14 +3,23 @@ asil: QM
 category: 기능
 derived: false
 header: |
-  ACC 상태 전이 - CRUISE
+  ACC 상태 전이 - CRUISING
 level: 3.0
 links:
 - STK005: XMG2-6DIg8HG1C2kJJtLYoBro2JktcgZ4XEhfNIm5UM=
 - STK009: dgF7jUPx5-ZTMvPHjylNTgY_vA1yMDz5izGLannYmb4=
 normative: true
 ref: ''
-reviewed: kSAH1rHahAoftsufOqsezE4GSY5ehGzHydoemOmGqY4=
+reviewed: 5ps7f3yzhqiPiKc1a3aIPznYwWp6izVK0HfdwyKNrsw=
 text: |
-  CRUISE 상태: 전방 차량 미감지 시 설정된 순항 속도를 유지한다. 전방 차량이 안전거리 이내에 감지되면 FOLLOWING으로 전이한다.
+  CRUISING 상태: 전방 차량 미감지 시 설정된 최고속도를 유지하며 주행.
+  - 전방 차량이 안전거리 이내에 감지: FOLLOWING으로 전이
+  - 브레이크 입력: STANDBY로 전이
+  - 액셀 입력: STANDBY로 전이
+  - 일시정지 버튼: STANDBY로 전이
+  - 속도+/- 버튼: 설정 최고속도 조정 (CRUISING 유지)
+  - 거리설정 버튼: 안전거리 단계 변경 (CRUISING 유지)
+  - 고장 감지: FAULT로 전이
+  - ACC ON/OFF 토글: OFF로 전이
+  CRUISING에서 SET/RES 버튼은 비활성(무시).
 verification: T
