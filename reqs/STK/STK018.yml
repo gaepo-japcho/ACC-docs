@@ -2,12 +2,15 @@ active: true
 category: 기능
 derived: false
 header: |
-  ACC Resume 기능
+  ACC SET/RES 재활성화 기능
 level: 18.0
 links: []
 normative: true
 priority: 필수
 ref: ''
-reviewed: R-sDP8yrdjqQQHMTFUon-wUxvKKaTqV2uCgfZLH12To=
+reviewed: EetbvOatOBNArHZYxIQFG9s_WxrNgDJ_4vHDJMU-aaY=
 text: |
-  운전자는 Resume 버튼을 눌러 STANDBY 상태에서 ACC를 재활성화할 수 있어야 한다. 재활성화 시 이전 설정 속도와 안전거리 단계가 그대로 적용된다.
+  운전자는 STANDBY 상태에서 다음 두 가지 방법으로 ACC를 재활성화할 수 있어야 한다:
+  - SET 버튼: 현재 주행 속도를 최고속도로 설정하고 CRUISING 또는 FOLLOWING 재진입
+  - RES(Resume) 버튼: 이전에 설정했던 최고속도를 복원하고 CRUISING 또는 FOLLOWING 재진입
+  전방 차량 유무에 따라 CRUISING 또는 FOLLOWING이 결정된다.
