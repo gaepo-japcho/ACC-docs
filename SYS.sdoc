@@ -1,0 +1,596 @@
+[DOCUMENT]
+TITLE: ACC System Requirements (SYS)
+
+[GRAMMAR]
+ELEMENTS:
+- TAG: REQUIREMENT
+  FIELDS:
+  - TITLE: UID
+    TYPE: String
+    REQUIRED: True
+  - TITLE: TITLE
+    TYPE: String
+    REQUIRED: False
+  - TITLE: STATEMENT
+    TYPE: String
+    REQUIRED: True
+  - TITLE: ASIL
+    TYPE: String
+    REQUIRED: False
+  - TITLE: CATEGORY
+    TYPE: String
+    REQUIRED: False
+  - TITLE: VERIFICATION
+    TYPE: String
+    REQUIRED: False
+  - TITLE: COMMENT
+    TYPE: String
+    REQUIRED: False
+  RELATIONS:
+  - TYPE: Parent
+
+[[SECTION]]
+TITLE: 상태 전이
+
+[REQUIREMENT]
+UID: SYS001
+TITLE: ACC 상태 전이 - OFF
+STATEMENT: >>>
+OFF 상태: ACC 기능 비활성. 운전자가 ACC ON/OFF 토글 버튼을 누르면:
+- 자가진단 실패(FAULT 조건) 시: ACC가 켜지지 않고 OFF 유지
+- 자가진단 통과 + 전방 차량 미감지: 현재 속도를 최고속도로 설정, CRUISING으로 전이
+- 자가진단 통과 + 전방 차량 감지: 현재 속도를 최고속도로 설정, FOLLOWING으로 전이
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK009
+- TYPE: Parent
+  VALUE: STK022
+
+[REQUIREMENT]
+UID: SYS002
+TITLE: ACC 상태 전이 - STANDBY
+STATEMENT: >>>
+STANDBY 상태: ACC 활성화 대기 (브레이크, 액셀, 일시정지에 의해 진입).
+이전 설정 속도와 안전거리 단계를 보존한다.
+- SET 버튼: 현재 주행 속도를 최고속도로 설정, 전방 차량 유무에 따라 CRUISING 또는 FOLLOWING 전이
+- RES 버튼: 보존된 이전 설정 속도를 최고속도로 복원, 전방 차량 유무에 따라 CRUISING 또는 FOLLOWING 전이
+- ACC ON/OFF 토글: OFF로 전이
+STANDBY에서 속도+/-, 일시정지 버튼은 비활성(무시).
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK009
+
+[REQUIREMENT]
+UID: SYS003
+TITLE: ACC 상태 전이 - CRUISING
+STATEMENT: >>>
+CRUISING 상태: 전방 차량 미감지 시 설정된 최고속도를 유지하며 주행.
+- 전방 차량이 안전거리 이내에 감지: FOLLOWING으로 전이
+- 브레이크 입력: STANDBY로 전이
+- 액셀 입력: STANDBY로 전이
+- 일시정지 버튼: STANDBY로 전이
+- 속도+/- 버튼: 설정 최고속도 조정 (CRUISING 유지)
+- 거리설정 버튼: 안전거리 단계 변경 (CRUISING 유지)
+- 고장 감지: FAULT로 전이
+- ACC ON/OFF 토글: OFF로 전이
+CRUISING에서 SET/RES 버튼은 비활성(무시).
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK005
+- TYPE: Parent
+  VALUE: STK009
+
+[REQUIREMENT]
+UID: SYS004
+TITLE: ACC 상태 전이 - FOLLOWING
+STATEMENT: >>>
+FOLLOWING 상태: 전방 차량 추종. 설정된 안전거리 단계에 따른 목표 차간거리를 유지하도록 속도 제어.
+자차 속도는 설정 최고속도를 초과하지 않는다.
+- 전방 차량 소멸: CRUISING으로 전이
+- 브레이크 입력: STANDBY로 전이
+- 액셀 입력: STANDBY로 전이
+- 일시정지 버튼: STANDBY로 전이
+- 속도+/- 버튼: 설정 최고속도 조정 (FOLLOWING 유지)
+- 거리설정 버튼: 안전거리 단계 변경 (FOLLOWING 유지)
+- 고장 감지: FAULT로 전이
+- ACC ON/OFF 토글: OFF로 전이
+FOLLOWING에서 SET/RES 버튼은 비활성(무시).
+<<<
+ASIL: B
+CATEGORY: 기능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK004
+- TYPE: Parent
+  VALUE: STK006
+- TYPE: Parent
+  VALUE: STK009
+
+[REQUIREMENT]
+UID: SYS005
+TITLE: ACC 상태 전이 - FAULT
+STATEMENT: >>>
+FAULT 상태: 센서 고장, CAN 통신 단절, 제어 이상 등 감지 시 진입.
+- 모터 제어 출력을 0으로 설정 (능동 감속 없음, 자연 감속)
+- HMI에 FAULT 경고를 즉시 표시 (시간 여유 시 경고음 추가)
+- 운전자가 ACC ON/OFF 토글 버튼을 눌러야 OFF로 전이
+- FAULT에서 ACC ON/OFF 외의 모든 버튼은 비활성(무시)
+- 운전자는 FAULT 발생 시 즉시 직접 개입하여 차량을 제어해야 한다
+ACC OFF 상태에서 자가진단 실패 시 ACC를 켤 수 없다 (FAULT 상태로 시작 불가).
+<<<
+ASIL: B
+CATEGORY: 안전
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK009
+- TYPE: Parent
+  VALUE: STK010
+- TYPE: Parent
+  VALUE: STK022
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 운전자 오버라이드
+
+[REQUIREMENT]
+UID: SYS006
+TITLE: 브레이크 오버라이드 (→ STANDBY)
+STATEMENT: >>>
+브레이크 입력 감지 시, 현재 상태와 무관하게 ACC를 즉시 STANDBY 상태로 전이한다. 브레이크 오버라이드 응답 시간은 50ms 이내여야 한다. STANDBY 전이 시 설정 속도 및 안전거리 단계 값을 보존한다.
+<<<
+ASIL: B
+CATEGORY: 안전
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK007
+
+[REQUIREMENT]
+UID: SYS007
+TITLE: 가속 오버라이드 (→ STANDBY)
+STATEMENT: >>>
+액셀 입력 감지 시, ACC를 즉시 STANDBY 상태로 전이한다. 이전 설정 속도와 안전거리 단계를 보존한다. 액셀 오버라이드 응답 시간은 50ms 이내여야 한다.
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK008
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 안전거리 모델
+
+[REQUIREMENT]
+UID: SYS008
+TITLE: 안전거리 모델 - 단계 1
+STATEMENT: >>>
+안전거리 1단계(근거리): 목표 차간거리 = 0.8초 * 자차속도에 해당하는 거리. (1/10 스케일 기준 파라미터 튜닝 필요)
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK006
+
+[REQUIREMENT]
+UID: SYS009
+TITLE: 안전거리 모델 - 단계 2
+STATEMENT: >>>
+안전거리 2단계(중거리): 목표 차간거리 = 1.2초 * 자차속도에 해당하는 거리. (1/10 스케일 기준 파라미터 튜닝 필요)
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK006
+
+[REQUIREMENT]
+UID: SYS010
+TITLE: 안전거리 모델 - 단계 3
+STATEMENT: >>>
+안전거리 3단계(원거리): 목표 차간거리 = 1.6초 * 자차속도에 해당하는 거리. (1/10 스케일 기준 파라미터 튜닝 필요)
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK006
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 인식 및 측정
+
+[REQUIREMENT]
+UID: SYS011
+TITLE: 전방 차량 인식 처리
+STATEMENT: >>>
+카메라 기반 전방 차량 인식 시스템은 Raspberry Pi 또는 Jetson에서 실행된다. 인식 결과(차량 유무)와 LiDAR 거리 데이터를 융합하여 전방 차량 존재 여부 및 거리를 확정한다.
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK002
+- TYPE: Parent
+  VALUE: STK003
+
+[REQUIREMENT]
+UID: SYS012
+TITLE: 자차 속도 측정
+STATEMENT: >>>
+인코더 모터의 펄스 카운트를 기반으로 자차 속도를 계산한다. 속도 측정 주기는 10ms 이하, 속도 분해능은 0.01 m/s 이상이어야 한다.
+<<<
+ASIL: QM
+CATEGORY: 성능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK016
+
+[REQUIREMENT]
+UID: SYS013
+TITLE: 전방 차량 상대속도 산출
+STATEMENT: >>>
+LiDAR 거리 측정값의 시간 미분과 자차 속도를 조합하여 전방 차량의 상대속도를 산출한다. 산출된 상대속도는 CAN 메시지로 메인 ECU에 전송한다.
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK012
+- TYPE: Parent
+  VALUE: STK017
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 제어 및 성능
+
+[REQUIREMENT]
+UID: SYS014
+TITLE: PID 속도 제어
+STATEMENT: >>>
+Simulink MBD로 설계된 PID 제어기를 통해 목표 속도/거리를 추종한다. 제어 주기는 10ms, 정상 상태 오차는 목표 속도의 5% 이내여야 한다.
+<<<
+ASIL: QM
+CATEGORY: 성능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK004
+
+[REQUIREMENT]
+UID: SYS020
+TITLE: 제어 응답 시간
+STATEMENT: >>>
+전방 차량 감지에서 제어 명령 출력까지의 종단간 지연은 100ms 이내여야 한다.
+<<<
+ASIL: B
+CATEGORY: 성능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK004
+
+[REQUIREMENT]
+UID: SYS021
+TITLE: 센서 데이터 갱신 주기
+STATEMENT: >>>
+LiDAR 거리 데이터 갱신 주기: 50ms 이하. 카메라 차량 인식 주기: 100ms 이하.
+<<<
+ASIL: QM
+CATEGORY: 성능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK002
+- TYPE: Parent
+  VALUE: STK003
+
+[REQUIREMENT]
+UID: SYS022
+TITLE: 차간거리 접근 시 제어 (AEB 미포함)
+STATEMENT: >>>
+FOLLOWING 모드에서 차간거리가 목표 거리 이하로 감소하면 PID 제어 범위 내에서 최대 감속을 수행한다. 본 시스템은 AEB를 포함하지 않으므로 비상 제동(긴급 정지)은 수행하지 않는다. 위험 상황에서의 제동은 운전자의 직접 개입에 의한다.
+<<<
+ASIL: B
+CATEGORY: 안전
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK004
+- TYPE: Parent
+  VALUE: STK023
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: CAN 통신
+
+[REQUIREMENT]
+UID: SYS015
+TITLE: CAN 통신 - 센서 → 메인 ECU
+STATEMENT: >>>
+카메라+LiDAR 처리 유닛(RPi/Jetson)은 CAN 메시지로 다음 정보를 메인 ECU(MPC5606B)에 전송한다: 전방 차량 감지 여부(1bit), 차간거리(16bit, mm), 상대속도(16bit, 0.01m/s). 전송 주기: 20ms.
+<<<
+ASIL: QM
+CATEGORY: 인터페이스
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK012
+
+[REQUIREMENT]
+UID: SYS016
+TITLE: CAN 통신 - 메인 ECU → 모터 제어기
+STATEMENT: >>>
+메인 ECU(MPC5606B)는 CAN 메시지로 모터 제어 명령을 STM32F439ZI에 전송한다: 목표 모터 제어값(PWM duty 또는 속도 명령). 전송 주기: 10ms.
+<<<
+ASIL: QM
+CATEGORY: 인터페이스
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK012
+- TYPE: Parent
+  VALUE: STK013
+
+[REQUIREMENT]
+UID: SYS017
+TITLE: CAN 통신 - 모터 제어기 → 메인 ECU
+STATEMENT: >>>
+STM32F439ZI는 인코더 기반 실측 속도, 모터 상태를 CAN 메시지로 메인 ECU에 전송한다. 전송 주기: 10ms.
+<<<
+ASIL: QM
+CATEGORY: 인터페이스
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK012
+- TYPE: Parent
+  VALUE: STK016
+
+[REQUIREMENT]
+UID: SYS025
+TITLE: CAN 통신 고장 감지 (→ FAULT)
+STATEMENT: >>>
+CAN 메시지 타임아웃(예: 3주기 연속 미수신) 시 해당 노드 통신 이상으로 판단하고 FAULT 상태로 전이한다. FAULT 전이 시 모터 출력을 0으로 설정하고 HMI에 경고를 표시한다. 능동 감속은 수행하지 않는다.
+<<<
+ASIL: B
+CATEGORY: 안전
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK010
+- TYPE: Parent
+  VALUE: STK012
+
+[REQUIREMENT]
+UID: SYS030
+TITLE: CAN 통신 - GUI → 메인 ECU (운전자 입력)
+STATEMENT: >>>
+RPi/Jetson GUI 애플리케이션은 운전자 입력(버튼 클릭, 페달 신호)을 CAN 메시지로 메인 ECU(MPC5606B)에 전송한다.
+메시지 내용: ACC ON/OFF, SET, RES, 속도+, 속도-, 거리설정(1/2/3), 일시정지, 브레이크, 액셀 상태.
+전송 주기: 20ms.
+<<<
+ASIL: QM
+CATEGORY: 인터페이스
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK012
+- TYPE: Parent
+  VALUE: STK019
+- TYPE: Parent
+  VALUE: STK020
+
+[REQUIREMENT]
+UID: SYS031
+TITLE: CAN 통신 - 메인 ECU → GUI (HMI 표시 데이터)
+STATEMENT: >>>
+메인 ECU(MPC5606B)는 HMI 표시용 데이터를 CAN 메시지로 RPi/Jetson GUI에 전송한다.
+메시지 내용: 현재 ACC 상태, 설정 최고속도, 현재 자차 속도, 현재 거리설정 단계, FAULT 경고 플래그, 전방 차량 감지 여부, 버튼 가용성 플래그.
+전송 주기: 50ms.
+<<<
+ASIL: QM
+CATEGORY: 인터페이스
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK012
+- TYPE: Parent
+  VALUE: STK020
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 운전자 인터페이스
+
+[REQUIREMENT]
+UID: SYS018
+TITLE: 운전자 입력 인터페이스 (가상 GUI)
+STATEMENT: >>>
+시스템은 다음 운전자 입력을 수신한다 (RPi/Jetson GUI 가상 버튼):
+- ACC ON/OFF 토글 버튼
+- SET 버튼 (STANDBY→현재속도로 재활성화)
+- RES 버튼 (STANDBY→이전설정속도로 재활성화)
+- 속도+ 버튼, 속도- 버튼
+- 거리설정 1/2/3단계 버튼 (개별)
+- 일시정지 버튼 (CRUISING/FOLLOWING→STANDBY)
+- 브레이크 페달 신호, 액셀 페달 신호
+모든 버튼 입력은 GUI에서 CAN 메시지로 메인 ECU에 전달된다.
+<<<
+ASIL: QM
+CATEGORY: 인터페이스
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK019
+- TYPE: Parent
+  VALUE: STK020
+
+[REQUIREMENT]
+UID: SYS019
+TITLE: HMI 출력 인터페이스 (GUI 클러스터)
+STATEMENT: >>>
+RPi/Jetson GUI가 HMI 클러스터 역할을 수행하며 다음을 표시한다:
+- 현재 자차 속도
+- ACC 상태 (OFF / STANDBY / CRUISING / FOLLOWING / FAULT)
+- 현재 설정된 최고속도
+- 현재 거리설정 단계 (1/2/3)
+- FAULT 발생 시 경고 표시 (시간 여유 시 경고음)
+상태에 따라 비활성 버튼은 그레이아웃 처리한다.
+<<<
+ASIL: QM
+CATEGORY: 인터페이스
+VERIFICATION: I
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK020
+- TYPE: Parent
+  VALUE: STK021
+
+[REQUIREMENT]
+UID: SYS029
+TITLE: 버튼 가용성 관리
+STATEMENT: >>>
+시스템은 현재 ACC 상태에 따라 각 버튼의 활성/비활성 상태를 관리한다.
+비활성 버튼 입력은 무시하며, HMI GUI에서 그레이아웃 표시한다.
+| 상태 | 활성 버튼 | 비활성 버튼 |
+| OFF | ACC ON/OFF | SET, RES, 속도+/-, 거리설정, 일시정지 |
+| STANDBY | ACC ON/OFF, SET, RES, 거리설정 | 속도+/-, 일시정지 |
+| CRUISING | ACC ON/OFF, 속도+/-, 거리설정, 일시정지 | SET, RES |
+| FOLLOWING | ACC ON/OFF, 속도+/-, 거리설정, 일시정지 | SET, RES |
+| FAULT | ACC ON/OFF | 나머지 전부 |
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK021
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 비기능 요구사항
+
+[REQUIREMENT]
+UID: SYS023
+TITLE: AUTOSAR 준수
+STATEMENT: >>>
+SW 아키텍처는 AUTOSAR 계층 구조(ASW/RTE/BSW)를 따른다. mobilgene을 활용하여 AUTOSAR 설정 및 코드 생성을 수행한다.
+<<<
+ASIL: QM
+CATEGORY: 비기능
+VERIFICATION: I
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK014
+
+[REQUIREMENT]
+UID: SYS024
+TITLE: MBD 기반 제어 설계
+STATEMENT: >>>
+거리/속도 제어 로직은 MATLAB/Simulink MBD로 설계하고, 자동 코드 생성을 통해 구현한다.
+<<<
+ASIL: QM
+CATEGORY: 비기능
+VERIFICATION: I
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK014
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 기타 기능
+
+[REQUIREMENT]
+UID: SYS026
+TITLE: 직진 전용 차량
+STATEMENT: >>>
+차량은 조향 없이 직진만 가능하도록 설계된다. 차선 유지(LKAS) 기능은 본 시스템 범위에 포함되지 않는다.
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: I
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK011
+
+[REQUIREMENT]
+UID: SYS027
+TITLE: SET/RES에 의한 STANDBY 복귀
+STATEMENT: >>>
+STANDBY 상태에서의 복귀 동작:
+- SET 버튼: 현재 주행 속도를 최고속도로 설정하고, 전방 차량 감지 시 FOLLOWING, 미감지 시 CRUISING으로 전이
+- RES 버튼: 이전 설정 최고속도를 복원하고, 전방 차량 감지 시 FOLLOWING, 미감지 시 CRUISING으로 전이
+SET/RES 버튼은 STANDBY 상태에서만 유효하며, 다른 상태에서는 비활성(그레이아웃).
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK018
+- TYPE: Parent
+  VALUE: STK019
+- TYPE: Parent
+  VALUE: STK021
+
+[REQUIREMENT]
+UID: SYS028
+TITLE: 일시정지 버튼 동작
+STATEMENT: >>>
+CRUISING 또는 FOLLOWING 상태에서 일시정지 버튼을 누르면 STANDBY로 전이한다. 이전 설정 속도와 안전거리 단계를 보존한다. 일시정지 버튼은 CRUISING/FOLLOWING 상태에서만 유효하며, 다른 상태에서는 비활성(그레이아웃).
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK019
+- TYPE: Parent
+  VALUE: STK021
+
+[REQUIREMENT]
+UID: SYS032
+TITLE: 최소 설정 속도 제한
+STATEMENT: >>>
+ACC 활성화(OFF→CRUISING/FOLLOWING) 또는 STANDBY에서 SET 복귀 시, 현재 자차 속도가 최소 설정 속도(파라미터, 기본값 TBD) 미만이면 최소 설정 속도를 최고속도로 자동 설정한다. RES 복귀 시에는 이전 설정 속도가 이미 최소값 이상이므로 별도 처리 불필요.
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK022
+- TYPE: Parent
+  VALUE: STK024
+
+[[/SECTION]]

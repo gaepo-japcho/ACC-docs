@@ -1,0 +1,292 @@
+[DOCUMENT]
+TITLE: ACC Safety Requirements (SAF)
+
+[GRAMMAR]
+ELEMENTS:
+- TAG: REQUIREMENT
+  FIELDS:
+  - TITLE: UID
+    TYPE: String
+    REQUIRED: True
+  - TITLE: TITLE
+    TYPE: String
+    REQUIRED: False
+  - TITLE: STATEMENT
+    TYPE: String
+    REQUIRED: True
+  - TITLE: ASIL
+    TYPE: String
+    REQUIRED: False
+  - TITLE: CATEGORY
+    TYPE: String
+    REQUIRED: False
+  - TITLE: VERIFICATION
+    TYPE: String
+    REQUIRED: False
+  - TITLE: HARA
+    TYPE: String
+    REQUIRED: False
+  - TITLE: SAFETY_GOAL
+    TYPE: String
+    REQUIRED: False
+  - TITLE: SAFETY_MECHANISM
+    TYPE: String
+    REQUIRED: False
+  - TITLE: COMMENT
+    TYPE: String
+    REQUIRED: False
+  RELATIONS:
+  - TYPE: Parent
+
+[[SECTION]]
+TITLE: Safety Goals
+
+[REQUIREMENT]
+UID: SAF001
+TITLE: Safety Goal 1 - 의도치 않은 가속 방지
+STATEMENT: >>>
+[ASIL B] ACC 시스템은 의도치 않은 가속을 야기해서는 안 된다. Safe State: 모터 구동 중지 (ACC OFF). FTTI(Fault Tolerant Time Interval): 100ms.
+<<<
+ASIL: B
+CATEGORY: Safety Goal
+VERIFICATION: T
+HARA: S2/E3/C2 → ASIL B
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS006
+- TYPE: Parent
+  VALUE: SYS007
+
+[REQUIREMENT]
+UID: SAF002
+TITLE: Safety Goal 2 - 접근 시 감속 (AEB 미포함)
+STATEMENT: >>>
+[ASIL B] 전방 차량 접근 시 시스템은 PID 제어 범위 내에서 적절한 감속을 수행해야 한다. 본 시스템은 AEB를 포함하지 않으므로 비상 제동은 수행하지 않는다. Safe State: 모터 출력 0 (자연 감속). FTTI: 200ms.
+<<<
+ASIL: B
+CATEGORY: Safety Goal
+VERIFICATION: T
+HARA: S2/E3/C2 → ASIL B
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS004
+- TYPE: Parent
+  VALUE: SYS022
+
+[REQUIREMENT]
+UID: SAF003
+TITLE: Safety Goal 3 - 운전자 오버라이드 보장 (→ STANDBY)
+STATEMENT: >>>
+[ASIL B] 운전자의 브레이크/액셀 입력은 어떠한 상황에서도 ACC보다 우선해야 한다. 브레이크 또는 액셀 입력 시 즉시 STANDBY로 전이 (모터 출력 0, 설정값 보존). Safe State: 운전자 직접 제어 모드 (STANDBY).
+<<<
+ASIL: B
+CATEGORY: Safety Goal
+VERIFICATION: T
+HARA: S2/E4/C1 → ASIL B
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS006
+- TYPE: Parent
+  VALUE: SYS007
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: Functional Safety Requirements (FSR)
+
+[REQUIREMENT]
+UID: SAF004
+TITLE: FSR-01: 브레이크 입력 시 모터 즉시 중지 (→ STANDBY)
+STATEMENT: >>>
+[ASIL B] 브레이크 페달 신호 감지 시 50ms 이내에 모터 구동을 중지하고 ACC를 STANDBY 상태로 전환한다. STANDBY 상태에서는 모터 제어 출력이 0이어야 한다. 이는 SG1, SG3을 만족하기 위한 안전 메커니즘이다.
+<<<
+ASIL: B
+CATEGORY: FSR
+VERIFICATION: T
+SAFETY_GOAL: SAF001, SAF003
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS006
+
+[REQUIREMENT]
+UID: SAF005
+TITLE: FSR-02: 센서 고장 시 FAULT (능동 감속 없음)
+STATEMENT: >>>
+[ASIL B] LiDAR 또는 카메라 데이터 손실(CAN 타임아웃) 감지 시 200ms 이내에 FAULT 상태로 전이한다. FAULT 진입 시 모터 출력을 0으로 설정하고 HMI에 경고를 표시한다. 능동 감속은 수행하지 않으며, 운전자가 ACC ON/OFF를 눌러 OFF로 전환해야 한다.
+<<<
+ASIL: B
+CATEGORY: FSR
+VERIFICATION: T
+SAFETY_GOAL: SAF002
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS005
+- TYPE: Parent
+  VALUE: SYS025
+
+[REQUIREMENT]
+UID: SAF006
+TITLE: FSR-03: CAN 통신 이상 시 FAULT (능동 감속 없음)
+STATEMENT: >>>
+[ASIL B] 메인 ECU ↔ 모터 제어기 간 CAN 통신 단절 감지 시 100ms 이내에 모터 출력을 0으로 설정하고 FAULT 상태로 전이한다. 능동 감속은 수행하지 않는다. 운전자가 ACC ON/OFF를 눌러 OFF로 전환해야 한다.
+<<<
+ASIL: B
+CATEGORY: FSR
+VERIFICATION: T
+SAFETY_GOAL: SAF001, SAF002
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS025
+
+[REQUIREMENT]
+UID: SAF007
+TITLE: FSR-04: 목표거리 이하 시 최대 감속 (AEB 미포함)
+STATEMENT: >>>
+[ASIL QM] 전방 차량과의 거리가 목표 거리 이하로 감소하면 PID 제어 범위 내에서 최대 감속을 수행한다. AEB(비상 제동)는 본 시스템에 포함되지 않으므로 긴급 정지는 수행하지 않는다. 위험 상황의 최종 제동 책임은 운전자에게 있다.
+<<<
+ASIL: QM
+CATEGORY: FSR
+VERIFICATION: T
+SAFETY_GOAL: SAF002
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS022
+
+[REQUIREMENT]
+UID: SAF008
+TITLE: FSR-05: 제어 출력 범위 제한
+STATEMENT: >>>
+[ASIL B] PID 제어기 출력은 물리적으로 허용 가능한 범위로 클램핑한다. 최대 가속도 및 최대 감속도 제한값을 초과하는 명령을 출력하지 않는다.
+<<<
+ASIL: B
+CATEGORY: FSR
+VERIFICATION: T
+SAFETY_GOAL: SAF001
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS014
+
+[REQUIREMENT]
+UID: SAF015
+TITLE: FSR-06: 액셀 입력 시 STANDBY 전이
+STATEMENT: >>>
+[ASIL B] 액셀 페달 신호 감지 시 50ms 이내에 모터 제어를 ACC에서 해제하고 STANDBY로 전환한다. 이는 SG3(운전자 오버라이드 보장)을 만족하기 위한 안전 메커니즘이다.
+<<<
+ASIL: B
+CATEGORY: FSR
+VERIFICATION: T
+SAFETY_GOAL: SAF003
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS007
+
+[REQUIREMENT]
+UID: SAF016
+TITLE: FSR-07: ACC ON 시 자가진단 필수
+STATEMENT: >>>
+[ASIL B] ACC OFF에서 ON 전환 시 자가진단을 수행해야 한다. 자가진단 실패(FAULT 조건 존재) 시 ACC가 활성화되지 않고 OFF를 유지해야 한다. 이는 SG1/SG2(의도치 않은 가속/충돌 방지)를 위한 사전 검증 메커니즘이다.
+<<<
+ASIL: B
+CATEGORY: FSR
+VERIFICATION: T
+SAFETY_GOAL: SAF001, SAF002
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS001
+- TYPE: Parent
+  VALUE: SYS005
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: Technical Safety Requirements (TSR)
+
+[REQUIREMENT]
+UID: SAF009
+TITLE: TSR-01: 브레이크 신호 이중화 읽기
+STATEMENT: >>>
+[ASIL B] 브레이크 페달 신호는 2개 GPIO 핀으로 이중 읽기하여 신뢰성을 확보한다. 두 신호 불일치 시 브레이크 활성으로 판단(Fail-safe)한다.
+<<<
+ASIL: B
+CATEGORY: TSR
+VERIFICATION: T
+SAFETY_MECHANISM: Redundant sensing
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS006
+
+[REQUIREMENT]
+UID: SAF010
+TITLE: TSR-02: CAN 메시지 CRC/카운터 검증
+STATEMENT: >>>
+[ASIL B] 안전 관련 CAN 메시지에 Rolling Counter(4bit)와 CRC(8bit)를 포함한다. 수신 측에서 검증 실패 시 해당 메시지를 무효 처리한다.
+<<<
+ASIL: B
+CATEGORY: TSR
+VERIFICATION: T
+SAFETY_MECHANISM: E2E protection
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS015
+- TYPE: Parent
+  VALUE: SYS016
+- TYPE: Parent
+  VALUE: SYS017
+
+[REQUIREMENT]
+UID: SAF011
+TITLE: TSR-03: 워치독 타이머
+STATEMENT: >>>
+[ASIL B] 메인 ECU는 주기적(10ms 이내)으로 워치독을 킥한다. SW 행(hang) 시 워치독 리셋으로 안전 상태(모터 정지)로 진입한다.
+<<<
+ASIL: B
+CATEGORY: TSR
+VERIFICATION: T
+SAFETY_MECHANISM: Watchdog timer
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS005
+
+[REQUIREMENT]
+UID: SAF012
+TITLE: TSR-04: 프로그램 흐름 모니터링
+STATEMENT: >>>
+[ASIL B] 주요 태스크(10ms 제어 루프)의 실행 순서를 모니터링한다. 예상 실행 순서 위반 시 FAULT 전이를 트리거한다.
+<<<
+ASIL: B
+CATEGORY: TSR
+VERIFICATION: T
+SAFETY_MECHANISM: Program flow monitoring
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS005
+
+[REQUIREMENT]
+UID: SAF013
+TITLE: TSR-05: RAM 무결성 테스트
+STATEMENT: >>>
+[ASIL B] 초기화 시 및 주기적으로 안전 관련 RAM 영역에 대해 무결성 테스트를 수행한다. 테스트 실패 시 FAULT 전이.
+<<<
+ASIL: B
+CATEGORY: TSR
+VERIFICATION: T
+SAFETY_MECHANISM: RAM test
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS005
+
+[REQUIREMENT]
+UID: SAF014
+TITLE: TSR-06: 모터 구동 독립 차단 경로
+STATEMENT: >>>
+[ASIL B] SW 제어와 독립적으로 모터 구동을 차단할 수 있는 하드웨어 경로를 확보한다. (예: 브레이크 신호로 모터 드라이버 Enable 핀 직접 제어)
+<<<
+ASIL: B
+CATEGORY: TSR
+VERIFICATION: T
+SAFETY_MECHANISM: Independent shutdown path
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS006
+
+[[/SECTION]]
