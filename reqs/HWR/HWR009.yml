@@ -3,13 +3,16 @@ asil: QM
 category: 인터페이스
 derived: false
 header: |
-  운전자 입력 장치
+  운전자 입력 장치 (가상 GUI + 페달)
 level: 9.0
 links:
 - SYS018: KG7iIec1JkuU3P1pxYrYTb1KKf4BS_gTBQ7GZutrfTY=
 normative: true
 ref: ''
-reviewed: 8jw9gAlnhtlkAIivOnxevg8j2SXh6HKrzXWALr2ttVo=
+reviewed: 0nXreSOoRyzGOSDjBV6hYefIkz4noUT4PsOyNs63WXA=
 text: |
-  ACC ON/OFF 버튼, Resume 버튼, 속도 증가/감소 버튼, 안전거리 단계 변경 버튼, 브레이크 페달 스위치, 액셀 페달 입력(가변저항 또는 스위치)을 구비한다.
+  운전자 입력 장치는 RPi/Jetson 상의 GUI 가상 버튼으로 구현한다.
+  가상 버튼: ACC ON/OFF, SET, RES, 속도+, 속도-, 거리설정 1/2/3단계, 일시정지.
+  브레이크/액셀 페달은 GPIO 또는 ADC 입력으로 RPi/Jetson에 직접 연결하거나, 별도 회로를 통해 CAN 메시지로 전달한다.
+  물리적 버튼 패널은 별도로 제작하지 않는다.
 verification: I
