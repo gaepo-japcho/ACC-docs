@@ -1,0 +1,17 @@
+active: true
+asil: B
+category: FSR
+derived: false
+header: |
+  FSR-07: ACC ON 시 자가진단 필수
+level: 16.0
+links:
+- SYS001: tTP8LA9U-PBRJrvv-GOUOh26868PdqQjUwnNgGoKrXU=
+- SYS005: ugP2_vVE4SiYK2JPjv7VkHEWkQKDYMAcZaaPUQAAjec=
+normative: true
+ref: ''
+reviewed: laOP0EYVEIZl99l1YEyIGzXiF8YIsC8jEfozu1hONWw=
+safety_goal: SAF001, SAF002
+text: |
+  [ASIL B] ACC OFF에서 ON 전환 시 자가진단을 수행해야 한다. 자가진단 실패(FAULT 조건 존재) 시 ACC가 활성화되지 않고 OFF를 유지해야 한다. 이는 SG1/SG2(의도치 않은 가속/충돌 방지)를 위한 사전 검증 메커니즘이다.
+verification: T
