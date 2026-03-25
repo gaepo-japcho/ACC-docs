@@ -3,14 +3,14 @@ asil: B
 category: FSR
 derived: false
 header: |
-  FSR-03: CAN 통신 이상 시 안전 상태 전이
+  FSR-03: CAN 통신 이상 시 FAULT (능동 감속 없음)
 level: 6.0
 links:
 - SYS025: MGYC0_jByqU4WBXmxLqW9ZJ7VAR3utDhA0N6783G5uw=
 normative: true
 ref: ''
-reviewed: ohueibGt6XtyCuoX3Ouvu7REkPvTGcOPARnXI03xrw8=
+reviewed: RX9pvi_IeIXqk5npv3H-4K3488L8b7SHARGKZXxgj5k=
 safety_goal: SAF001, SAF002
 text: |
-  [ASIL B] 메인 ECU ↔ 모터 제어기 간 CAN 통신 단절 감지 시 100ms 이내에 모터를 정지시키고 FAULT 상태로 전이한다.
+  [ASIL B] 메인 ECU ↔ 모터 제어기 간 CAN 통신 단절 감지 시 100ms 이내에 모터 출력을 0으로 설정하고 FAULT 상태로 전이한다. 능동 감속은 수행하지 않는다. 운전자가 ACC ON/OFF를 눌러 OFF로 전환해야 한다.
 verification: T
