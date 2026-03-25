@@ -3,16 +3,22 @@ asil: QM
 category: 인터페이스
 derived: false
 header: |
-  운전자 입력 인터페이스
+  운전자 입력 인터페이스 (가상 GUI)
 level: 18.0
 links:
-- STK005: XMG2-6DIg8HG1C2kJJtLYoBro2JktcgZ4XEhfNIm5UM=
-- STK006: k__gBe2GjP9WoLGCeNFv7QR_E0JSBRLcOuHKpJppU2c=
-- STK007: 4lMIQWOd9Xq3pIzFKKekWZ-jQ2ANb1KzYex3m022lNY=
-- STK008: RInv_jX-W-IplSCaLM_4h3d_aoedhKCU9f6ZMscFEIQ=
+- STK019: BQghXGFpa3Qs6a97TiIoLm2sloWkg3vYcb4NbSAAqRw=
+- STK020: XccUST6wyPfguOATtL86BphzQnLncjMO35SPmLSESZY=
 normative: true
 ref: ''
-reviewed: SYGZHTqcOJV8ADhFpb9u53zJ66LBtXhfc7EhJiM3VWw=
+reviewed: b4sraY57mplVQPuFEXLCk3XGWrkKw1wHmSDYwUjIZYY=
 text: |
-  시스템은 다음 운전자 입력을 수신한다: ACC ON/OFF 버튼, Resume 버튼, 설정 속도 증가/감소 버튼, 안전거리 단계 변경 버튼, 브레이크 페달 신호(디지털), 액셀 페달 신호(아날로그 또는 디지털).
+  시스템은 다음 운전자 입력을 수신한다 (RPi/Jetson GUI 가상 버튼):
+  - ACC ON/OFF 토글 버튼
+  - SET 버튼 (STANDBY→현재속도로 재활성화)
+  - RES 버튼 (STANDBY→이전설정속도로 재활성화)
+  - 속도+ 버튼, 속도- 버튼
+  - 거리설정 1/2/3단계 버튼 (개별)
+  - 일시정지 버튼 (CRUISING/FOLLOWING→STANDBY)
+  - 브레이크 페달 신호, 액셀 페달 신호
+  모든 버튼 입력은 GUI에서 CAN 메시지로 메인 ECU에 전달된다.
 verification: T
