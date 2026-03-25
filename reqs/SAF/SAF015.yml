@@ -1,0 +1,16 @@
+active: true
+asil: B
+category: FSR
+derived: false
+header: |
+  FSR-06: 액셀 입력 시 STANDBY 전이
+level: 15.0
+links:
+- SYS007: d-FR-YY1mNRyt4lWslIGph5T1SjRfSxRnSYfy-q9Tn0=
+normative: true
+ref: ''
+reviewed: J9U1m27Q8xlxkc6GgTuZ7k26W-k5m7_IxgTDgDihfe0=
+safety_goal: SAF003
+text: |
+  [ASIL B] 액셀 페달 신호 감지 시 50ms 이내에 모터 제어를 ACC에서 해제하고 STANDBY로 전환한다. 이는 SG3(운전자 오버라이드 보장)을 만족하기 위한 안전 메커니즘이다.
+verification: T
