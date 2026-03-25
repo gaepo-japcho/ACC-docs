@@ -2,12 +2,12 @@ active: true
 category: 안전
 derived: false
 header: |
-  고장 안전
+  고장 안전 (FAULT 동작)
 level: 10.0
 links: []
 normative: true
 priority: 필수
 ref: ''
-reviewed: 1kmABCGJXt1Pg5zvC2qyCKSREAniCe_ALCMJKxDRZ_M=
+reviewed: Rmo0beHCrlJUdcxGYZrTTBwoYDHxhF_nIq5SIXXKq38=
 text: |
-  센서 고장, 통신 이상 등 이상 상황 발생 시 시스템은 안전 상태(감속 후 정지 또는 ACC OFF)로 전환되어야 한다.
+  센서 고장, 통신 이상 등 이상 상황 발생 시 시스템은 FAULT 상태로 전환한다. FAULT 상태에서는 모터 제어 출력을 0으로 하고(능동 감속 없음), 운전자에게 즉각 경고한다. 운전자는 FAULT 상태에서 직접 개입하여 차량을 제어해야 하며, ACC ON/OFF 버튼을 눌러 수동으로 ACC를 OFF 상태로 전환해야 한다. 본 시스템은 AEB(자동 비상 제동)를 포함하지 않는다.
