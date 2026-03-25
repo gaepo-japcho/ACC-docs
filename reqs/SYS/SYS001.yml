@@ -6,10 +6,14 @@ header: |
   ACC 상태 전이 - OFF
 level: 1.0
 links:
-- STK009: dgF7jUPx5-ZTMvPHjylNTgY_vA1yMDz5izGLannYmb4=
+- STK009: GX45hIEydlfqArqYbEBaYFwX8_9BSOPxl7Iyez6paA4=
+- STK022: n4BJoTc6nISshTSOr4ye-k2Zw3WxHM8VlgemfNyZ4I4=
 normative: true
 ref: ''
-reviewed: PJbkzTKja0VL3Dm37lkoiErKWIS3br6-PWFlScRDVk0=
+reviewed: dp8ky33V1YspqHVcjQJrZTe3op3EeixhsdXbh6jC86I=
 text: |
-  OFF 상태: ACC 기능이 비활성. 운전자가 ACC 활성화 버튼을 누르면 STANDBY로 전이한다.
+  OFF 상태: ACC 기능 비활성. 운전자가 ACC ON/OFF 토글 버튼을 누르면:
+  - 자가진단 실패(FAULT 조건) 시: ACC가 켜지지 않고 OFF 유지
+  - 자가진단 통과 + 전방 차량 미감지: 현재 속도를 최고속도로 설정, CRUISING으로 전이
+  - 자가진단 통과 + 전방 차량 감지: 현재 속도를 최고속도로 설정, FOLLOWING으로 전이
 verification: T
