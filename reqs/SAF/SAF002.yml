@@ -4,14 +4,14 @@ category: Safety Goal
 derived: false
 hara: S2/E3/C2 → ASIL B
 header: |
-  Safety Goal 2 - 충돌 위험 시 감속 보장
+  Safety Goal 2 - 접근 시 감속 (AEB 미포함)
 level: 2.0
 links:
-- SYS004: k8BAztLPG_0zTyVjGDGGaDC1BA6ZYz1WWdfFH_fRuUU=
-- SYS022: NkvdxY7YnTD8OkR0AITHk3a3m7j9Vnvmeau3gTm_qRg=
+- SYS004: IpkyijHeHQqNOHKGteCY5UcUVPPFcEJ6IKp9NxnBZ0w=
+- SYS022: RJ2peIa1_cI0AQm-B_qUJC-mNyXh3hbhVimVJ6oNCMY=
 normative: true
 ref: ''
-reviewed: SORR_soAsxQ3x7nU0X36hZYHse7I2IOoFTRmlHYau6M=
+reviewed: evHccJvrMYBz25-naV1_r5PxJ7oNgPJ-1xNJI9JR3Zc=
 text: |
-  [ASIL B] 전방 차량 접근 시 시스템은 적절한 감속을 수행해야 한다. Safe State: 감속 후 정지. FTTI: 200ms.
+  [ASIL B] 전방 차량 접근 시 시스템은 PID 제어 범위 내에서 적절한 감속을 수행해야 한다. 본 시스템은 AEB를 포함하지 않으므로 비상 제동은 수행하지 않는다. Safe State: 모터 출력 0 (자연 감속). FTTI: 200ms.
 verification: T
