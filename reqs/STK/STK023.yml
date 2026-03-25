@@ -1,0 +1,13 @@
+active: true
+category: 제약조건
+derived: false
+header: |
+  AEB 미포함
+level: 23.0
+links: []
+normative: true
+priority: 필수
+ref: ''
+reviewed: T-mywEgFoGl3bAsPhBiEe1uT_gh52ILYm0FovLv0SEc=
+text: |
+  본 ACC 시스템은 AEB(Autonomous Emergency Braking) 기능을 포함하지 않는다. 비상 제동, 긴급 정지 기능은 시스템 범위에 포함되지 않으며, 위험 상황에서의 제동은 전적으로 운전자의 책임이다.
