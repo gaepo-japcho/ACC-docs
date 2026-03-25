@@ -10,8 +10,8 @@ links:
 - SYS019: loEp48UbbXz8WXOEr5qAAnsUrh43pBW5OZ7w_bTZDOM=
 normative: true
 ref: ''
-reviewed: WRC_rmLOCXu0fjsClvEEdiNscjsQ5aHa5qWcteXRs_w=
+reviewed: V8MHadF3fuPWMJFt2TftCpTmsgY7PW4C2VC0HkVWVIE=
 swc: HmiManager
 text: |
-  FAULT 상태 진입 시 HMI에 경고 메시지를 표시한다. 경고는 FAULT 해제(OFF 전이) 시까지 유지된다.
+  FAULT 상태 진입 시 GUI에 경고 메시지를 즉시 표시한다. 경고는 운전자가 ACC ON/OFF를 눌러 OFF 전이 시 해제된다. 시간 여유 시 경고음(buzzer 또는 SW audio)을 추가한다.
 verification: T
