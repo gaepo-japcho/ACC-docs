@@ -9,7 +9,12 @@ links:
 - STK009: dgF7jUPx5-ZTMvPHjylNTgY_vA1yMDz5izGLannYmb4=
 normative: true
 ref: ''
-reviewed: 8WDHhljSS7NlN4mviJpxA2M2UMJZpMpYGANC9gibl7A=
+reviewed: S0Lj9o2tmNoODdMUQnqExDiWMKwPXYUO6O11A9dD6YY=
 text: |
-  STANDBY 상태: ACC 활성화 대기. 설정 속도가 지정되고 Set 버튼이 눌리면 CRUISE로 전이한다. Resume 버튼이 눌리면 이전 설정값으로 복귀한다 (전방 차량 유무에 따라 CRUISE 또는 FOLLOWING). 브레이크에 의한 STANDBY 진입 시 이전 설정 속도 및 안전거리 단계를 보존한다.
+  STANDBY 상태: ACC 활성화 대기 (브레이크, 액셀, 일시정지에 의해 진입).
+  이전 설정 속도와 안전거리 단계를 보존한다.
+  - SET 버튼: 현재 주행 속도를 최고속도로 설정, 전방 차량 유무에 따라 CRUISING 또는 FOLLOWING 전이
+  - RES 버튼: 보존된 이전 설정 속도를 최고속도로 복원, 전방 차량 유무에 따라 CRUISING 또는 FOLLOWING 전이
+  - ACC ON/OFF 토글: OFF로 전이
+  STANDBY에서 속도+/-, 일시정지 버튼은 비활성(무시).
 verification: T
