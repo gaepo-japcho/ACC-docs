@@ -1,0 +1,15 @@
+active: true
+category: 기능
+derived: false
+header: |
+  HMI 가상 GUI 인터페이스
+level: 20.0
+links: []
+normative: true
+priority: 필수
+ref: ''
+reviewed: XccUST6wyPfguOATtL86BphzQnLncjMO35SPmLSESZY=
+text: |
+  HMI는 Raspberry Pi(또는 Jetson) 상에서 실행되는 GUI 애플리케이션으로 구현한다. 물리적 버튼 대신 화면상의 가상 버튼으로 운전자 입력을 받으며, 동시에 HMI 클러스터(계기판) 역할도 수행한다.
+  HMI 표시 항목: 현재 속도, ACC 상태(OFF/STANDBY/CRUISING/FOLLOWING/FAULT), 현재 설정된 최고속도, 현재 거리설정 단계.
+  FAULT 발생 시 경고 표시를 한다. (시간 여유 시 경고음 추가)
