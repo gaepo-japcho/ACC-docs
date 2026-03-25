@@ -3,14 +3,18 @@ asil: QM
 category: 기능
 derived: false
 header: |
-  Resume에 의한 STANDBY 복귀
+  SET/RES에 의한 STANDBY 복귀
 level: 27.0
 links:
-- STK009: dgF7jUPx5-ZTMvPHjylNTgY_vA1yMDz5izGLannYmb4=
-- STK018: R-sDP8yrdjqQQHMTFUon-wUxvKKaTqV2uCgfZLH12To=
+- STK018: EetbvOatOBNArHZYxIQFG9s_WxrNgDJ_4vHDJMU-aaY=
+- STK019: BQghXGFpa3Qs6a97TiIoLm2sloWkg3vYcb4NbSAAqRw=
+- STK021: pHqXm-oSEoLcD8Yp-QdqDs9dGawKmw5-Yefz5sCSMPw=
 normative: true
 ref: ''
-reviewed: okMIIh0yHE2xi5_RQXr9sKqi-Za0onnP0sxiOuS_SJo=
+reviewed: VlgvvOfPDmP5Y-YwciH3dVGo_OpaKKeFbevHeztkez0=
 text: |
-  STANDBY 상태에서 운전자가 Resume 버튼을 누르면, 전방 차량이 안전거리 이내에 감지된 경우 FOLLOWING으로, 감지되지 않은 경우 CRUISE로 전이한다. 이전 설정 속도와 안전거리 단계가 그대로 적용된다. 자차 속도가 0인 경우(정지 상태)에서 Resume 시에도 동일하게 동작한다.
+  STANDBY 상태에서의 복귀 동작:
+  - SET 버튼: 현재 주행 속도를 최고속도로 설정하고, 전방 차량 감지 시 FOLLOWING, 미감지 시 CRUISING으로 전이
+  - RES 버튼: 이전 설정 최고속도를 복원하고, 전방 차량 감지 시 FOLLOWING, 미감지 시 CRUISING으로 전이
+  SET/RES 버튼은 STANDBY 상태에서만 유효하며, 다른 상태에서는 비활성(그레이아웃).
 verification: T
