@@ -1,0 +1,16 @@
+active: true
+asil: QM
+category: 기능
+derived: false
+header: |
+  일시정지 버튼 처리
+level: 27.0
+links:
+- SYS028: EaLYzw1S6aYQ3mgI9KI-HQhO82we6b0OdWMlMMjhdE4=
+normative: true
+ref: ''
+reviewed: _s-MPAPi5NyKNr3DB9bVOoRguXsMOIuYKAwOU8i7tbw=
+swc: AccStateMachine
+text: |
+  CRUISING 또는 FOLLOWING 상태에서 일시정지 버튼 CAN 메시지 수신 시 STANDBY로 전이한다. 이전 설정 속도와 안전거리 단계를 보존한다. 일시정지 버튼은 CRUISING/FOLLOWING 상태에서만 유효하며, 다른 상태에서는 무시한다.
+verification: T
