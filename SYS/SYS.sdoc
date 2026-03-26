@@ -39,8 +39,8 @@ STATEMENT: >>>
 OFF 상태: ACC 기능 비활성. 운전자가 ACC ON/OFF 토글 버튼을 누르면:
 - 브레이크 또는 액셀 페달이 눌려있는 경우: ACC 활성화 거부, OFF 유지
 - 자가진단 실패(FAULT 조건) 시: ACC가 켜지지 않고 OFF 유지
-- 자가진단 통과 + 전방 차량 미감지: 현재 속도를 최고속도로 설정, CRUISING으로 전이
-- 자가진단 통과 + 전방 차량 감지: 현재 속도를 최고속도로 설정, FOLLOWING으로 전이
+- 자가진단 통과 + 전방 차량 미감지: 현재 속도를 최고속도로 설정, 안전거리 단계 3단계로 초기화, CRUISING으로 전이
+- 자가진단 통과 + 전방 차량 감지: 현재 속도를 최고속도로 설정, 안전거리 단계 3단계로 초기화, FOLLOWING으로 전이
 <<<
 ASIL: QM
 CATEGORY: 기능
@@ -593,6 +593,21 @@ RELATIONS:
   VALUE: STK022
 - TYPE: Parent
   VALUE: STK024
+
+[REQUIREMENT]
+UID: SYS034
+TITLE: ACC 활성화 시 기본 안전거리 단계
+STATEMENT: >>>
+ACC OFF에서 활성화(CRUISING/FOLLOWING) 전이 시, 안전거리 단계를 기본값 3단계(원거리)로 초기화한다. 이는 최초 활성화 시 가장 보수적인 차간거리를 적용하여 안전을 확보하기 위함이다.
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK006
+- TYPE: Parent
+  VALUE: STK022
 
 [REQUIREMENT]
 UID: SYS033
