@@ -1,9 +1,10 @@
-from strictdoc.core.project_config import ProjectConfig
+from strictdoc.core.project_config import ProjectConfig, ProjectFeature
 
 
 def create_config() -> ProjectConfig:
     config = ProjectConfig(
         project_title="ACC Requirements Specification",
         exclude_doc_paths=["README.md"],
+        project_features=ProjectFeature.all()
     )
     return config
