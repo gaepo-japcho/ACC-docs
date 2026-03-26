@@ -37,6 +37,7 @@ UID: SYS001
 TITLE: ACC 상태 전이 - OFF
 STATEMENT: >>>
 OFF 상태: ACC 기능 비활성. 운전자가 ACC ON/OFF 토글 버튼을 누르면:
+- 브레이크 또는 액셀 페달이 눌려있는 경우: ACC 활성화 거부, OFF 유지
 - 자가진단 실패(FAULT 조건) 시: ACC가 켜지지 않고 OFF 유지
 - 자가진단 통과 + 전방 차량 미감지: 현재 속도를 최고속도로 설정, CRUISING으로 전이
 - 자가진단 통과 + 전방 차량 감지: 현재 속도를 최고속도로 설정, FOLLOWING으로 전이
@@ -592,5 +593,24 @@ RELATIONS:
   VALUE: STK022
 - TYPE: Parent
   VALUE: STK024
+
+[REQUIREMENT]
+UID: SYS033
+TITLE: 페달 입력 중 ACC 활성화 거부
+STATEMENT: >>>
+브레이크 페달 또는 액셀 페달이 눌려있는 상태에서 ACC ON/OFF 토글 버튼이 눌리면 ACC 활성화를 거부하고 OFF 상태를 유지한다.
+이는 운전자가 직접 제어 중일 때 ACC가 의도치 않게 개입하는 것을 방지하기 위함이다.
+페달을 뗀 후 다시 ACC ON/OFF를 눌러야 활성화가 가능하다.
+<<<
+ASIL: B
+CATEGORY: 안전
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK007
+- TYPE: Parent
+  VALUE: STK008
+- TYPE: Parent
+  VALUE: STK022
 
 [[/SECTION]]

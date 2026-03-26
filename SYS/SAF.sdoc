@@ -196,6 +196,20 @@ RELATIONS:
 - TYPE: Parent
   VALUE: SYS005
 
+[REQUIREMENT]
+UID: SAF017
+TITLE: FSR-08: 페달 입력 중 ACC 활성화 방지
+STATEMENT: >>>
+[ASIL B] ACC OFF 상태에서 ON 전환 시도 시, 브레이크 또는 액셀 페달이 눌려있는 경우 ACC 활성화를 거부하고 OFF 상태를 유지해야 한다. 페달 입력 중에는 운전자가 직접 제어 중이므로 ACC가 개입하지 않는다. 이는 SG1(의도치 않은 가속 방지) 및 SG3(운전자 오버라이드 보장)을 만족하기 위한 안전 메커니즘이다.
+<<<
+ASIL: B
+CATEGORY: FSR
+VERIFICATION: T
+SAFETY_GOAL: SAF001, SAF003
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS033
+
 [[/SECTION]]
 
 [[SECTION]]

@@ -141,7 +141,10 @@ RELATIONS:
 UID: SWR029
 TITLE: ACC ON 자가진단
 STATEMENT: >>>
-ACC ON/OFF 토글 수신 시 (OFF→ON 방향), 다음 자가진단을 수행한다:
+ACC ON/OFF 토글 수신 시 (OFF→ON 방향), 다음 사전 조건 및 자가진단을 수행한다:
+사전 조건 확인:
+- 브레이크/액셀 페달 입력 확인 → 눌려있으면 활성화 거부 (OFF 유지)
+자가진단:
 - CAN 통신 상태 확인 (각 노드 정상 응답)
 - 센서 데이터 유효성 확인 (LiDAR, 카메라, 인코더)
 자가진단 실패 시 ACC를 켜지 않고 OFF 상태를 유지하며, HMI에 진단 실패 메시지를 표시한다.
@@ -155,6 +158,8 @@ RELATIONS:
   VALUE: SYS001
 - TYPE: Parent
   VALUE: SYS005
+- TYPE: Parent
+  VALUE: SYS033
 
 [REQUIREMENT]
 UID: SWR031
