@@ -70,7 +70,7 @@ RELATIONS:
 UID: HWR003
 TITLE: 카메라+LiDAR 처리 유닛
 STATEMENT: >>>
-Raspberry Pi 또는 Jetson 보드를 사용한다. 카메라로 전방 차량 인식, LiDAR로 거리 측정을 수행하고 연산 결과를 CAN 인터페이스로 메인 ECU에 전송한다.
+Raspberry Pi 보드를 사용한다. 카메라로 전방 차량 인식, LiDAR로 거리 측정을 수행하고 연산 결과를 CAN 인터페이스로 메인 ECU에 전송한다.
 <<<
 ASIL: QM
 CATEGORY: 기능
@@ -122,7 +122,7 @@ RELATIONS:
 UID: HWR008
 TITLE: 인코더
 STATEMENT: >>>
-모터 또는 휠에 장착된 로터리 인코더. 분해능: 속도 0.01m/s 이상 측정 가능한 PPR. 출력: A/B상 Quadrature.
+모터 또는 휠에 장착된 로터리 인코더. 분해능: 속도 1cm/s 이상 측정 가능한 PPR. 출력: A/B상 Quadrature.
 <<<
 ASIL: QM
 CATEGORY: 성능
@@ -180,9 +180,9 @@ TITLE: HMI 및 입력 장치
 UID: HWR009
 TITLE: 운전자 입력 장치 (가상 GUI + 페달)
 STATEMENT: >>>
-운전자 입력 장치는 RPi/Jetson 상의 GUI 가상 버튼으로 구현한다.
+운전자 입력 장치는 RPi 상의 GUI 가상 버튼으로 구현한다.
 가상 버튼: ACC ON/OFF, SET, RES, 속도+, 속도-, 거리설정 1/2/3단계, 일시정지.
-브레이크/액셀 페달은 GPIO 또는 ADC 입력으로 RPi/Jetson에 직접 연결하거나, 별도 회로를 통해 CAN 메시지로 전달한다.
+브레이크/액셀 페달은 GPIO 또는 ADC 입력으로 RPi에 직접 연결하거나, 별도 회로를 통해 CAN 메시지로 전달한다.
 물리적 버튼 패널은 별도로 제작하지 않는다.
 <<<
 ASIL: QM
@@ -196,9 +196,9 @@ RELATIONS:
 UID: HWR010
 TITLE: HMI 표시 장치 (GUI 겸용)
 STATEMENT: >>>
-HMI 표시 장치는 RPi/Jetson GUI 화면으로 대체한다.
+HMI 표시 장치는 RPi GUI 화면으로 대체한다.
 GUI 화면에 현재 속도, ACC 상태, 설정 최고속도, 거리설정 단계, FAULT 경고를 표시한다.
-별도 LCD/LED 패널은 제작하지 않으며, RPi/Jetson의 HDMI 또는 연결된 디스플레이를 사용한다.
+별도 LCD/LED 패널은 제작하지 않으며, RPi의 HDMI 또는 연결된 디스플레이를 사용한다.
 <<<
 ASIL: QM
 CATEGORY: 인터페이스
@@ -229,7 +229,7 @@ RELATIONS:
 UID: HWR012
 TITLE: 전원 공급
 STATEMENT: >>>
-배터리(LiPo 등)로 전원을 공급한다. 5V(RPi/Jetson, 센서), 3.3V(MCU), 모터 구동 전압을 안정적으로 공급하는 레귤레이터를 포함한다.
+배터리(LiPo 등)로 전원을 공급한다. 5V(RPi, 센서), 3.3V(MCU), 모터 구동 전압을 안정적으로 공급하는 레귤레이터를 포함한다.
 <<<
 ASIL: QM
 CATEGORY: 기능

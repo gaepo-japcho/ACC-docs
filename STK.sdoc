@@ -3,6 +3,30 @@ TITLE: ACC Stakeholder Requirements (STK)
 
 [GRAMMAR]
 ELEMENTS:
+- TAG: SECTION
+  PROPERTIES:
+    IS_COMPOSITE: True
+  FIELDS:
+  - TITLE: UID
+    TYPE: String
+    REQUIRED: False
+  - TITLE: LEVEL
+    TYPE: String
+    REQUIRED: False
+  - TITLE: PREFIX
+    TYPE: String
+    REQUIRED: False
+  - TITLE: TITLE
+    TYPE: String
+    REQUIRED: True
+- TAG: TEXT
+  FIELDS:
+  - TITLE: UID
+    TYPE: String
+    REQUIRED: False
+  - TITLE: STATEMENT
+    TYPE: String
+    REQUIRED: True
 - TAG: REQUIREMENT
   FIELDS:
   - TITLE: UID
@@ -40,7 +64,7 @@ PRIORITY: 필수
 UID: STK002
 TITLE: 전방 차량 인식
 STATEMENT: >>>
-시스템은 카메라(Raspberry Pi 또는 Jetson 기반)를 사용하여 전방 차량을 실시간으로 인식해야 한다.
+시스템은 카메라(Raspberry Pi 기반)를 사용하여 전방 차량을 실시간으로 인식해야 한다.
 <<<
 CATEGORY: 기능
 PRIORITY: 필수
@@ -108,10 +132,17 @@ PRIORITY: 필수
 UID: STK009
 TITLE: ACC 상태 관리
 STATEMENT: >>>
-시스템은 명확한 상태 머신으로 관리되어야 한다. OFF, STANDBY, CRUISING, FOLLOWING, FAULT 5개 상태를 포함한다. CRUISING: 전방 차량 미감지 시 설정 속도 유지. FOLLOWING: 전방 차량 감지 시 안전거리 유지하며 추종. FAULT: 센서/통신 이상 시 진입, 능동 감속 없이 운전자에게 경고, 운전자가 ACC OFF로 수동 해제.
+시스템은 명확한 상태 머신으로 관리되어야 한다. OFF, STANDBY, CRUISING, FOLLOWING, FAULT 5개 상태를 포함한다.
+CRUISING: 전방 차량 미감지 시 설정 속도 유지.
+FOLLOWING: 전방 차량 감지 시 안전거리 유지하며 추종.
+FAULT: 센서/통신 이상 시 진입, 능동 감속 없이 운전자에게 경고, 운전자가 ACC OFF로 수동 해제.
 <<<
-CATEGORY: 기능
-PRIORITY: 필수
+CATEGORY: >>>
+기능
+<<<
+PRIORITY: >>>
+필수
+<<<
 
 [REQUIREMENT]
 UID: STK010
@@ -244,7 +275,7 @@ PRIORITY: 필수
 UID: STK020
 TITLE: HMI 가상 GUI 인터페이스
 STATEMENT: >>>
-HMI는 Raspberry Pi(또는 Jetson) 상에서 실행되는 GUI 애플리케이션으로 구현한다. 물리적 버튼 대신 화면상의 가상 버튼으로 운전자 입력을 받으며, 동시에 HMI 클러스터(계기판) 역할도 수행한다.
+HMI는 Raspberry Pi 상에서 실행되는 GUI 애플리케이션으로 구현한다. 물리적 버튼 대신 화면상의 가상 버튼으로 운전자 입력을 받으며, 동시에 HMI 클러스터(계기판) 역할도 수행한다.
 HMI 표시 항목: 현재 속도, ACC 상태(OFF/STANDBY/CRUISING/FOLLOWING/FAULT), 현재 설정된 최고속도, 현재 거리설정 단계.
 FAULT 발생 시 경고 표시를 한다. (시간 여유 시 경고음 추가)
 <<<
@@ -269,13 +300,10 @@ UID: STK022
 TITLE: ACC ON 동작 흐름
 STATEMENT: >>>
 운전자가 ACC ON/OFF 토글 버튼을 눌러 ACC를 켤 때의 동작:
-0. 브레이크 또는 액셀 페달이 눌려있는 경우 → ACC 활성화 거부 (OFF 유지)
 1. 시스템 자가진단 수행 → FAULT 조건 존재 시 ACC 켜지지 않음
 2. 자가진단 통과 시, 전방 차량 미감지: 현재 속도를 최고속도로 설정, CRUISING 진입
 3. 자가진단 통과 시, 전방 차량 감지: 현재 속도를 최고속도로 설정, FOLLOWING 진입
-안전거리 단계는 기본값 3단계(원거리)로 초기화된다.
 STANDBY 단계를 거치지 않고 바로 활성 모드로 진입한다.
-페달 입력 중에는 운전자가 직접 제어 중이므로 ACC가 개입하지 않는다.
 <<<
 CATEGORY: 기능
 PRIORITY: 필수
@@ -284,7 +312,7 @@ PRIORITY: 필수
 UID: STK024
 TITLE: 최소 설정 속도
 STATEMENT: >>>
-ACC 활성화 시 설정 최고속도에 최소값 하한을 둔다. 현재 자차 속도가 최소 설정 속도 미만인 경우, 최소 설정 속도를 최고속도로 자동 설정한다. (예: 만도 ACC의 0~30km/h → 30km/h 설정 방식 참고. 1/10 스케일카 특성에 맞게 파라미터 튜닝 필요)
+ACC 활성화 시 설정 최고속도에 최소값 하한을 둔다. 현재 자차 속도가 최소 설정 속도(5cm/s) 미만인 경우, 최소 설정 속도를 최고속도로 자동 설정한다.
 <<<
 CATEGORY: 기능
 PRIORITY: 필수

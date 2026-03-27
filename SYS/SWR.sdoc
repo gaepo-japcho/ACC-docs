@@ -168,7 +168,7 @@ RELATIONS:
 UID: SWR031
 TITLE: 최소 설정 속도 클램핑
 STATEMENT: >>>
-ACC 활성화 시 설정 최고속도를 max(현재속도, 최소설정속도)로 클램핑한다. 최소설정속도는 캘리브레이션 파라미터로 정의하며, 1/10 스케일카 특성에 맞게 튜닝한다. 속도+/- 버튼으로 조정 시에도 최소설정속도 이하로 내려가지 않도록 제한한다.
+ACC 활성화 시 설정 최고속도를 max(현재속도, 5cm/s)로 클램핑한다. 최소설정속도는 5cm/s이다. 속도+/- 버튼으로 조정 시에도 최소설정속도 이하로 내려가지 않도록 제한한다.
 <<<
 ASIL: QM
 CATEGORY: 기능
@@ -219,7 +219,7 @@ RELATIONS:
 UID: SWR006
 TITLE: 상대속도 데이터 처리
 STATEMENT: >>>
-CAN RX로 수신된 전방 차량 상대속도(16bit, 0.01m/s)를 처리한다. 이동평균 필터(윈도우 5샘플)를 적용하여 노이즈를 저감한다.
+CAN RX로 수신된 전방 차량 상대속도(16bit, 1cm/s)를 처리한다. 이동평균 필터(윈도우 5샘플)를 적용하여 노이즈를 저감한다.
 <<<
 ASIL: QM
 CATEGORY: 기능
@@ -425,7 +425,7 @@ TITLE: HmiManager
 UID: SWR018
 TITLE: HMI GUI 표시 (클러스터)
 STATEMENT: >>>
-RPi/Jetson에서 실행되는 GUI 애플리케이션을 통해 현재 ACC 상태, 설정 속도, 안전거리 단계, 전방 차량 감지, 자차 속도를 표시한다. 메인 ECU로부터 CAN 수신한 데이터를 GUI에 반영한다. 갱신 주기: 50ms.
+RPi에서 실행되는 GUI 애플리케이션을 통해 현재 ACC 상태, 설정 속도, 안전거리 단계, 전방 차량 감지, 자차 속도를 표시한다. 메인 ECU로부터 CAN 수신한 데이터를 GUI에 반영한다. 갱신 주기: 50ms.
 상태별 버튼 그레이아웃 처리를 수행한다.
 <<<
 ASIL: QM
@@ -461,7 +461,7 @@ TITLE: DriverInput
 UID: SWR020
 TITLE: 운전자 입력 처리 (GUI → CAN)
 STATEMENT: >>>
-GUI 가상 버튼 클릭 이벤트를 CAN 메시지로 변환하여 메인 ECU에 전송한다. 브레이크/액셀 페달 신호는 GPIO 또는 ADC 입력을 GUI와 별도로 CAN 전송할 수 있다. 버튼 입력에 대해 20ms 디바운싱을 적용한다 (GUI 클릭은 단일 이벤트이므로 반복 방지 용도). 브레이크/액셀 페달은 디바운싱 없이 즉시 처리한다.
+GUI 가상 버튼 클릭 이벤트를 CAN 메시지로 변환하여 메인 ECU에 전송한다. 브레이크/액셀 페달 신호는 GPIO 또는 ADC 입력을 GUI와 별도로 CAN 전송할 수 있다. 버튼 입력에 대해 300ms 디바운싱을 적용한다: 동일 버튼(속도+, 속도- 등)이 연속 클릭되면 클릭 횟수를 누적하고, 마지막 클릭 후 300ms 동안 추가 입력이 없으면 누적된 횟수를 한 번의 CAN 메시지로 합산 전송한다. 브레이크/액셀 페달은 디바운싱 없이 즉시 처리한다.
 <<<
 ASIL: QM
 CATEGORY: 기능
@@ -562,9 +562,9 @@ TITLE: GuiCanInterface
 
 [REQUIREMENT]
 UID: SWR030
-TITLE: GUI-CAN 인터페이스 (RPi/Jetson측)
+TITLE: GUI-CAN 인터페이스 (RPi측)
 STATEMENT: >>>
-RPi/Jetson에서 실행되는 GUI 애플리케이션은:
+RPi에서 실행되는 GUI 애플리케이션은:
 - 운전자 버튼 클릭 → CAN TX 메시지 생성 (20ms 주기)
 - 메인 ECU로부터 CAN RX 메시지 수신 → GUI 화면 갱신 (50ms 주기)
 - 카메라+LiDAR 처리 결과(전방 차량 정보)를 동일 CAN 버스로 전송
