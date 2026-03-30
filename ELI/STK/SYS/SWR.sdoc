@@ -3,6 +3,30 @@ TITLE: ACC Software Requirements (SWR)
 
 [GRAMMAR]
 ELEMENTS:
+- TAG: SECTION
+  PROPERTIES:
+    IS_COMPOSITE: True
+  FIELDS:
+  - TITLE: UID
+    TYPE: String
+    REQUIRED: False
+  - TITLE: LEVEL
+    TYPE: String
+    REQUIRED: False
+  - TITLE: PREFIX
+    TYPE: String
+    REQUIRED: False
+  - TITLE: TITLE
+    TYPE: String
+    REQUIRED: True
+- TAG: TEXT
+  FIELDS:
+  - TITLE: UID
+    TYPE: String
+    REQUIRED: False
+  - TITLE: STATEMENT
+    TYPE: String
+    REQUIRED: True
 - TAG: REQUIREMENT
   FIELDS:
   - TITLE: UID
@@ -40,18 +64,27 @@ UID: SWR001
 TITLE: ACC 상태 머신 구현
 STATEMENT: >>>
 ACC StateMachine SWC는 OFF, STANDBY, CRUISING, FOLLOWING, FAULT 5개 상태를 관리한다.
-OFF→CRUISING/FOLLOWING: ACC ON + 자가진단 통과 (현재 속도를 최고속도로 설정)
-STANDBY→CRUISING/FOLLOWING: SET 또는 RES 버튼
-CRUISING↔FOLLOWING: 전방 차량 감지/소멸
-CRUISING/FOLLOWING→STANDBY: 브레이크, 액셀, 일시정지
-Any Active→FAULT: 고장 감지
-FAULT→OFF: ACC ON/OFF 토글
-Any→OFF: ACC ON/OFF 토글
+
+- OFF→CRUISING/FOLLOWING: ACC ON + 자가진단 통과 (현재 속도를 최고속도로 설정)
+- STANDBY→CRUISING/FOLLOWING: SET 또는 RES 버튼
+- CRUISING↔FOLLOWING: 전방 차량 감지/소멸
+- CRUISING/FOLLOWING→STANDBY: 브레이크, 액셀, 일시정지
+- Any Active→FAULT: 고장 감지
+- FAULT→OFF: ACC ON/OFF 토글
+- Any→OFF: ACC ON/OFF 토글
 <<<
-ASIL: B
-CATEGORY: 기능
-VERIFICATION: T
-SWC: AccStateMachine
+ASIL: >>>
+B
+<<<
+CATEGORY: >>>
+기능
+<<<
+VERIFICATION: >>>
+T
+<<<
+SWC: >>>
+AccStateMachine
+<<<
 RELATIONS:
 - TYPE: Parent
   VALUE: SYS001
@@ -97,8 +130,10 @@ UID: SWR026
 TITLE: SET/RES 버튼 처리
 STATEMENT: >>>
 STANDBY 상태에서:
+
 - SET 버튼 수신 시: 현재 자차 속도를 최고속도로 설정, 전방 차량 유무에 따라 CRUISING/FOLLOWING 전이
 - RES 버튼 수신 시: 보존된 이전 최고속도를 복원, 전방 차량 유무에 따라 CRUISING/FOLLOWING 전이
+
 SET/RES는 STANDBY에서만 유효하며, 다른 상태에서 수신 시 무시한다.
 <<<
 ASIL: QM
@@ -142,11 +177,16 @@ UID: SWR029
 TITLE: ACC ON 자가진단
 STATEMENT: >>>
 ACC ON/OFF 토글 수신 시 (OFF→ON 방향), 다음 사전 조건 및 자가진단을 수행한다:
+
 사전 조건 확인:
+
 - 브레이크/액셀 페달 입력 확인 → 눌려있으면 활성화 거부 (OFF 유지)
+
 자가진단:
+
 - CAN 통신 상태 확인 (각 노드 정상 응답)
 - 센서 데이터 유효성 확인 (LiDAR, 카메라, 인코더)
+
 자가진단 통과 시 안전거리 단계를 기본값 3단계(원거리)로 초기화한다.
 자가진단 실패 시 ACC를 켜지 않고 OFF 상태를 유지하며, HMI에 진단 실패 메시지를 표시한다.
 <<<
@@ -565,9 +605,11 @@ UID: SWR030
 TITLE: GUI-CAN 인터페이스 (RPi측)
 STATEMENT: >>>
 RPi에서 실행되는 GUI 애플리케이션은:
+
 - 운전자 버튼 클릭 → CAN TX 메시지 생성 (20ms 주기)
 - 메인 ECU로부터 CAN RX 메시지 수신 → GUI 화면 갱신 (50ms 주기)
 - 카메라+LiDAR 처리 결과(전방 차량 정보)를 동일 CAN 버스로 전송
+
 CAN 인터페이스는 USB-CAN 어댑터 또는 MCP2515 SPI-CAN 모듈을 사용한다.
 <<<
 ASIL: QM
