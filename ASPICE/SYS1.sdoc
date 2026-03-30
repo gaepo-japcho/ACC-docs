@@ -1,0 +1,693 @@
+[DOCUMENT]
+TITLE: ACC SYS.1 Requirements Elicitation
+
+[GRAMMAR]
+ELEMENTS:
+- TAG: STAKEHOLDER
+  FIELDS:
+  - TITLE: UID
+    TYPE: String
+    REQUIRED: True
+  - TITLE: TITLE
+    TYPE: String
+    REQUIRED: True
+  - TITLE: TEXT
+    TYPE: String
+    REQUIRED: True
+  - TITLE: INTERESTS
+    TYPE: String
+    REQUIRED: True
+  - TITLE: COMMENT
+    TYPE: String
+    REQUIRED: False
+  RELATIONS:
+  - TYPE: Parent
+- TAG: TEXT
+  FIELDS:
+  - TITLE: UID
+    TYPE: String
+    REQUIRED: False
+  - TITLE: TITLE
+    TYPE: String
+    REQUIRED: False
+  - TITLE: STATEMENT
+    TYPE: String
+    REQUIRED: True
+- TAG: SECTION
+  PROPERTIES:
+    IS_COMPOSITE: True
+  FIELDS:
+  - TITLE: UID
+    TYPE: String
+    REQUIRED: False
+  - TITLE: TITLE
+    TYPE: String
+    REQUIRED: True
+
+[TEXT]
+STATEMENT: >>>
+본 문서는 ASPICE SYS.1 (Requirements Elicitation) 프로세스에 따라, ACC 시스템의 이해관계자를 식별하고 요구사항 도출 방법 및 분석·합의 과정을 기술한다.
+
+- 프로젝트명: 1/10 스케일 RC카 기반 ACC 시스템
+- 문서번호: ACC-SYS1-001
+- 프로세스: ASPICE SYS.1 Requirements Elicitation
+- 문서 버전: 3.0
+- 작성일: 2026-03-30
+- 프로젝트 기간: ~ 2026.05.01
+- 팀 규모: 4명
+- 적용 표준: ASPICE 4.0 / ISO 26262 / AUTOSAR
+
+요구사항 계층 구조 및 추적 체인:
+ELC (이해관계자) ← STK (이해관계자 요구사항) ← SYS (시스템 요구사항) ← SWR / HWR / SAF
+
+각 STK 항목의 Parent 관계로 도출 근거(ELC)를 추적하며, METHOD 필드로 도출 기법을 기록한다.
+
+적용 범위: 1/10 스케일 RC카 기반 ACC 시스템 전체. 조향 기능(LKAS)과 AEB(자동 비상 제동)는 본 시스템 범위에 포함되지 않는다.
+<<<
+
+[[SECTION]]
+TITLE: 이해관계자 및 도출 니즈
+
+[TEXT]
+STATEMENT: >>>
+본 프로젝트와 관련된 이해관계자를 역할, 관심사, 영향도에 따라 분류하였다. 각 이해관계자(ELC)는 STK(이해관계자 요구사항)에서 Parent 관계로 직접 추적된다.
+<<<
+
+[[SECTION]]
+TITLE: 직접 이해관계자 (Primary Stakeholders)
+
+[STAKEHOLDER]
+UID: ELC001
+TITLE: 운전자 (Operator)
+TEXT: >>>
+RC카를 직접 조작하는 사용자. ACC ON/OFF, 순항 속도 설정, 안전거리 단계 선택, 브레이크/액셀 오버라이드 등 HMI를 통해 시스템과 상호작용한다.
+<<<
+INTERESTS: >>>
+- 직관적이고 안전한 조작 인터페이스
+- 즉각적인 운전자 오버라이드 응답
+- ACC 상태 및 설정값의 명확한 표시
+- 고장 시 즉각적인 경고 및 안전한 동작
+<<<
+
+[STAKEHOLDER]
+UID: ELC002
+TITLE: 개발팀 (Development Team, 4인)
+TEXT: >>>
+시스템 설계, SW/HW 구현, 검증을 담당하는 프로젝트 팀원.
+<<<
+INTERESTS: >>>
+- 실현 가능한 기술 요구사항
+- 명확한 시스템 아키텍처 및 인터페이스 정의
+- 개발 도구 및 플랫폼 제약 충족 (MPC5606B, STM32, RPi)
+- ASPICE/ISO 26262 프로세스 준수 부담의 적절성
+<<<
+
+[STAKEHOLDER]
+UID: ELC003
+TITLE: 교육기관 / 멘토 (SESAC)
+TEXT: >>>
+프로젝트를 주관하는 교육기관 및 기술 멘토. 프로젝트 주제 선정, 기술 방향 지도, 최종 평가를 수행한다.
+<<<
+INTERESTS: >>>
+- ASPICE 및 ISO 26262 프로세스 학습 목표 달성
+- AUTOSAR 아키텍처 및 MBD 적용 경험
+- 프로젝트 완성도 및 시연 가능성
+- 산출물(요구사항 문서, 설계 문서, 코드) 품질
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 기술 이해관계자 (Technical Stakeholders)
+
+[STAKEHOLDER]
+UID: ELC004
+TITLE: 시스템 아키텍트
+TEXT: >>>
+전체 시스템 구조를 설계하고, HW/SW 분배 및 통신 인터페이스를 정의하는 역할. 개발팀 내에서 겸임.
+<<<
+INTERESTS: >>>
+- AUTOSAR 계층 구조 적용 가능성
+- CAN 버스 통신 설계 (메시지 정의, 주기, E2E 보호)
+- 센서-ECU-액추에이터 간 데이터 흐름
+- 시스템 응답 시간 및 실시간 제약 충족
+<<<
+
+[STAKEHOLDER]
+UID: ELC005
+TITLE: 안전 담당자 (Safety Manager)
+TEXT: >>>
+ISO 26262 관점에서 안전 분석(HARA), 안전 목표(Safety Goal) 정의, 안전 요구사항 도출을 담당. 개발팀 내에서 겸임.
+<<<
+INTERESTS: >>>
+- 위험 분석 및 ASIL 등급 결정
+- 안전 목표 달성을 위한 안전 메커니즘 정의
+- FAULT 상태 정의 및 안전 상태(Safe State) 보장
+- AEB 미포함에 따른 운전자 책임 범위 명확화
+<<<
+
+[STAKEHOLDER]
+UID: ELC006
+TITLE: HW 플랫폼 공급자
+TEXT: >>>
+MCU 보드(NXP MPC5606B, STM32F439ZI), Raspberry Pi, LiDAR 센서, 카메라 모듈, 1/10 RC카 섀시 등 하드웨어 플랫폼의 사양을 제공하는 공급자.
+<<<
+INTERESTS: >>>
+- HW 사양 범위 내 요구사항 정의
+- 전기적/물리적 인터페이스 호환성
+- 센서 성능 한계 (LiDAR 측정 범위, 카메라 해상도)
+<<<
+
+[STAKEHOLDER]
+UID: ELC007
+TITLE: 도구 공급자
+TEXT: >>>
+개발 도구(mobilgene, MATLAB/Simulink, StrictDoc) 및 프로젝트 관리 도구(Jira/Confluence, Git/GitHub)의 제약사항을 제공.
+<<<
+INTERESTS: >>>
+- 도구 호환성 및 라이선스
+- mobilgene AUTOSAR 코드 생성 지원 범위
+- Simulink 모델 기반 자동 코드 생성 가능 범위
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 간접 이해관계자 (Secondary Stakeholders)
+
+[STAKEHOLDER]
+UID: ELC008
+TITLE: 품질 보증 담당 (QA)
+TEXT: >>>
+ASPICE 프로세스 수준 달성 여부, 요구사항 추적성 확보, 검증 완전성을 확인하는 역할. 개발팀 내에서 겸임.
+<<<
+INTERESTS: >>>
+- STK → SYS → SWR/HWR/SAF 간 양방향 추적성
+- 검증 방법(T/I/R/A) 정의 및 실행 가능성
+- 문서 일관성 및 완전성
+<<<
+
+[STAKEHOLDER]
+UID: ELC009
+TITLE: 규격/표준 기관
+TEXT: >>>
+ASPICE (Automotive SPICE) 및 ISO 26262 표준 자체가 요구사항 도출의 입력이 된다.
+<<<
+INTERESTS: >>>
+- ASPICE SYS/SWE 프로세스 요구 산출물 충족
+- ISO 26262 Part 3~4 안전 수명주기 준수
+- HARA 결과에 따른 ASIL 등급별 요구사항 반영
+<<<
+
+[STAKEHOLDER]
+UID: ELC010
+TITLE: 시연 참관자
+TEXT: >>>
+프로젝트 최종 시연 시 시스템 동작을 관찰하는 외부 참관인 (타 팀, 외부 평가자 등).
+<<<
+INTERESTS: >>>
+- 시스템의 가시적 동작 확인 (ACC 추종 주행, 오버라이드 반응)
+- HMI 표시 정보의 이해 용이성
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 법규 및 인증 이해관계자 (Regulatory & Certification Stakeholders)
+
+[STAKEHOLDER]
+UID: ELC011
+TITLE: 법규 기관 (UNECE WP.29 / 국토교통부)
+TEXT: >>>
+차량 ADAS 기능에 대한 형식승인(Type Approval) 규정을 제정·시행하는 기관. 본 프로젝트는 교육용이므로 직접 인증 대상은 아니나, 양산 수준의 설계 기준을 참고한다.
+
+참고: UN R79 ACSF(조향 제어)와 UN R152 AEBS(비상 제동)는 본 시스템의 LKAS/AEB 미포함 범위에 따라 직접 적용 대상이 아님.
+<<<
+INTERESTS: >>>
+- ACC 종방향 제어의 업계 관행 (감속도 ≤0.2g)
+- 운전자 오버라이드 즉시 보장
+- 고장 시 안전 상태 전이
+<<<
+
+[STAKEHOLDER]
+UID: ELC012
+TITLE: 안전 인증 기관 (ISO 26262 인증 기관)
+TEXT: >>>
+ISO 26262 기능안전 표준에 따라 안전 수명주기(Safety Lifecycle) 산출물을 심사하는 기관. HARA, Safety Goal, FSR/TSR의 적절성, ASIL 등급별 요구사항 충족을 평가한다.
+<<<
+INTERESTS: >>>
+- HARA의 S/E/C 등급 판정 근거
+- Safety Goal과 Safe State의 적절성
+- ASIL 등급에 따른 안전 메커니즘 구현 수준
+- 독립 검증(Independent Verification) 근거
+<<<
+
+[STAKEHOLDER]
+UID: ELC013
+TITLE: OEM (차량 제조사 관점)
+TEXT: >>>
+양산 차량에서 ACC 시스템을 통합하는 차량 제조사의 관점. 본 프로젝트에서는 가상의 OEM 역할로서, 차량 수준 요구사항과 사용자 경험(UX) 기준을 제공한다.
+<<<
+INTERESTS: >>>
+- ACC 상태 전이의 운전자 직관성
+- HMI 표시 정보의 Euro NCAP 평가 기준 부합
+- 경쟁사 ACC 기능 대비 동등 이상의 기능 수준
+- 시스템 응답 시간 및 승차감(comfort)
+<<<
+
+[STAKEHOLDER]
+UID: ELC014
+TITLE: 소비자 평가 기관 (Euro NCAP)
+TEXT: >>>
+차량 안전 등급 평가를 통해 소비자에게 안전 정보를 제공하는 기관. ACC 시스템의 Highway Assist 성능을 평가한다.
+<<<
+INTERESTS: >>>
+- 속도 보조(Speed Assistance) 성능
+- 선행 차량 추종 정확도
+- 운전자 모니터링(Driver Engagement) 수준
+- 시스템 상태 정보 제공 품질
+<<<
+
+[[/SECTION]]
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 법규 및 표준 요구사항
+
+[TEXT]
+STATEMENT: >>>
+본 프로젝트는 교육용 1/10 스케일카이므로 법적 인증 의무는 없으나, 양산 ACC 시스템에 적용되는 표준을 참고하여 설계 기준을 도출하였다.
+<<<
+
+[[SECTION]]
+TITLE: 범위 외 법규 (Out of Scope)
+
+[TEXT]
+STATEMENT: >>>
+- UN R79 ACSF: 자동 조향(횡방향 제어). 본 시스템은 직진 전용이며 조향 기능(LKAS) 미포함.
+- UN R152 AEBS: 자동 비상 제동. 본 시스템은 AEB 미포함. 비상 제동은 운전자 책임.
+
+참고: UN R152에서 일반 ACC 감속은 ≤0.2g(약 2 m/s²)이 업계 관행으로 언급된다. 이 수치는 PID 제어 출력 범위 클램핑(SAF008)에 참고값으로 활용하였다.
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: ISO 15622 / ISO 22179 (ACC 시스템 표준)
+
+[TEXT]
+STATEMENT: >>>
+- 작동 모드: Cruise + Following 필수 → CRUISING / FOLLOWING 상태 구현
+- 최소 Time Gap: ≥ 1.0초 → 1단계 0.8초 (1/10 스케일 특성상 조정)
+- 감속 능력: 정지 시도 가능 (FSRA) → PID 범위 내 최대 감속. 정지까지 제동은 운전자 책임
+- 재시작: 운전자 재개 요청 시 재시작 → SET/RES 버튼으로 STANDBY에서 재활성화
+- 고장 대응: 센서 고장 시 즉시 알림 → FAULT 상태 전이 + HMI 경고
+- 운전자 알림: 작동 상태, 설정 속도, 감지 대상 표시 → HMI에 ACC 상태, 속도, 거리단계, 전방 차량 감지 여부 표시
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: Euro NCAP Highway Assist 평가 기준
+
+[TEXT]
+STATEMENT: >>>
+- Speed Assistance: PID 정상상태 오차 ≤ 목표속도 5%
+- ACC Performance: 안전거리 모델 3단계
+- Driver Engagement: HMI에 상태/속도/거리단계 표시, 버튼 그레이아웃
+- System Status Info: OFF/STANDBY/CRUISING/FOLLOWING/FAULT 상태 표시
+- Safety Backup: FAULT 시 모터 출력 0 + 경고. AEB 미포함
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 경쟁사 벤치마크
+
+[TEXT]
+STATEMENT: >>>
+Tesla TACC, Hyundai/Kia SCC 등 양산 ACC 기능 사양을 비교 분석하여 기능 수준을 도출하였다.
+
+- 속도 제어: Tesla(설정 속도 유지, 5mph 단위), Hyundai(설정 속도 유지, 곡선 감속) → 본 프로젝트(설정 속도 유지, 속도+/- 버튼)
+- 추종 거리: Tesla(1~7단계), Hyundai(3축 커스터마이징) → 본 프로젝트(3단계: 0.8/1.2/1.6초)
+- 오버라이드: Tesla(액셀 일시무시, 브레이크 즉시해제), Hyundai(동일) → 본 프로젝트(STANDBY 전이)
+- Resume: Tesla(이전 설정 복원), Hyundai(동일) → 본 프로젝트(RES 버튼)
+- FSRA: Tesla(정지 후 자동/수동 재출발), Hyundai(3초 이내 자동 재출발) → 본 프로젝트(미적용, 정지 시 STANDBY)
+- 곡선 감속: Tesla(자동 감속), Hyundai(감지 감속) → 본 프로젝트(미적용, 직진 전용)
+- HMI: Tesla(대시보드 + 터치스크린), Hyundai(클러스터 + HUD) → 본 프로젝트(RPi GUI 가상 클러스터)
+<<<
+
+[[/SECTION]]
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 사용 시나리오
+
+[TEXT]
+STATEMENT: >>>
+도출된 요구사항의 완전성을 검증하기 위해 13개 주요 사용 시나리오를 정의하였다.
+
+- UC-01 정속 순항: 전방 차량 없이 직진 → 설정 최고속도 CRUISING
+- UC-02 추종 진입: CRUISING 중 전방 차량 진입 → FOLLOWING 전이, 안전거리 유지
+- UC-03 추종→순항: FOLLOWING 중 전방 차량 이탈 → CRUISING 전이, 설정 속도 가속
+- UC-04 브레이크 오버라이드: CRUISING/FOLLOWING 중 브레이크 → 50ms 이내 STANDBY 전이
+- UC-05 액셀 오버라이드: FOLLOWING 중 액셀 → 50ms 이내 STANDBY 전이
+- UC-06 SET 재활성화: STANDBY에서 SET → 현재 속도를 최고속도로 설정
+- UC-07 RES 재활성화: STANDBY에서 RES → 이전 설정 속도 복원
+- UC-08 안전거리 변경: FOLLOWING 중 거리단계 변경 → 새 목표 거리로 즉시 전환
+- UC-09 센서 고장: FOLLOWING 중 LiDAR 유실 → 200ms 이내 FAULT 전이
+- UC-10 CAN 통신 단절: 메인 ECU ↔ 모터 제어기 끊김 → 100ms 이내 FAULT 전이
+- UC-11 ACC 활성화 거부: 페달 입력 중 ACC ON 시도 → OFF 유지
+- UC-12 자가진단 실패: ACC ON 시 센서 이상 → OFF 유지
+- UC-13 최소 속도 보호: 극저속(< 5cm/s)에서 ACC 활성화 → 최소 설정 속도 자동 설정
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 요구사항 도출 방법
+
+[TEXT]
+STATEMENT: >>>
+다양한 도출 기법을 활용하여 이해관계자별 요구사항을 체계적으로 수집하였다. 도출 방법은 프로세스 기록이며 UID를 부여하지 않는다. 각 STK 항목의 METHOD 필드에서 해당 요구사항의 도출 방법을 추적한다.
+<<<
+
+[[SECTION]]
+TITLE: 표준/규격 분석 (Standards Analysis)
+
+[TEXT]
+STATEMENT: >>>
+ASPICE 및 ISO 26262 표준 문서를 분석하여 프로세스 요구사항 및 안전 요구사항을 도출하였다. 적용 대상: ISO 26262 Part 3(HARA 수행 → Safety Goal 도출), ISO 26262 Part 4(안전 메커니즘 요구사항 도출), ASPICE SYS/SWE(문서 구조, 추적성, 검증 방법 요구사항), ISO 15622(ACC 기능·성능 요구사항의 기준 참조), ISO 22179(저속 추종 동작 참조).
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 벤치마킹 (Benchmarking)
+
+[TEXT]
+STATEMENT: >>>
+양산 차량의 ACC 기능 사양을 참고하여 기능 요구사항을 도출하였다. 참고 대상: 양산 ACC 시스템의 상태 머신(OFF → STANDBY → CRUISING/FOLLOWING), SET/RES 기능 및 속도+/- 조정과 안전거리 단계 설정, 운전자 오버라이드(브레이크/액셀) 동작. 1/10 스케일카 특성상 양산 ACC 기능을 그대로 적용할 수 없으므로, 조향 미포함(직진 전용), AEB 미포함 등 범위를 제한하여 적용하였다.
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 팀 회의 (Team Meeting)
+
+[TEXT]
+STATEMENT: >>>
+개발팀 전원이 참여하는 회의를 통해 기술적 실현 가능성을 검토하고 시스템 요구사항을 구체화하였다. 주요 논의 내용: HW 플랫폼 선정 및 제약 조건 확정(MPC5606B, STM32F439ZI, RPi), CAN 통신 구조 및 메시지 정의, 센서 구성(카메라 + LiDAR 융합) 결정, HMI를 물리 버튼 대신 RPi GUI로 구현하는 방안 결정, 안전거리 모델 파라미터(시간 기반: 0.8/1.2/1.6초) 결정, AEB 미포함 결정 및 FAULT 시 동작 정의.
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 멘토 리뷰 (Mentor Review)
+
+[TEXT]
+STATEMENT: >>>
+SESAC 교육기관 멘토의 기술 리뷰 및 피드백을 통해 요구사항을 보완하였다. 주요 피드백: ASPICE 프로세스 산출물 구조에 대한 지도(STK → SYS → SWR/HWR/SAF 계층), ISO 26262 HARA 수행 방법론 조언, AUTOSAR 아키텍처 적용 범위 조정, 프로젝트 일정 대비 범위 적절성 검토.
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 프로토타이핑 및 실험 (Prototyping)
+
+[TEXT]
+STATEMENT: >>>
+초기 프로토타입을 통해 센서 성능, 제어 응답, 통신 지연 등을 실측하고 성능 요구사항을 구체화하였다. 실험 항목: LiDAR 거리 측정 정확도 및 갱신 주기 확인, 카메라 기반 차량 인식 처리 속도 확인, CAN 통신 지연 측정, PID 제어기 응답 특성 확인, 모터 인코더 속도 분해능 확인.
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 법규/표준 분석 (Regulatory Analysis)
+
+[TEXT]
+STATEMENT: >>>
+ISO 15622, ISO 22179, Euro NCAP 프로토콜을 분석하여 양산 수준 설계 기준을 도출하였다. 상세 분석 결과는 본 문서의 "법규 및 표준 요구사항" 섹션에 기술한다.
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 경쟁사 벤치마킹 (Competitive Benchmark)
+
+[TEXT]
+STATEMENT: >>>
+Tesla TACC, Hyundai/Kia SCC 등 양산 ACC 기능 사양을 비교 분석하여 기능 수준을 도출하였다. 핵심 기능인 정속 순항, 추종 제어, 오버라이드, 상태 관리, SET/RES는 양산 수준과 동등하게 구현하며, FSRA(정지 & 재출발)와 곡선 속도 조정은 본 프로젝트 범위 외이다.
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 사용 시나리오 분석 (Use Scenario Analysis)
+
+[TEXT]
+STATEMENT: >>>
+13개 주요 사용 시나리오를 정의하여 요구사항 완전성을 검증하였다. 상세 시나리오는 본 문서의 "사용 시나리오" 섹션에 기술한다.
+<<<
+
+[[/SECTION]]
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 운영 환경
+
+[TEXT]
+STATEMENT: >>>
+물리적 환경은 1/10 스케일카 플랫폼, 실내 평탄 노면이며 직진 전용(조향 미포함)이다.
+
+작동 속도는 cm/s 단위이고 최소 설정 속도는 5cm/s이다.
+
+센서 구성은 카메라(RPi, 전방 차량 인식), LiDAR(차간거리, 갱신 주기 50ms 이하), 인코더(자차 속도)이다.
+
+AEB 미포함, 기상 조건 미고려, 도로 곡률 미고려이다.
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 인터페이스 요구
+
+[[SECTION]]
+TITLE: CAN 버스 통신
+
+[TEXT]
+STATEMENT: >>>
+- RPi → MPC5606B: 차량 감지 여부, 차간거리, 상대속도 (주기 20ms)
+- MPC5606B → STM32: 모터 제어 명령 — PWM duty / 속도 명령 (주기 10ms)
+- STM32 → MPC5606B: 인코더 기반 실측 속도, 모터 상태 (주기 10ms)
+- RPi GUI → MPC5606B: 운전자 입력 — 버튼, 페달 신호 (주기 20ms)
+- MPC5606B → RPi GUI: HMI 표시 데이터 — ACC 상태, 속도, 거리단계 (주기 50ms)
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: HMI 출력 (GUI 클러스터)
+
+[TEXT]
+STATEMENT: >>>
+RPi GUI가 HMI 클러스터 역할을 수행하며 다음을 표시한다: 현재 자차 속도, ACC 상태 (OFF/STANDBY/CRUISING/FOLLOWING/FAULT), 현재 설정된 최고속도, 현재 거리설정 단계 (1/2/3), FAULT 발생 시 경고, 상태에 따른 버튼 비활성화(그레이아웃) 처리.
+<<<
+
+[[/SECTION]]
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 제약 조건
+
+[[SECTION]]
+TITLE: 타깃 ECU 및 HW 플랫폼
+
+[TEXT]
+STATEMENT: >>>
+- 메인 제어기: NXP MPC5606B (ACC 상태 관리, PID 제어)
+- 모터 제어 보드: STM32F439ZI (CAN 통신, 모터 PWM 제어)
+- 인식/HMI 프로세서: Raspberry Pi (카메라 + LiDAR 융합, GUI HMI)
+- 차량 플랫폼: 1/10 스케일카 (아크릴판 직접 제작, 직진 전용)
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 개발 도구 및 표준
+
+[TEXT]
+STATEMENT: >>>
+AUTOSAR 아키텍처 적용(mobilgene 코드 생성), MATLAB/Simulink MBD 기반 제어 설계, ASPICE 4.0 및 ISO 26262 프로세스 준수, 형상관리 Git/GitHub, 프로젝트 관리 Jira/Confluence, 요구사항 관리 StrictDoc을 사용한다.
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 개발 일정 및 인력
+
+[TEXT]
+STATEMENT: >>>
+개발 기간은 2026.05.01까지이며, 팀원 4명이 시스템 아키텍트, 안전 담당자, QA 담당을 겸임한다.
+<<<
+
+[[/SECTION]]
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 추적성
+
+[TEXT]
+STATEMENT: >>>
+모든 추적성은 StrictDoc RELATIONS (Parent)로 관리된다. 수동 추적 매트릭스는 작성하지 않으며, StrictDoc에서 자동 생성한다.
+
+- ELC ← STK: STK.sdoc 내 STK 항목의 Parent → ELC. 어떤 이해관계자로부터 요구사항이 도출되었는지 (도출 방법은 METHOD 필드로 기록)
+- STK ← SYS: STK/SYS.sdoc 내 SYS 항목의 Parent → STK. 시스템 요구사항의 이해관계자 근거
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: ISO 26262 연계
+
+[[SECTION]]
+TITLE: Item Definition
+
+[TEXT]
+STATEMENT: >>>
+- 시스템 경계: 1/10 스케일 RC카 기반 ACC (카메라 + LiDAR + 메인 ECU + 모터 제어기 + HMI GUI)
+- 기능 설명: 전방 차량 인식 및 차간거리/속도 자동 제어. 5개 상태: OFF, STANDBY, CRUISING, FOLLOWING, FAULT
+- 운영 조건: 실내 평탄 노면, 직진 전용. AEB 미포함, 조향 미포함
+- 상호작용: CAN 노드 간 통신, 운전자 오버라이드 → STANDBY, HMI GUI 입출력
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: HARA 입력
+
+[TEXT]
+STATEMENT: >>>
+- 의도치 않은 가속: S2/E3/C2 → ASIL B → Safety Goal SAF001 → Safe State: 모터 구동 중지 (ACC OFF)
+- ACC 미감속 (전방 차량 접근): S2/E3/C2 → ASIL B → Safety Goal SAF002 → Safe State: 모터 출력 0 (자연 감속)
+- 운전자 오버라이드 무시: S2/E4/C1 → ASIL B → Safety Goal SAF003 → Safe State: 운전자 직접 제어 (STANDBY)
+
+Safety Goal 3개 → FSR (SAF004~SAF017) / TSR (SAF009~SAF014)은 STK/SYS/SAF.sdoc 참조.
+<<<
+
+[[/SECTION]]
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 요구사항 분석 및 합의
+
+[[SECTION]]
+TITLE: 상충 요구사항 해결
+
+[TEXT]
+STATEMENT: >>>
+- No.1 AEB 포함 여부: AEB 미포함 합의. FAULT 시 모터 출력 0. 운전자 제동 책임.
+- No.2 HMI 구현 방식 (물리 버튼 vs GUI): RPi GUI로 대체. 페달도 GUI 시뮬레이션.
+- No.3 안전거리 파라미터: 0.8/1.2/1.6초 (1/10 스케일 조정).
+- No.4 FAULT 시 능동 감속: 모터 출력 0(자연 감속) 통일. 운전자 즉시 개입.
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 합의 절차
+
+[TEXT]
+STATEMENT: >>>
+초안 작성(벤치마킹/표준 분석) → 팀 내부 리뷰(회의) → 멘토 리뷰(SESAC) → 최종 합의(전 이해관계자).
+
+합의 일자: (기입 필요), 참석자: (팀원 4인 이름 기입 필요)
+<<<
+
+[[/SECTION]]
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 도출 완전성 점검
+
+[TEXT]
+STATEMENT: >>>
+- [O] 기능 요구사항 (핵심 ACC 기능): STK001~006, STK016~017
+- [O] 안전 요구사항 (오버라이드, FAULT): STK007~008, STK010, STK023
+- [O] 운전자 조작 요구사항 (HMI, 입력): STK018~021, STK024
+- [O] 시스템 상태 요구사항: STK009, STK022
+- [O] 운영 환경 및 제약: STK011~015
+- [△] 성능 요구사항: STK 레벨 정성적, SYS 레벨에서 정량화
+- [-] 유지보수/폐기: 교육 프로젝트 특성상 범위 외
+<<<
+
+[[SECTION]]
+TITLE: 미결 사항
+
+[TEXT]
+STATEMENT: >>>
+1. 안전거리 모델 파라미터 최종 튜닝값 — 프로토타입 실험 결과에 따라 조정
+2. FAULT 경고음 구현 여부 — 시간 여유에 따라 결정
+3. GUI 디자인 세부 레이아웃 — 상세 설계 단계에서 확정
+4. CAN 메시지 DBC 상세 정의 — SYS 레벨에서 구체화 진행 중
+<<<
+
+[[/SECTION]]
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 참고 문서
+
+[TEXT]
+STATEMENT: >>>
+내부 문서:
+- STK: STK.sdoc — 이해관계자 요구사항 (STK001~024), Parent → ELC
+- SYS: STK/SYS.sdoc — 시스템 요구사항 (SYS001~034)
+- SAF: STK/SYS/SAF.sdoc — 안전 요구사항 (SAF001~017)
+- SWR: STK/SYS/SWR.sdoc — SW 요구사항
+- HWR: STK/SYS/HWR.sdoc — HW 요구사항
+
+외부 표준:
+- ISO 26262:2018 Part 3 (Concept Phase), Part 4 (Product Development)
+- Automotive SPICE v4.0 — SYS.1 Requirements Elicitation
+- ISO 15622:2018 — Intelligent transport systems — Adaptive cruise control systems
+- ISO 22179:2009 — Intelligent transport systems — Full speed range adaptive cruise control (FSRA)
+- Euro NCAP — Assisted Driving Grading Protocol v2.1
+<<<
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 부록 A. 용어 정의
+
+[TEXT]
+STATEMENT: >>>
+- ACC: Adaptive Cruise Control — 전방 차량과의 거리/속도를 자동 제어하는 순항 시스템
+- AEB: Autonomous Emergency Braking — 자동 비상 제동 (본 시스템 미포함)
+- ASPICE: Automotive SPICE — 차량 SW 개발 프로세스 평가 모델
+- ASIL: Automotive Safety Integrity Level — 차량 안전 무결성 등급 (QM/A/B/C/D)
+- AUTOSAR: AUTomotive Open System ARchitecture — 차량 SW 표준 아키텍처
+- CAN: Controller Area Network — 차량용 실시간 통신 버스
+- ELC: Elicitation Process — 요구사항 도출 프로세스 (이해관계자, 도출방법, 분석/합의)
+
+- FTTI: Fault Tolerant Time Interval — 고장 허용 시간
+- HARA: Hazard Analysis and Risk Assessment — 위험 분석 및 위험도 평가
+- HMI: Human-Machine Interface — 사용자-시스템 인터페이스
+- LKAS: Lane Keeping Assist System — 차선 유지 보조 (본 시스템 범위 제외)
+- LiDAR: Light Detection and Ranging — 레이저 기반 거리 측정 센서
+- MBD: Model-Based Design — 모델 기반 설계 (MATLAB/Simulink)
+- PID: Proportional-Integral-Derivative — 비례-적분-미분 제어기
+- STK: Stakeholder Requirements — 이해관계자 요구사항
+- SYS: System Requirements — 시스템 요구사항
+<<<
+
+[[/SECTION]]
+
