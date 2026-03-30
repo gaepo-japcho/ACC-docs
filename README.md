@@ -7,6 +7,7 @@ Adaptive Cruise Control(ACC) 시스템의 요구사항 문서입니다.
 
 | 파일 | 설명 |
 |------|------|
+| `ELI.sdoc` | Elicitation Needs |
 | `STK.sdoc` | Stakeholder Requirements |
 | `SYS.sdoc` | System Requirements |
 | `SWR.sdoc` | Software Requirements |
