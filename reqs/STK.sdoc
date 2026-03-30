@@ -1,0 +1,472 @@
+[DOCUMENT]
+TITLE: ACC Stakeholder Requirements (STK)
+
+[GRAMMAR]
+ELEMENTS:
+- TAG: SECTION
+  PROPERTIES:
+    IS_COMPOSITE: True
+  FIELDS:
+  - TITLE: UID
+    TYPE: String
+    REQUIRED: False
+  - TITLE: LEVEL
+    TYPE: String
+    REQUIRED: False
+  - TITLE: PREFIX
+    TYPE: String
+    REQUIRED: False
+  - TITLE: TITLE
+    TYPE: String
+    REQUIRED: True
+- TAG: TEXT
+  FIELDS:
+  - TITLE: UID
+    TYPE: String
+    REQUIRED: False
+  - TITLE: STATEMENT
+    TYPE: String
+    REQUIRED: True
+- TAG: REQUIREMENT
+  FIELDS:
+  - TITLE: UID
+    TYPE: String
+    REQUIRED: True
+  - TITLE: TITLE
+    TYPE: String
+    REQUIRED: False
+  - TITLE: STATEMENT
+    TYPE: String
+    REQUIRED: True
+  - TITLE: CATEGORY
+    TYPE: String
+    REQUIRED: False
+  - TITLE: PRIORITY
+    TYPE: String
+    REQUIRED: False
+  - TITLE: METHOD
+    TYPE: String
+    REQUIRED: False
+  - TITLE: COMMENT
+    TYPE: String
+    REQUIRED: False
+  RELATIONS:
+  - TYPE: Parent
+
+[[SECTION]]
+TITLE: 시스템 목적 및 핵심 기능
+
+[REQUIREMENT]
+UID: STK001
+TITLE: 시스템 목적
+STATEMENT: >>>
+1/10 스케일 RC카 기반 Adaptive Cruise Control(ACC) 시스템을 개발한다. 전방 차량을 인식하고 차간거리 및 속도를 자동으로 제어하여 안전한 추종 주행을 수행한다.
+<<<
+CATEGORY: 기능
+PRIORITY: 필수
+METHOD: 벤치마킹, 법규/표준 분석, 경쟁사 벤치마킹
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC001
+- TYPE: Parent
+  VALUE: ELC003
+- TYPE: Parent
+  VALUE: ELC013
+- TYPE: Parent
+  VALUE: ELC014
+
+[REQUIREMENT]
+UID: STK002
+TITLE: 전방 차량 인식
+STATEMENT: >>>
+시스템은 카메라(Raspberry Pi 기반)를 사용하여 전방 차량을 실시간으로 인식해야 한다.
+<<<
+CATEGORY: 기능
+PRIORITY: 필수
+METHOD: 벤치마킹, 팀 회의
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC004
+
+[REQUIREMENT]
+UID: STK003
+TITLE: 차간거리 측정
+STATEMENT: >>>
+시스템은 LiDAR 센서를 사용하여 인식된 전방 차량까지의 거리를 실시간으로 측정해야 한다.
+<<<
+CATEGORY: 기능
+PRIORITY: 필수
+METHOD: 팀 회의, 프로토타이핑
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC004
+
+[REQUIREMENT]
+UID: STK004
+TITLE: 속도 제어
+STATEMENT: >>>
+시스템은 전방 차량과의 안전거리를 유지하도록 자차의 속도를 자동으로 제어해야 한다.
+<<<
+CATEGORY: 기능
+PRIORITY: 필수
+METHOD: 벤치마킹, 법규/표준 분석, 경쟁사 벤치마킹
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC001
+- TYPE: Parent
+  VALUE: ELC014
+
+[REQUIREMENT]
+UID: STK005
+TITLE: 순항 속도 설정
+STATEMENT: >>>
+운전자는 ACC의 최대 순항 속도를 설정할 수 있어야 한다. 전방 차량이 없을 경우 설정된 순항 속도를 유지한다.
+<<<
+CATEGORY: 기능
+PRIORITY: 필수
+METHOD: 벤치마킹, 법규/표준 분석, 경쟁사 벤치마킹
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC001
+- TYPE: Parent
+  VALUE: ELC014
+
+[REQUIREMENT]
+UID: STK006
+TITLE: 안전거리 단계 설정
+STATEMENT: >>>
+운전자는 1~3단계의 안전거리 모드를 선택할 수 있어야 한다. 단계가 높을수록 더 긴 차간거리를 유지한다.
+<<<
+CATEGORY: 기능
+PRIORITY: 필수
+METHOD: 벤치마킹, 팀 회의, 경쟁사 벤치마킹
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC001
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 안전 기능
+
+[REQUIREMENT]
+UID: STK007
+TITLE: 운전자 오버라이드 (브레이크)
+STATEMENT: >>>
+운전자가 브레이크를 밟으면 ACC는 즉시 대기(STANDBY) 상태로 전환되어야 한다. STANDBY 전환 시 이전 설정 속도 및 안전거리 단계를 유지한다. 어떠한 상황에서도 운전자의 제동 제어가 ACC보다 우선한다.
+<<<
+CATEGORY: 안전
+PRIORITY: 필수
+METHOD: 표준/규격 분석, 벤치마킹, 법규/표준 분석, 사용 시나리오 분석
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC001
+- TYPE: Parent
+  VALUE: ELC005
+- TYPE: Parent
+  VALUE: ELC011
+
+[REQUIREMENT]
+UID: STK008
+TITLE: 운전자 오버라이드 (가속 → STANDBY)
+STATEMENT: >>>
+운전자가 액셀을 밟으면 ACC는 즉시 대기(STANDBY) 상태로 전환되어야 한다. STANDBY 전환 시 이전 설정 속도 및 안전거리 단계를 유지한다. 운전자의 가속 의지가 ACC 제어보다 우선한다.
+<<<
+CATEGORY: 안전
+PRIORITY: 필수
+METHOD: 벤치마킹, 사용 시나리오 분석
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC001
+- TYPE: Parent
+  VALUE: ELC005
+- TYPE: Parent
+  VALUE: ELC011
+
+[REQUIREMENT]
+UID: STK009
+TITLE: ACC 상태 관리
+STATEMENT: >>>
+시스템은 명확한 상태 머신으로 관리되어야 한다. OFF, STANDBY, CRUISING, FOLLOWING, FAULT 5개 상태를 포함한다.
+CRUISING: 전방 차량 미감지 시 설정 속도 유지.
+FOLLOWING: 전방 차량 감지 시 안전거리 유지하며 추종.
+FAULT: 센서/통신 이상 시 진입, 능동 감속 없이 운전자에게 경고, 운전자가 ACC OFF로 수동 해제.
+<<<
+CATEGORY: >>>
+기능
+<<<
+PRIORITY: >>>
+필수
+<<<
+METHOD: 벤치마킹, 법규/표준 분석, 사용 시나리오 분석
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC004
+- TYPE: Parent
+  VALUE: ELC013
+
+[REQUIREMENT]
+UID: STK010
+TITLE: 고장 안전 (FAULT 동작)
+STATEMENT: >>>
+센서 고장, 통신 이상 등 이상 상황 발생 시 시스템은 FAULT 상태로 전환한다. FAULT 상태에서는 모터 제어 출력을 0으로 하고(능동 감속 없음), 운전자에게 즉각 경고한다. 운전자는 FAULT 상태에서 직접 개입하여 차량을 제어해야 하며, ACC ON/OFF 버튼을 눌러 수동으로 ACC를 OFF 상태로 전환해야 한다. 본 시스템은 AEB(자동 비상 제동)를 포함하지 않는다.
+<<<
+CATEGORY: 안전
+PRIORITY: 필수
+METHOD: 표준/규격 분석, 법규/표준 분석, 사용 시나리오 분석
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC005
+- TYPE: Parent
+  VALUE: ELC011
+- TYPE: Parent
+  VALUE: ELC012
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 운영 환경 및 인터페이스
+
+[REQUIREMENT]
+UID: STK011
+TITLE: 운영 환경
+STATEMENT: >>>
+시스템은 1/10 스케일카 플랫폼에서 동작한다. 차량은 직진 전용이며 조향 기능은 포함하지 않는다 (LKAS 범위 제외). 실내 평탄 노면 환경을 기본으로 한다.
+<<<
+CATEGORY: 운영환경
+PRIORITY: 필수
+METHOD: 팀 회의
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC002
+- TYPE: Parent
+  VALUE: ELC003
+- TYPE: Parent
+  VALUE: ELC006
+
+[REQUIREMENT]
+UID: STK012
+TITLE: 통신 인터페이스
+STATEMENT: >>>
+시스템 내부 통신은 CAN 버스를 사용한다. 카메라+LiDAR 처리 유닛에서 연산된 전방 차량 상대속도 값을 CAN 메시지로 전송한다.
+<<<
+CATEGORY: 인터페이스
+PRIORITY: 필수
+METHOD: 팀 회의
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC004
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 제약 조건
+
+[REQUIREMENT]
+UID: STK013
+TITLE: 제약 조건 - MCU
+STATEMENT: >>>
+메인 제어기는 NXP MPC5606B 보드를 사용한다. 모터 제어 보드는 STM32F439ZI를 사용하여 CAN 통신으로 연결한다.
+<<<
+CATEGORY: 제약조건
+PRIORITY: 필수
+METHOD: 팀 회의
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC002
+- TYPE: Parent
+  VALUE: ELC006
+
+[REQUIREMENT]
+UID: STK014
+TITLE: 제약 조건 - 개발 표준
+STATEMENT: >>>
+ASPICE 및 ISO 26262 프로세스를 준수하여 개발한다. AUTOSAR 아키텍처를 적용하고 mobilgene 및 MATLAB/Simulink MBD를 활용한다.
+<<<
+CATEGORY: 제약조건
+PRIORITY: 필수
+METHOD: 표준/규격 분석, 멘토 리뷰
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC002
+- TYPE: Parent
+  VALUE: ELC009
+
+[REQUIREMENT]
+UID: STK015
+TITLE: 제약 조건 - 개발 일정
+STATEMENT: >>>
+개발 기간은 ~2026.05.01까지이며, 팀원은 4명이다. 형상관리는 Git/GitHub, 프로젝트 관리는 Jira/Confluence를 사용한다.
+<<<
+CATEGORY: 제약조건
+PRIORITY: 필수
+METHOD: 멘토 리뷰
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC002
+- TYPE: Parent
+  VALUE: ELC003
+
+[REQUIREMENT]
+UID: STK023
+TITLE: AEB 미포함
+STATEMENT: >>>
+본 ACC 시스템은 AEB(Autonomous Emergency Braking) 기능을 포함하지 않는다. 비상 제동, 긴급 정지 기능은 시스템 범위에 포함되지 않으며, 위험 상황에서의 제동은 전적으로 운전자의 책임이다.
+<<<
+CATEGORY: 제약조건
+PRIORITY: 필수
+METHOD: 팀 회의
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC005
+- TYPE: Parent
+  VALUE: ELC012
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 추가 기능 요구사항
+
+[REQUIREMENT]
+UID: STK016
+TITLE: 자차 속도 측정
+STATEMENT: >>>
+시스템은 자차의 현재 속도를 알아내야 한다. 인코더 모터 값 또는 SLAM 추정값 등을 활용할 수 있다.
+<<<
+CATEGORY: 기능
+PRIORITY: 필수
+METHOD: 팀 회의, 프로토타이핑
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC004
+
+[REQUIREMENT]
+UID: STK017
+TITLE: 전방 차량 속도 추정
+STATEMENT: >>>
+LiDAR 거리 데이터의 시간 미분과 자차 속도를 조합하여 전방 차량의 속도를 추정해야 한다.
+<<<
+CATEGORY: 기능
+PRIORITY: 필수
+METHOD: 팀 회의
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC004
+
+[REQUIREMENT]
+UID: STK018
+TITLE: ACC SET/RES 재활성화 기능
+STATEMENT: >>>
+운전자는 STANDBY 상태에서 다음 두 가지 방법으로 ACC를 재활성화할 수 있어야 한다:
+
+- SET 버튼: 현재 주행 속도를 최고속도로 설정하고 CRUISING 또는 FOLLOWING 재진입
+- RES(Resume) 버튼: 이전에 설정했던 최고속도를 복원하고 CRUISING 또는 FOLLOWING 재진입
+
+전방 차량 유무에 따라 CRUISING 또는 FOLLOWING이 결정된다.
+<<<
+CATEGORY: 기능
+PRIORITY: 필수
+METHOD: 벤치마킹, 경쟁사 벤치마킹
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC001
+
+[REQUIREMENT]
+UID: STK019
+TITLE: 운전자 입력 버튼 정의
+STATEMENT: >>>
+운전자는 다음 입력을 사용하여 시스템을 조작한다:
+
+- ACC ON/OFF 토글 버튼: ACC 시스템 켜기/끄기
+- SET 버튼: STANDBY에서 현재 속도로 재활성화
+- RES 버튼: STANDBY에서 이전 설정 속도로 재활성화
+- 속도+ 버튼: 설정 최고속도 증가
+- 속도- 버튼: 설정 최고속도 감소
+- 거리설정 1단계 버튼: 안전거리 1단계(근거리) 선택
+- 거리설정 2단계 버튼: 안전거리 2단계(중거리) 선택
+- 거리설정 3단계 버튼: 안전거리 3단계(원거리) 선택
+- 일시정지 버튼: CRUISING/FOLLOWING에서 STANDBY로 전환
+- 액셀 페달 / 브레이크 페달
+
+<<<
+CATEGORY: 기능
+PRIORITY: 필수
+METHOD: 벤치마킹, 경쟁사 벤치마킹
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC001
+
+[REQUIREMENT]
+UID: STK020
+TITLE: HMI 가상 GUI 인터페이스
+STATEMENT: >>>
+HMI는 Raspberry Pi 상에서 실행되는 GUI 애플리케이션으로 구현한다. 물리적 버튼 대신 화면상의 가상 버튼으로 운전자 입력을 받으며, 동시에 HMI 클러스터(계기판) 역할도 수행한다.
+HMI 표시 항목: 현재 속도, ACC 상태(OFF/STANDBY/CRUISING/FOLLOWING/FAULT), 현재 설정된 최고속도, 현재 거리설정 단계.
+FAULT 발생 시 경고 표시를 한다. (시간 여유 시 경고음 추가)
+<<<
+CATEGORY: 기능
+PRIORITY: 필수
+METHOD: 팀 회의
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC001
+- TYPE: Parent
+  VALUE: ELC010
+- TYPE: Parent
+  VALUE: ELC013
+- TYPE: Parent
+  VALUE: ELC014
+
+[REQUIREMENT]
+UID: STK021
+TITLE: 버튼 가용성 규칙
+STATEMENT: >>>
+ACC 상태에 따라 사용 불가능한 버튼은 그레이아웃(비활성) 처리한다:
+
+- STANDBY: 속도+, 속도-, 일시정지 버튼 비활성
+- CRUISING/FOLLOWING: SET, RES 버튼 비활성
+- OFF: SET, RES, 속도+, 속도-, 일시정지, 거리설정 버튼 비활성
+- FAULT: ACC ON/OFF 버튼만 활성 (OFF로 전환 용도)
+
+<<<
+CATEGORY: 기능
+PRIORITY: 필수
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC001
+- TYPE: Parent
+  VALUE: ELC005
+
+[REQUIREMENT]
+UID: STK022
+TITLE: ACC ON 동작 흐름
+STATEMENT: >>>
+운전자가 ACC ON/OFF 토글 버튼을 눌러 ACC를 켤 때의 동작:
+1. 시스템 자가진단 수행 → FAULT 조건 존재 시 ACC 켜지지 않음
+2. 자가진단 통과 시, 전방 차량 미감지: 현재 속도를 최고속도로 설정, CRUISING 진입
+3. 자가진단 통과 시, 전방 차량 감지: 현재 속도를 최고속도로 설정, FOLLOWING 진입
+STANDBY 단계를 거치지 않고 바로 활성 모드로 진입한다.
+<<<
+CATEGORY: 기능
+PRIORITY: 필수
+METHOD: 표준/규격 분석, 사용 시나리오 분석
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC005
+- TYPE: Parent
+  VALUE: ELC012
+
+[REQUIREMENT]
+UID: STK024
+TITLE: 최소 설정 속도
+STATEMENT: >>>
+ACC 활성화 시 설정 최고속도에 최소값 하한을 둔다. 현재 자차 속도가 최소 설정 속도(5cm/s) 미만인 경우, 최소 설정 속도를 최고속도로 자동 설정한다.
+<<<
+CATEGORY: 기능
+PRIORITY: 필수
+METHOD: 벤치마킹, 경쟁사 벤치마킹
+RELATIONS:
+- TYPE: Parent
+  VALUE: ELC001
+
+[[/SECTION]]

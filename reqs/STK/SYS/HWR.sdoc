@@ -1,0 +1,241 @@
+[DOCUMENT]
+TITLE: ACC Hardware Requirements (HWR)
+
+[GRAMMAR]
+ELEMENTS:
+- TAG: REQUIREMENT
+  FIELDS:
+  - TITLE: UID
+    TYPE: String
+    REQUIRED: True
+  - TITLE: TITLE
+    TYPE: String
+    REQUIRED: False
+  - TITLE: STATEMENT
+    TYPE: String
+    REQUIRED: True
+  - TITLE: ASIL
+    TYPE: String
+    REQUIRED: False
+  - TITLE: CATEGORY
+    TYPE: String
+    REQUIRED: False
+  - TITLE: VERIFICATION
+    TYPE: String
+    REQUIRED: False
+  - TITLE: COMMENT
+    TYPE: String
+    REQUIRED: False
+  RELATIONS:
+  - TYPE: Parent
+
+[[SECTION]]
+TITLE: ECU 및 처리 유닛
+
+[REQUIREMENT]
+UID: HWR001
+TITLE: 메인 ECU - MPC5606B
+STATEMENT: >>>
+메인 제어 ECU는 NXP MPC5606B MCU를 사용한다. ACC 상태 관리, 거리/속도 제어, CAN 통신 허브 역할을 수행한다. 최소 사양: CAN 2채널 이상, 타이머, GPIO, ADC.
+<<<
+ASIL: B
+CATEGORY: 기능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS001
+- TYPE: Parent
+  VALUE: SYS014
+- TYPE: Parent
+  VALUE: SYS015
+- TYPE: Parent
+  VALUE: SYS016
+
+[REQUIREMENT]
+UID: HWR002
+TITLE: 모터 제어 보드 - STM32F439ZI
+STATEMENT: >>>
+모터 제어 보드는 STM32F439ZI를 사용한다. CAN 인터페이스로 메인 ECU와 통신하며, PWM 출력으로 모터를 구동한다. 인코더 입력으로 실측 속도를 계측한다.
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS016
+- TYPE: Parent
+  VALUE: SYS017
+
+[REQUIREMENT]
+UID: HWR003
+TITLE: 카메라+LiDAR 처리 유닛
+STATEMENT: >>>
+Raspberry Pi 보드를 사용한다. 카메라로 전방 차량 인식, LiDAR로 거리 측정을 수행하고 연산 결과를 CAN 인터페이스로 메인 ECU에 전송한다.
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS011
+- TYPE: Parent
+  VALUE: SYS013
+- TYPE: Parent
+  VALUE: SYS015
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 센서
+
+[REQUIREMENT]
+UID: HWR004
+TITLE: LiDAR 센서
+STATEMENT: >>>
+전방 차량까지의 거리를 측정하는 LiDAR 센서를 장착한다. 측정 범위: 최소 2m 이상 (1/10 스케일 기준). 측정 주기: 50ms 이하. 정확도: ±2cm.
+<<<
+ASIL: QM
+CATEGORY: 성능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS011
+- TYPE: Parent
+  VALUE: SYS021
+
+[REQUIREMENT]
+UID: HWR005
+TITLE: 카메라 모듈
+STATEMENT: >>>
+전방 차량 인식용 카메라 모듈. 해상도: 최소 640x480. FPS: 최소 10fps. 화각: 전방 차량 인식에 적합한 FOV.
+<<<
+ASIL: QM
+CATEGORY: 성능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS011
+- TYPE: Parent
+  VALUE: SYS021
+
+[REQUIREMENT]
+UID: HWR008
+TITLE: 인코더
+STATEMENT: >>>
+모터 또는 휠에 장착된 로터리 인코더. 분해능: 속도 1cm/s 이상 측정 가능한 PPR. 출력: A/B상 Quadrature.
+<<<
+ASIL: QM
+CATEGORY: 성능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS012
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 통신
+
+[REQUIREMENT]
+UID: HWR006
+TITLE: CAN 트랜시버
+STATEMENT: >>>
+각 ECU 노드에 CAN 트랜시버(예: MCP2551, TJA1050 등)를 장착한다. CAN 2.0B, 500kbps 지원. 종단 저항(120Ω) 배치.
+<<<
+ASIL: QM
+CATEGORY: 인터페이스
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS015
+- TYPE: Parent
+  VALUE: SYS016
+- TYPE: Parent
+  VALUE: SYS017
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 구동부
+
+[REQUIREMENT]
+UID: HWR007
+TITLE: 모터 및 모터 드라이버
+STATEMENT: >>>
+1/10 스케일카 구동용 DC 모터 및 모터 드라이버(H-Bridge). 전진/후진/제동 제어 가능. PWM 주파수: 10kHz 이상.
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS016
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: HMI 및 입력 장치
+
+[REQUIREMENT]
+UID: HWR009
+TITLE: 운전자 입력 장치 (가상 GUI + 페달)
+STATEMENT: >>>
+운전자 입력 장치는 RPi 상의 GUI 가상 버튼으로 구현한다.
+가상 버튼: ACC ON/OFF, SET, RES, 속도+, 속도-, 거리설정 1/2/3단계, 일시정지.
+브레이크/액셀 페달은 GPIO 또는 ADC 입력으로 RPi에 직접 연결하거나, 별도 회로를 통해 CAN 메시지로 전달한다.
+물리적 버튼 패널은 별도로 제작하지 않는다.
+<<<
+ASIL: QM
+CATEGORY: 인터페이스
+VERIFICATION: I
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS018
+
+[REQUIREMENT]
+UID: HWR010
+TITLE: HMI 표시 장치 (GUI 겸용)
+STATEMENT: >>>
+HMI 표시 장치는 RPi GUI 화면으로 대체한다.
+GUI 화면에 현재 속도, ACC 상태, 설정 최고속도, 거리설정 단계, FAULT 경고를 표시한다.
+별도 LCD/LED 패널은 제작하지 않으며, RPi의 HDMI 또는 연결된 디스플레이를 사용한다.
+<<<
+ASIL: QM
+CATEGORY: 인터페이스
+VERIFICATION: I
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS019
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 차체 및 전원
+
+[REQUIREMENT]
+UID: HWR011
+TITLE: 차체 프레임
+STATEMENT: >>>
+1/10 스케일 차량 차체는 아크릴판 등으로 제작한다. 직진 전용 구조이며 조향 메커니즘은 포함하지 않는다. 센서, ECU, 모터 등 모든 부품을 안정적으로 탑재할 수 있는 강성을 확보한다.
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: I
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS026
+
+[REQUIREMENT]
+UID: HWR012
+TITLE: 전원 공급
+STATEMENT: >>>
+배터리(LiPo 등)로 전원을 공급한다. 5V(RPi, 센서), 3.3V(MCU), 모터 구동 전압을 안정적으로 공급하는 레귤레이터를 포함한다.
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS001
+
+[[/SECTION]]
