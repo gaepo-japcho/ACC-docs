@@ -77,7 +77,7 @@ STATEMENT: >>>
 TITLE: 직접 이해관계자 (Primary Stakeholders)
 
 [STAKEHOLDER]
-UID: ELC001
+UID: SYS1-ELC-001
 TITLE: 운전자 (Operator)
 TEXT: >>>
 RC카를 직접 조작하는 사용자. ACC ON/OFF, 순항 속도 설정, 안전거리 단계 선택, 브레이크/액셀 오버라이드 등 HMI를 통해 시스템과 상호작용한다.
@@ -90,7 +90,7 @@ INTERESTS: >>>
 <<<
 
 [STAKEHOLDER]
-UID: ELC002
+UID: SYS1-ELC-002
 TITLE: 개발팀 (Development Team, 4인)
 TEXT: >>>
 시스템 설계, SW/HW 구현, 검증을 담당하는 프로젝트 팀원.
@@ -103,7 +103,7 @@ INTERESTS: >>>
 <<<
 
 [STAKEHOLDER]
-UID: ELC003
+UID: SYS1-ELC-003
 TITLE: 교육기관 / 멘토 (SESAC)
 TEXT: >>>
 프로젝트를 주관하는 교육기관 및 기술 멘토. 프로젝트 주제 선정, 기술 방향 지도, 최종 평가를 수행한다.
@@ -121,7 +121,7 @@ INTERESTS: >>>
 TITLE: 기술 이해관계자 (Technical Stakeholders)
 
 [STAKEHOLDER]
-UID: ELC004
+UID: SYS1-ELC-004
 TITLE: 시스템 아키텍트
 TEXT: >>>
 전체 시스템 구조를 설계하고, HW/SW 분배 및 통신 인터페이스를 정의하는 역할. 개발팀 내에서 겸임.
@@ -134,7 +134,7 @@ INTERESTS: >>>
 <<<
 
 [STAKEHOLDER]
-UID: ELC005
+UID: SYS1-ELC-005
 TITLE: 안전 담당자 (Safety Manager)
 TEXT: >>>
 ISO 26262 관점에서 안전 분석(HARA), 안전 목표(Safety Goal) 정의, 안전 요구사항 도출을 담당. 개발팀 내에서 겸임.
@@ -147,7 +147,7 @@ INTERESTS: >>>
 <<<
 
 [STAKEHOLDER]
-UID: ELC006
+UID: SYS1-ELC-006
 TITLE: HW 플랫폼 공급자
 TEXT: >>>
 MCU 보드(NXP MPC5606B, STM32F439ZI), Raspberry Pi, LiDAR 센서, 카메라 모듈, 1/10 RC카 섀시 등 하드웨어 플랫폼의 사양을 제공하는 공급자.
@@ -159,7 +159,7 @@ INTERESTS: >>>
 <<<
 
 [STAKEHOLDER]
-UID: ELC007
+UID: SYS1-ELC-007
 TITLE: 도구 공급자
 TEXT: >>>
 개발 도구(mobilgene, MATLAB/Simulink, StrictDoc) 및 프로젝트 관리 도구(Jira/Confluence, Git/GitHub)의 제약사항을 제공.
@@ -176,7 +176,7 @@ INTERESTS: >>>
 TITLE: 간접 이해관계자 (Secondary Stakeholders)
 
 [STAKEHOLDER]
-UID: ELC008
+UID: SYS1-ELC-008
 TITLE: 품질 보증 담당 (QA)
 TEXT: >>>
 ASPICE 프로세스 수준 달성 여부, 요구사항 추적성 확보, 검증 완전성을 확인하는 역할. 개발팀 내에서 겸임.
@@ -188,7 +188,7 @@ INTERESTS: >>>
 <<<
 
 [STAKEHOLDER]
-UID: ELC009
+UID: SYS1-ELC-009
 TITLE: 규격/표준 기관
 TEXT: >>>
 ASPICE (Automotive SPICE) 및 ISO 26262 표준 자체가 요구사항 도출의 입력이 된다.
@@ -200,7 +200,7 @@ INTERESTS: >>>
 <<<
 
 [STAKEHOLDER]
-UID: ELC010
+UID: SYS1-ELC-010
 TITLE: 시연 참관자
 TEXT: >>>
 프로젝트 최종 시연 시 시스템 동작을 관찰하는 외부 참관인 (타 팀, 외부 평가자 등).
@@ -216,7 +216,7 @@ INTERESTS: >>>
 TITLE: 법규 및 인증 이해관계자 (Regulatory & Certification Stakeholders)
 
 [STAKEHOLDER]
-UID: ELC011
+UID: SYS1-ELC-011
 TITLE: 법규 기관 (UNECE WP.29 / 국토교통부)
 TEXT: >>>
 차량 ADAS 기능에 대한 형식승인(Type Approval) 규정을 제정·시행하는 기관. 본 프로젝트는 교육용이므로 직접 인증 대상은 아니나, 양산 수준의 설계 기준을 참고한다.
@@ -230,7 +230,7 @@ INTERESTS: >>>
 <<<
 
 [STAKEHOLDER]
-UID: ELC012
+UID: SYS1-ELC-012
 TITLE: 안전 인증 기관 (ISO 26262 인증 기관)
 TEXT: >>>
 ISO 26262 기능안전 표준에 따라 안전 수명주기(Safety Lifecycle) 산출물을 심사하는 기관. HARA, Safety Goal, FSR/TSR의 적절성, ASIL 등급별 요구사항 충족을 평가한다.
@@ -243,7 +243,7 @@ INTERESTS: >>>
 <<<
 
 [STAKEHOLDER]
-UID: ELC013
+UID: SYS1-ELC-013
 TITLE: OEM (차량 제조사 관점)
 TEXT: >>>
 양산 차량에서 ACC 시스템을 통합하는 차량 제조사의 관점. 본 프로젝트에서는 가상의 OEM 역할로서, 차량 수준 요구사항과 사용자 경험(UX) 기준을 제공한다.
@@ -256,7 +256,7 @@ INTERESTS: >>>
 <<<
 
 [STAKEHOLDER]
-UID: ELC014
+UID: SYS1-ELC-014
 TITLE: 소비자 평가 기관 (Euro NCAP)
 TEXT: >>>
 차량 안전 등급 평가를 통해 소비자에게 안전 정보를 제공하는 기관. ACC 시스템의 Highway Assist 성능을 평가한다.
