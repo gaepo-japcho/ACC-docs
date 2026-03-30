@@ -171,7 +171,9 @@ COMMENT: 메인 제어기: NXP MPC5606B, 모터 제어기: STM32F439ZI
 [REQUIREMENT]
 UID: ELI022
 TITLE: 개발 표준 준수
-STATEMENT: 시스템 개발 전반에 걸쳐 ASPICE 및 ISO 26262 프로세스를 준수하여야 한다.
+STATEMENT: >>>
+시스템 개발 전반에 걸쳐 ASPICE 4.0 및 ISO 26262 프로세스를 준수하여야 한다.
+<<<
 
 [REQUIREMENT]
 UID: ELI023
