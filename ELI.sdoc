@@ -1,0 +1,181 @@
+[DOCUMENT]
+TITLE: ACC Elicitation Needs (ELI)
+
+[GRAMMAR]
+ELEMENTS:
+- TAG: SECTION
+  PROPERTIES:
+    IS_COMPOSITE: True
+  FIELDS:
+  - TITLE: UID
+    TYPE: String
+    REQUIRED: False
+  - TITLE: TITLE
+    TYPE: String
+    REQUIRED: True
+- TAG: TEXT
+  FIELDS:
+  - TITLE: UID
+    TYPE: String
+    REQUIRED: False
+  - TITLE: STATEMENT
+    TYPE: String
+    REQUIRED: True
+- TAG: REQUIREMENT
+  FIELDS:
+  - TITLE: UID
+    TYPE: String
+    REQUIRED: True
+  - TITLE: TITLE
+    TYPE: String
+    REQUIRED: True
+  - TITLE: STATEMENT
+    TYPE: String
+    REQUIRED: True
+  - TITLE: COMMENT
+    TYPE: String
+    REQUIRED: False
+
+[[SECTION]]
+TITLE: 핵심 기능 니즈
+
+[REQUIREMENT]
+UID: ELI001
+TITLE: 전방 차량 자동 추종
+STATEMENT: 시스템은 전방 차량을 자동으로 인식하고, 차간거리에 따라 속도를 조절하며 추종 주행을 수행하여야 한다.
+
+[REQUIREMENT]
+UID: ELI002
+TITLE: 전방 차량 인식
+STATEMENT: 시스템은 카메라를 통해 전방 차량의 존재 여부를 실시간으로 확인할 수 있어야 한다.
+
+[REQUIREMENT]
+UID: ELI003
+TITLE: 전방 차량까지의 거리 파악
+STATEMENT: 시스템은 전방 차량까지의 거리를 측정할 수 있어야 한다.
+
+[REQUIREMENT]
+UID: ELI004
+TITLE: 설정 속도 순항
+STATEMENT: 전방 차량이 존재하지 않는 경우, 운전자가 설정한 속도로 일정하게 주행하여야 한다.
+
+[REQUIREMENT]
+UID: ELI005
+TITLE: 최고 순항 속도 설정
+STATEMENT: 운전자는 시스템이 유지할 최고 순항 속도를 직접 설정할 수 있어야 한다.
+
+[REQUIREMENT]
+UID: ELI006
+TITLE: 안전거리 수준 선택
+STATEMENT: 운전자는 전방 차량과 유지할 차간거리 수준을 근거리·중거리·원거리 중에서 선택할 수 있어야 한다.
+
+[REQUIREMENT]
+UID: ELI007
+TITLE: 자차 속도 파악
+STATEMENT: 시스템은 자차의 현재 주행 속도를 실시간으로 파악할 수 있어야 한다.
+
+[REQUIREMENT]
+UID: ELI008
+TITLE: 전방 차량 속도 추정
+STATEMENT: 시스템은 전방 차량의 이동 속도를 추정할 수 있어야 한다.
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 안전 및 오버라이드 니즈
+
+[REQUIREMENT]
+UID: ELI009
+TITLE: 브레이크 입력 우선 처리
+STATEMENT: 운전자가 브레이크를 조작하는 경우, 시스템은 ACC 제어를 즉시 중단하고 운전자의 제동 입력을 우선으로 처리하여야 한다.
+
+[REQUIREMENT]
+UID: ELI010
+TITLE: 액셀 입력 시 ACC 대기 전환
+STATEMENT: 운전자가 액셀을 조작하는 경우, 시스템은 ACC를 대기 상태로 전환하여야 한다.
+
+[REQUIREMENT]
+UID: ELI011
+TITLE: 이상 상황 감지 및 경고
+STATEMENT: 센서 또는 통신에 이상이 발생한 경우, 시스템은 이를 즉시 감지하고 운전자에게 경고를 제공하며 안전한 상태로 전환하여야 한다.
+COMMENT: 이상 상황에서의 구체적인 처리 방식은 이후 시스템 요구사항 단계에서 구체화한다.
+
+[REQUIREMENT]
+UID: ELI012
+TITLE: 자동 비상 제동 미포함
+STATEMENT: 본 시스템은 자동 비상 제동(AEB) 기능을 포함하지 않는다. 위험 상황에서의 제동은 운전자가 직접 수행하여야 한다.
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 운전자 조작 니즈
+
+[REQUIREMENT]
+UID: ELI013
+TITLE: 운전자 입력 수단 제공
+STATEMENT: 운전자는 버튼 조작을 통해 ACC 활성화/비활성화, 순항 속도 조정, 안전거리 수준 선택 등의 입력을 수행할 수 있어야 한다.
+
+[REQUIREMENT]
+UID: ELI014
+TITLE: 이전 설정값 복원
+STATEMENT: ACC가 대기 상태로 전환된 이후 재활성화 시, 이전에 설정한 속도 및 안전거리 수준을 복원하여 사용할 수 있어야 한다.
+
+[REQUIREMENT]
+UID: ELI015
+TITLE: HMI를 통한 상태 표시 및 조작
+STATEMENT: 운전자는 화면을 통해 현재 ACC 상태, 주행 속도, 설정값을 확인하고, 화면 상의 버튼으로 시스템을 조작할 수 있어야 한다.
+
+[REQUIREMENT]
+UID: ELI016
+TITLE: 현재 상태에서 유효하지 않은 입력 차단
+STATEMENT: 현재 ACC 상태에서 허용되지 않는 버튼 입력은 동작하지 않아야 하며, 운전자가 이를 직관적으로 인지할 수 있어야 한다.
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 시스템 상태 니즈
+
+[REQUIREMENT]
+UID: ELI017
+TITLE: 명확한 시스템 상태 구분
+STATEMENT: 시스템은 ACC의 동작 상태(꺼짐·대기·순항·추종 등)를 명확하게 구분하여 관리하여야 한다.
+
+[REQUIREMENT]
+UID: ELI018
+TITLE: 활성화 전 자가진단
+STATEMENT: ACC 활성화 시, 시스템은 자가진단을 먼저 수행하고 이상이 없는 경우에 한하여 정상 동작을 시작하여야 한다.
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: 운영 환경 및 제약 니즈
+
+[REQUIREMENT]
+UID: ELI019
+TITLE: 1/10 스케일 RC카 플랫폼 운용
+STATEMENT: 시스템은 1/10 스케일 RC카 플랫폼에서 동작하여야 한다. 해당 플랫폼은 직진 주행만을 지원하며 조향 기능은 포함하지 않는다.
+
+[REQUIREMENT]
+UID: ELI020
+TITLE: 구성 요소 간 CAN 통신
+STATEMENT: >>>
+시스템 내 각 제어기 간에는 CAN 버스를 통해 상호 통신하여야 한다.
+<<<
+
+[REQUIREMENT]
+UID: ELI021
+TITLE: 지정 MCU 플랫폼 사용
+STATEMENT: 메인 제어기 및 모터 제어기는 지정된 MCU 보드를 사용하여야 한다.
+COMMENT: 메인 제어기: NXP MPC5606B, 모터 제어기: STM32F439ZI
+
+[REQUIREMENT]
+UID: ELI022
+TITLE: 개발 표준 준수
+STATEMENT: 시스템 개발 전반에 걸쳐 ASPICE 및 ISO 26262 프로세스를 준수하여야 한다.
+
+[REQUIREMENT]
+UID: ELI023
+TITLE: 개발 일정 및 팀 구성
+STATEMENT: 본 시스템은 4인으로 구성된 팀이 2026년 5월까지 개발을 완료하여야 한다.
+
+[[/SECTION]]
