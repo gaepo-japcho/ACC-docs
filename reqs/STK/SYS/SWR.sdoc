@@ -298,10 +298,18 @@ TITLE: 안전거리 목표값 계산 (AEB 미포함)
 STATEMENT: >>>
 현재 선택된 안전거리 단계(1~3)와 자차 속도를 기반으로 목표 차간거리를 계산한다. 단계별 Time-gap 계수: 1단계=0.8s, 2단계=1.2s, 3단계=1.6s. 목표 거리 이하 접근 시 PID 제어 범위 내에서 최대 감속을 수행한다. 비상 제동(AEB)은 수행하지 않는다.
 <<<
-ASIL: B
-CATEGORY: 기능
-VERIFICATION: T
-SWC: DistanceControl
+ASIL: >>>
+B
+<<<
+CATEGORY: >>>
+기능
+<<<
+VERIFICATION: >>>
+T
+<<<
+SWC: >>>
+DistanceControl
+<<<
 RELATIONS:
 - TYPE: Parent
   VALUE: SYS008
@@ -311,6 +319,8 @@ RELATIONS:
   VALUE: SYS010
 - TYPE: Parent
   VALUE: SYS022
+- TYPE: Parent
+  VALUE: SYS035
 
 [REQUIREMENT]
 UID: SWR009
