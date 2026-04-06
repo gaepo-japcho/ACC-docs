@@ -3,6 +3,30 @@ TITLE: ACC Safety Requirements (SAF)
 
 [GRAMMAR]
 ELEMENTS:
+- TAG: SECTION
+  PROPERTIES:
+    IS_COMPOSITE: True
+  FIELDS:
+  - TITLE: UID
+    TYPE: String
+    REQUIRED: False
+  - TITLE: LEVEL
+    TYPE: String
+    REQUIRED: False
+  - TITLE: PREFIX
+    TYPE: String
+    REQUIRED: False
+  - TITLE: TITLE
+    TYPE: String
+    REQUIRED: True
+- TAG: TEXT
+  FIELDS:
+  - TITLE: UID
+    TYPE: String
+    REQUIRED: False
+  - TITLE: STATEMENT
+    TYPE: String
+    REQUIRED: True
 - TAG: REQUIREMENT
   FIELDS:
   - TITLE: UID
@@ -216,29 +240,23 @@ RELATIONS:
 TITLE: Technical Safety Requirements (TSR)
 
 [REQUIREMENT]
-UID: SAF009
-TITLE: TSR-01: 브레이크 신호 이중화 읽기
-STATEMENT: >>>
-[ASIL B] 브레이크 페달 신호는 2개 GPIO 핀으로 이중 읽기하여 신뢰성을 확보한다. 두 신호 불일치 시 브레이크 활성으로 판단(Fail-safe)한다.
-<<<
-ASIL: B
-CATEGORY: TSR
-VERIFICATION: T
-SAFETY_MECHANISM: Redundant sensing
-RELATIONS:
-- TYPE: Parent
-  VALUE: SYS006
-
-[REQUIREMENT]
 UID: SAF010
 TITLE: TSR-02: CAN 메시지 CRC/카운터 검증
 STATEMENT: >>>
 [ASIL B] 안전 관련 CAN 메시지에 Rolling Counter(4bit)와 CRC(8bit)를 포함한다. 수신 측에서 검증 실패 시 해당 메시지를 무효 처리한다.
 <<<
-ASIL: B
-CATEGORY: TSR
-VERIFICATION: T
-SAFETY_MECHANISM: E2E protection
+ASIL: >>>
+B
+<<<
+CATEGORY: >>>
+TSR
+<<<
+VERIFICATION: >>>
+T
+<<<
+SAFETY_MECHANISM: >>>
+E2E protection
+<<<
 RELATIONS:
 - TYPE: Parent
   VALUE: SYS015
@@ -302,5 +320,27 @@ SAFETY_MECHANISM: Independent shutdown path
 RELATIONS:
 - TYPE: Parent
   VALUE: SYS006
+
+[REQUIREMENT]
+UID: SAF018
+TITLE: TSR-07: 하트비트 모니터링
+STATEMENT: >>>
+[ASIL B] 메인 ECU는 주기적(10ms 이내)으로 하트비트 신호를 출력해야 한다. 하트비트 신호가 설정된 타임아웃 내 감지되지 않으면 시스템은 SW hang으로 판단하고, ACC를 FAULT 상태로 전이하여 안전 상태(모터 정지)로 진입해야 한다.
+<<<
+ASIL: >>>
+B
+<<<
+CATEGORY: >>>
+TSR
+<<<
+VERIFICATION: >>>
+T
+<<<
+SAFETY_MECHANISM: >>>
+Heartbeat monitoring
+<<<
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS005
 
 [[/SECTION]]
