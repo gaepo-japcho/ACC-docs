@@ -275,7 +275,7 @@ RELATIONS:
 UID: SWR007
 TITLE: 자차 속도 수신 및 처리
 STATEMENT: >>>
-모터 제어기(STM32)에서 CAN RX로 수신된 인코더 기반 속도값을 처리한다. 타임아웃 시 속도 이상 플래그를 설정한다.
+모터 제어기(Arduino)에서 CAN RX로 수신된 인코더 기반 속도값을 처리한다. 타임아웃 시 속도 이상 플래그를 설정한다.
 <<<
 ASIL: QM
 CATEGORY: 기능
@@ -379,7 +379,7 @@ TITLE: CanCommunication
 UID: SWR012
 TITLE: CAN TX - 모터 제어 명령 송신
 STATEMENT: >>>
-메인 ECU(MPC5606B)에서 모터 제어기(STM32)로 목표 모터 PWM/속도 명령을 CAN 전송한다. 메시지 주기: 10ms. DLC: 8 bytes.
+메인 ECU(MPC5606B)에서 모터 제어기(Arduino)로 목표 모터 PWM/속도 명령을 CAN 전송한다. 메시지 주기: 10ms. DLC: 8 bytes.
 <<<
 ASIL: QM
 CATEGORY: 인터페이스
@@ -407,7 +407,7 @@ RELATIONS:
 UID: SWR014
 TITLE: CAN RX - 모터 피드백 수신
 STATEMENT: >>>
-모터 제어기(STM32)로부터 실측 속도, 모터 상태 CAN 메시지를 수신한다. 수신 주기: 10ms. 타임아웃: 30ms.
+모터 제어기(Arduino)로부터 실측 속도, 모터 상태 CAN 메시지를 수신한다. 수신 주기: 10ms. 타임아웃: 30ms.
 <<<
 ASIL: QM
 CATEGORY: 인터페이스

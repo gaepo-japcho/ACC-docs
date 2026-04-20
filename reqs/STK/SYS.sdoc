@@ -438,7 +438,7 @@ RELATIONS:
 UID: SYS016
 TITLE: CAN 통신 - 메인 ECU → 모터 제어기
 STATEMENT: >>>
-메인 ECU(MPC5606B)는 CAN 메시지로 모터 제어 명령을 STM32F439ZI에 전송한다: 목표 모터 제어값(PWM duty 또는 속도 명령). 전송 주기: 10ms.
+메인 ECU(MPC5606B)는 CAN 메시지로 모터 제어 명령을 Arduino 모터 제어 보드에 전송한다: 목표 모터 제어값(PWM duty 또는 속도 명령). 전송 주기: 10ms.
 <<<
 ASIL: QM
 CATEGORY: 인터페이스
@@ -453,7 +453,7 @@ RELATIONS:
 UID: SYS017
 TITLE: CAN 통신 - 모터 제어기 → 메인 ECU
 STATEMENT: >>>
-STM32F439ZI는 인코더 기반 실측 속도, 모터 상태를 CAN 메시지로 메인 ECU에 전송한다. 전송 주기: 10ms.
+Arduino 모터 제어 보드는 인코더 기반 실측 속도, 모터 상태를 CAN 메시지로 메인 ECU에 전송한다. 전송 주기: 10ms.
 <<<
 ASIL: QM
 CATEGORY: 인터페이스

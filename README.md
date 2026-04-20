@@ -8,7 +8,7 @@
 | **목적** | AUTOSAR 기반 ACC SW 개발 프로세스 학습 및 포트폴리오 |
 | **팀 규모** | 4명 |
 | **프로젝트 기간** | ~ 2026.05.01 |
-| **HW 플랫폼** | NXP TRK-MPC5606B, STM32F439ZI, Raspberry Pi 5 |
+| **HW 플랫폼** | NXP TRK-MPC5606B, Arduino, Raspberry Pi 5 |
 | **적용 표준** | Automotive SPICE 4.0 + ISO 26262:2018 |
 
 ---
@@ -29,7 +29,7 @@
 | 구성 요소 | 사양 | 역할 |
 |-----------|------|------|
 | 메인 ECU | NXP TRK-MPC5606B | ACC 제어 로직 (AUTOSAR) |
-| 보조 MCU | STM32F439ZI | 모터 제어, 센서 인터페이스 |
+| 보조 MCU | Arduino | 모터 제어, 센서 인터페이스 |
 | 호스트 | Raspberry Pi 5 | HMI GUI, 카메라 처리 |
 | 거리 센서 | LiDAR | 전방 차량 거리 측정 |
 | 카메라 | RPi Camera | 전방 차량 인식 |
