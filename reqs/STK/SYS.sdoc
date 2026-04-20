@@ -62,7 +62,7 @@ TITLE: ACC 상태 전이 - OFF
 STATEMENT: >>>
 OFF 상태: ACC 기능 비활성. 운전자가 ACC ON/OFF 토글 버튼을 누르면:
 
-- 브레이크 또는 액셀 페달이 눌려있는 경우: ACC 활성화 거부, OFF 유지
+- 브레이크 버튼 또는 액셀 페달이 눌려있는 경우: ACC 활성화 거부, OFF 유지
 - 자가진단 실패(FAULT 조건) 시: ACC가 켜지지 않고 OFF 유지
 - 자가진단 통과 + 전방 차량 미감지: 현재 속도를 최고속도로 설정, 안전거리 단계 3단계로 초기화, CRUISING으로 전이
 - 자가진단 통과 + 전방 차량 감지: 현재 속도를 최고속도로 설정, 안전거리 단계 3단계로 초기화, FOLLOWING으로 전이
@@ -203,7 +203,7 @@ TITLE: 운전자 오버라이드
 UID: SYS006
 TITLE: 브레이크 오버라이드 (→ STANDBY)
 STATEMENT: >>>
-브레이크 입력 감지 시, 현재 상태와 무관하게 ACC를 즉시 STANDBY 상태로 전이한다. 브레이크 오버라이드 응답 시간은 50ms 이내여야 한다. STANDBY 전이 시 설정 속도 및 안전거리 단계 값을 보존한다.
+브레이크 버튼 입력 감지 시, 현재 상태와 무관하게 ACC를 즉시 STANDBY 상태로 전이한다. 브레이크 버튼은 디지털 입력(ON/OFF)이며, 눌려있는 동안 지속적으로 제동 상태로 간주한다 (CAN 시그널: BTN_BRAKE, 1bit). 브레이크 오버라이드 응답 시간은 50ms 이내여야 한다. STANDBY 전이 시 설정 속도 및 안전거리 단계 값을 보존한다.
 <<<
 ASIL: B
 CATEGORY: 안전
@@ -468,7 +468,13 @@ RELATIONS:
 UID: SYS025
 TITLE: CAN 통신 고장 감지 (→ FAULT)
 STATEMENT: >>>
-CAN 메시지 타임아웃(예: 3주기 연속 미수신) 시 해당 노드 통신 이상으로 판단하고 FAULT 상태로 전이한다. FAULT 전이 시 모터 출력을 0으로 설정하고 HMI에 경고를 표시한다. 능동 감속은 수행하지 않는다.
+CAN 메시지 타임아웃(예: 3주기 연속 미수신) 시 해당 노드 통신 이상으로 판단하고 FAULT 상태로 전이한다. 각 노드는 Heartbeat 및 에러코드를 CAN 메시지로 전송한다:
+
+- RASPI: HB_SENSOR / ERR_SENSOR (RASPI_SENSOR, 0x110)
+- STM: HB_MTR / ERR_MTR (STM_STATUS, 0x310)
+- ECU: HB_ECU / ERR_ECU (ECU_HEARTBEAT, 0x410)
+
+ERR 시그널 값이 0이 아닌 경우 해당 노드의 고장으로 판단한다. FAULT 전이 시 모터 출력을 0으로 설정하고 HMI에 경고를 표시한다. 능동 감속은 수행하지 않는다.
 <<<
 ASIL: B
 CATEGORY: 안전
@@ -484,7 +490,7 @@ UID: SYS030
 TITLE: CAN 통신 - GUI → 메인 ECU (운전자 입력)
 STATEMENT: >>>
 RPi GUI 애플리케이션은 운전자 입력(버튼 클릭, 페달 신호)을 CAN 메시지로 메인 ECU(MPC5606B)에 전송한다.
-메시지 내용: ACC ON/OFF, SET, RES, 속도+, 속도-, 거리설정(1/2/3), 일시정지, 브레이크, 액셀 상태.
+메시지 내용: ACC ON/OFF, SET, RES, 속도+, 속도-, 거리설정(1/2/3), 일시정지, 브레이크 버튼(BTN_BRAKE), 액셀 상태(SET_ACCEL_PWM).
 전송 주기: 20ms.
 <<<
 ASIL: QM
@@ -503,7 +509,7 @@ UID: SYS031
 TITLE: CAN 통신 - 메인 ECU → GUI (HMI 표시 데이터)
 STATEMENT: >>>
 메인 ECU(MPC5606B)는 HMI 표시용 데이터를 CAN 메시지로 RPi GUI에 전송한다.
-메시지 내용: 현재 ACC 상태, 설정 최고속도, 현재 자차 속도, 현재 거리설정 단계, FAULT 경고 플래그, 전방 차량 감지 여부, 버튼 가용성 플래그.
+메시지 내용: 현재 ACC 상태(GET_ACC_STATUS), 설정 최고속도(GET_ACC_SPD), 현재 자차 속도(GET_SPD_AVG), 현재 거리설정 단계(GET_ACC_LVL). ECU 에러 상태는 별도 ECU_HEARTBEAT 메시지(0x410)의 ERR_ECU 시그널로 전송한다.
 전송 주기: 50ms.
 <<<
 ASIL: QM
@@ -532,7 +538,7 @@ STATEMENT: >>>
 - 속도+ 버튼, 속도- 버튼
 - 거리설정 1/2/3단계 버튼 (개별)
 - 일시정지 버튼 (CRUISING/FOLLOWING→STANDBY)
-- 브레이크 페달 신호, 액셀 페달 신호
+- 브레이크 버튼 신호 (디지털 ON/OFF, 눌림 유지 시 지속 제동), 액셀 페달 신호
 
 모든 버튼 입력은 GUI에서 CAN 메시지로 메인 ECU에 전달된다.
 <<<
@@ -708,9 +714,9 @@ RELATIONS:
 UID: SYS033
 TITLE: 페달 입력 중 ACC 활성화 거부
 STATEMENT: >>>
-브레이크 페달 또는 액셀 페달이 눌려있는 상태에서 ACC ON/OFF 토글 버튼이 눌리면 ACC 활성화를 거부하고 OFF 상태를 유지한다.
+브레이크 버튼 또는 액셀 페달이 눌려있는 상태에서 ACC ON/OFF 토글 버튼이 눌리면 ACC 활성화를 거부하고 OFF 상태를 유지한다.
 이는 운전자가 직접 제어 중일 때 ACC가 의도치 않게 개입하는 것을 방지하기 위함이다.
-페달을 뗀 후 다시 ACC ON/OFF를 눌러야 활성화가 가능하다.
+브레이크 버튼 또는 액셀 페달을 뗀 후 다시 ACC ON/OFF를 눌러야 활성화가 가능하다.
 <<<
 ASIL: B
 CATEGORY: 안전

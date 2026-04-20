@@ -122,7 +122,7 @@ TITLE: Functional Safety Requirements (FSR)
 UID: SAF004
 TITLE: FSR-01: 브레이크 입력 시 모터 즉시 중지 (→ STANDBY)
 STATEMENT: >>>
-[ASIL B] 브레이크 페달 신호 감지 시 50ms 이내에 모터 구동을 중지하고 ACC를 STANDBY 상태로 전환한다. STANDBY 상태에서는 모터 제어 출력이 0이어야 한다. 이는 SG1, SG3을 만족하기 위한 안전 메커니즘이다.
+[ASIL B] 브레이크 버튼 신호(BTN_BRAKE=1) 감지 시 50ms 이내에 모터 구동을 중지하고 ACC를 STANDBY 상태로 전환한다. 브레이크 버튼이 눌려있는 동안 지속적으로 제동 상태로 간주한다. STANDBY 상태에서는 모터 제어 출력이 0이어야 한다. 이는 SG1, SG3을 만족하기 위한 안전 메커니즘이다.
 <<<
 ASIL: B
 CATEGORY: FSR
@@ -136,7 +136,7 @@ RELATIONS:
 UID: SAF005
 TITLE: FSR-02: 센서 고장 시 FAULT (능동 감속 없음)
 STATEMENT: >>>
-[ASIL B] LiDAR 또는 카메라 데이터 손실(CAN 타임아웃) 감지 시 200ms 이내에 FAULT 상태로 전이한다. FAULT 진입 시 모터 출력을 0으로 설정하고 HMI에 경고를 표시한다. 능동 감속은 수행하지 않으며, 운전자가 ACC ON/OFF를 눌러 OFF로 전환해야 한다.
+[ASIL B] LiDAR 또는 카메라 데이터 손실(CAN 타임아웃) 또는 센서 에러코드 수신(ERR_SENSOR != 0) 감지 시 200ms 이내에 FAULT 상태로 전이한다. FAULT 진입 시 모터 출력을 0으로 설정하고 HMI에 경고를 표시한다. 능동 감속은 수행하지 않으며, 운전자가 ACC ON/OFF를 눌러 OFF로 전환해야 한다.
 <<<
 ASIL: B
 CATEGORY: FSR
@@ -152,7 +152,7 @@ RELATIONS:
 UID: SAF006
 TITLE: FSR-03: CAN 통신 이상 시 FAULT (능동 감속 없음)
 STATEMENT: >>>
-[ASIL B] 메인 ECU ↔ 모터 제어기 간 CAN 통신 단절 감지 시 100ms 이내에 모터 출력을 0으로 설정하고 FAULT 상태로 전이한다. 능동 감속은 수행하지 않는다. 운전자가 ACC ON/OFF를 눌러 OFF로 전환해야 한다.
+[ASIL B] 메인 ECU ↔ 모터 제어기 간 CAN 통신 단절 또는 모터 에러코드 수신(ERR_MTR != 0) 감지 시 100ms 이내에 모터 출력을 0으로 설정하고 FAULT 상태로 전이한다. 능동 감속은 수행하지 않는다. 운전자가 ACC ON/OFF를 눌러 OFF로 전환해야 한다.
 <<<
 ASIL: B
 CATEGORY: FSR
@@ -224,7 +224,7 @@ RELATIONS:
 UID: SAF017
 TITLE: FSR-08: 페달 입력 중 ACC 활성화 방지
 STATEMENT: >>>
-[ASIL B] ACC OFF 상태에서 ON 전환 시도 시, 브레이크 또는 액셀 페달이 눌려있는 경우 ACC 활성화를 거부하고 OFF 상태를 유지해야 한다. 페달 입력 중에는 운전자가 직접 제어 중이므로 ACC가 개입하지 않는다. 이는 SG1(의도치 않은 가속 방지) 및 SG3(운전자 오버라이드 보장)을 만족하기 위한 안전 메커니즘이다.
+[ASIL B] ACC OFF 상태에서 ON 전환 시도 시, 브레이크 버튼 또는 액셀 페달이 눌려있는 경우 ACC 활성화를 거부하고 OFF 상태를 유지해야 한다. 브레이크 버튼 또는 액셀 페달 입력 중에는 운전자가 직접 제어 중이므로 ACC가 개입하지 않는다. 이는 SG1(의도치 않은 가속 방지) 및 SG3(운전자 오버라이드 보장)을 만족하기 위한 안전 메커니즘이다.
 <<<
 ASIL: B
 CATEGORY: FSR
