@@ -4,7 +4,7 @@
 |------|------|
 | **프로젝트명** | ACC (Adaptive Cruise Control) 시스템 |
 | **목적** | ACC SW 개발 프로세스 학습 및 포트폴리오 |
-| **인원** | 4명 |
+| **인원** | 5명 |
 | **기간** | 1개월 |
 | **HW 플랫폼** | NXP TRK-MPC5606B, Arduino, raspi5 |
 | **적용 표준** | Automotive SPICE 4.0 + ISO 26262:2018 |

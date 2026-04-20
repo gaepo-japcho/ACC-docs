@@ -296,7 +296,7 @@ RELATIONS:
 UID: STK015
 TITLE: 제약 조건 - 개발 일정
 STATEMENT: >>>
-개발 기간은 ~2026.05.01까지이며, 팀원은 4명이다. 형상관리는 Git/GitHub, 프로젝트 관리는 Jira/Confluence를 사용한다.
+개발 기간은 ~2026.04.30까지이며, 팀원은 5명이다. 형상관리는 Git/GitHub, 프로젝트 관리는 Jira/Confluence를 사용한다.
 <<<
 CATEGORY: 제약조건
 PRIORITY: 필수

@@ -240,38 +240,6 @@ RELATIONS:
   VALUE: SYS025
 
 [REQUIREMENT]
-UID: SWR005
-TITLE: 전방 차량 감지 상태 처리
-STATEMENT: >>>
-CAN RX로 수신된 전방 차량 감지 플래그(1bit)를 처리한다. 감지 → 미감지 전환 시 디바운싱(예: 3연속 미감지)을 적용하여 오인식을 방지한다.
-<<<
-ASIL: QM
-CATEGORY: 기능
-VERIFICATION: T
-SWC: SensorProcessing
-RELATIONS:
-- TYPE: Parent
-  VALUE: SYS011
-- TYPE: Parent
-  VALUE: SYS015
-
-[REQUIREMENT]
-UID: SWR006
-TITLE: 상대속도 데이터 처리
-STATEMENT: >>>
-CAN RX로 수신된 전방 차량 상대속도(16bit, 1cm/s)를 처리한다. 이동평균 필터(윈도우 5샘플)를 적용하여 노이즈를 저감한다.
-<<<
-ASIL: QM
-CATEGORY: 기능
-VERIFICATION: T
-SWC: SensorProcessing
-RELATIONS:
-- TYPE: Parent
-  VALUE: SYS013
-- TYPE: Parent
-  VALUE: SYS015
-
-[REQUIREMENT]
 UID: SWR007
 TITLE: 자차 속도 수신 및 처리
 STATEMENT: >>>
