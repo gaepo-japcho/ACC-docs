@@ -37,7 +37,7 @@ STK (stakeholder, ~15개)
 ```
 
 - **절대로 ID를 재활용하지 말 것** — 삭제된 요구사항은 상태를 `Obsolete` 로 바꾸되 번호는 비워둔다.
-- 새 ID는 그 파일의 최대치 +1 로 부여. 코드 주석(`// SWR017`)과 1:1 대응되므로 번호가 변하면 전 레포 grep 필요.
+- 새 ID는 그 파일의 최대치 +1 로 부여. 코드 주석(`// SWR016`)과 1:1 대응되므로 번호가 변하면 전 레포 grep 필요.
 
 ## 빌드 · 렌더링
 
@@ -82,4 +82,4 @@ strictdoc server .          # localhost:5111 에서 라이브 편집
 ## 참조 순서 (다른 레포에서 이 문서를 볼 때)
 
 - 구현자(AUTOSAR/Arduino/RPi)는 `autosar/ACC_AUTOSAR_Architecture_Sketch.md` 를 1차 레퍼런스로 본다 — CAN DB, 5 SWC 계약, 런너블 주기, 데이터타입이 모두 여기에 있음.
-- 요구사항 문구 원문이 필요하면 `reqs/STK/SYS/*.sdoc` 를 직접 열 것. 코드 주석의 `SWR017` 같은 표시는 이 파일의 UID 와 매칭된다.
+- 요구사항 문구 원문이 필요하면 `reqs/STK/SYS/*.sdoc` 를 직접 열 것. 코드 주석의 `SWR016` 같은 표시는 이 파일의 UID 와 매칭된다.

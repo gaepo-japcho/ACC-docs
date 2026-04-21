@@ -408,7 +408,7 @@ TITLE: Diagnostics
 UID: SWR016
 TITLE: 고장 감지 및 FAULT 전이 (능동 감속 없음)
 STATEMENT: >>>
-센서 이상(ERR_SENSOR != 0), 모터 이상(ERR_MTR != 0), ECU 내부 이상(ERR_ECU != 0), CAN 타임아웃, 제어 이상 등을 감지하면 StateMachine에 FAULT 전이를 요청한다. FAULT 진입 시 모터 제어 출력을 0으로 설정한다 (능동 감속 없음). HMI에 FAULT 경고를 즉시 전달하며, 에러코드 값을 포함하여 고장 원인을 식별할 수 있도록 한다. FAULT 상태에서는 ACC ON/OFF 토글만 처리하며(→ OFF), 그 외 입력은 무시한다.
+센서 이상(ERR_SENSOR != 0), 모터 이상(ERR_MTR != 0), ECU 내부 이상(ERR_ECU != 0), CAN 타임아웃을 감지하면 StateMachine에 FAULT 전이를 요청한다. FAULT 진입 시 모터 제어 출력을 0으로 설정한다 (능동 감속 없음). HMI에 FAULT 경고를 즉시 전달하며, 에러코드 값을 포함하여 고장 원인을 식별할 수 있도록 한다. FAULT 상태에서는 ACC ON/OFF 토글만 처리하며(→ OFF), 그 외 입력은 무시한다.
 <<<
 ASIL: B
 CATEGORY: 안전
@@ -419,20 +419,6 @@ RELATIONS:
   VALUE: SYS005
 - TYPE: Parent
   VALUE: SYS025
-
-[REQUIREMENT]
-UID: SWR017
-TITLE: DTC(Diagnostic Trouble Code) 관리
-STATEMENT: >>>
-고장 발생 시 DTC를 저장한다. DTC는 고장 유형, 발생 시각, 발생 횟수를 포함한다. CAN 에러코드 시그널(ERR_SENSOR, ERR_MTR, ERR_ECU)의 값을 DTC 고장 유형에 매핑하여 기록한다.
-<<<
-ASIL: QM
-CATEGORY: 기능
-VERIFICATION: T
-SWC: Diagnostics
-RELATIONS:
-- TYPE: Parent
-  VALUE: SYS005
 
 [[/SECTION]]
 
@@ -530,7 +516,7 @@ RELATIONS:
 UID: SWR023
 TITLE: 태스크 주기 - 100ms
 STATEMENT: >>>
-HMI 갱신, DTC 로깅, 진단 처리는 100ms 주기 태스크에서 수행한다.
+HMI 갱신, 진단 처리는 100ms 주기 태스크에서 수행한다.
 <<<
 ASIL: QM
 CATEGORY: 타이밍
@@ -603,3 +589,4 @@ RELATIONS:
   VALUE: SYS031
 
 [[/SECTION]]
+                   

@@ -173,7 +173,7 @@ RELATIONS:
 UID: SYS005
 TITLE: ACC 상태 전이 - FAULT
 STATEMENT: >>>
-FAULT 상태: 센서 고장, CAN 통신 단절, 제어 이상 등 감지 시 진입.
+FAULT 상태: 센서 고장, CAN 통신 단절 등 감지 시 진입.
 
 - 모터 제어 출력을 0으로 설정 (능동 감속 없음, 자연 감속)
 - HMI에 FAULT 경고를 즉시 표시 (시간 여유 시 경고음 추가)
