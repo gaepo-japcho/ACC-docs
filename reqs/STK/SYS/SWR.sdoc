@@ -294,7 +294,7 @@ RELATIONS:
 UID: SWR009
 TITLE: PID 제어기 구현
 STATEMENT: >>>
-Simulink MBD에서 생성된 PID 제어 코드를 실행한다. 입력: 목표 거리/속도와 실측값의 오차. 출력: 모터 제어 명령. 제어 주기: 10ms. Anti-windup 기능을 포함한다.
+Simulink MBD에서 생성된 PID 제어 코드를 실행한다. 입력: 목표 거리/속도와 실측값의 오차. 출력: IF_CtrlOutput (TargetSpeedCmS, CtrlMode, CmdValid) — MotorControl SWC로 전달. 제어 주기: 10ms. Anti-windup 기능을 포함한다.
 <<<
 ASIL: QM
 CATEGORY: 기능
@@ -347,7 +347,7 @@ TITLE: CanCommunication
 UID: SWR012
 TITLE: CAN TX - 모터 제어 명령 송신
 STATEMENT: >>>
-메인 ECU(MPC5606B)에서 모터 제어기(Arduino)로 목표 모터 PWM/속도 명령을 CAN 전송한다. 메시지 주기: 10ms. DLC: 8 bytes.
+MotorControl SWC가 IF_MotorCmd (TargetPwmDuty, CmdValid)를 생성하면, CanCommunication SWC의 RE_CanTxMotor (10ms)가 이를 MTR_CMD(0x210) CAN 메시지로 Arduino 모터 제어기에 전송한다. DLC: 8 bytes.
 <<<
 ASIL: QM
 CATEGORY: 인터페이스
@@ -465,7 +465,13 @@ TITLE: DriverInput
 UID: SWR020
 TITLE: 운전자 입력 처리 (GUI → CAN)
 STATEMENT: >>>
-GUI 가상 버튼 클릭 이벤트를 CAN 메시지로 변환하여 메인 ECU에 전송한다. 브레이크 버튼(BTN_BRAKE, 디지털 ON/OFF) 및 액셀 페달 신호(SET_ACCEL_PWM)는 GPIO 또는 ADC 입력을 GUI와 별도로 CAN 전송할 수 있다. 버튼 입력에 대해 300ms 디바운싱을 적용한다: 동일 버튼(속도+, 속도- 등)이 연속 클릭되면 클릭 횟수를 누적하고, 마지막 클릭 후 300ms 동안 추가 입력이 없으면 누적된 횟수를 한 번의 CAN 메시지로 합산 전송한다. 브레이크/액셀 페달은 디바운싱 없이 즉시 처리한다.
+PyQt GUI 버튼/슬라이더 이벤트를 GUI_CTRL(0x510) CAN 메시지로 변환하여 메인 ECU에 50ms 주기로 전송한다.
+
+처리 항목:
+
+- 버튼(RawBtnBitmap): 300ms 디바운싱 적용. 동일 버튼 연속 클릭은 횟수 누적 후 합산 전송.
+- 브레이크(BTN_BRAKE): 디바운싱 없이 즉시 처리.
+- 액셀 슬라이더(AccelPwmDuty, PwmDuty/sint16): GUI 슬라이더 현재값을 매 주기 그대로 전송. 디바운싱 없음. STANDBY 상태에서 MotorControl SWC가 직접 PWM으로 사용 (SWR033).
 <<<
 ASIL: QM
 CATEGORY: 기능
@@ -514,9 +520,10 @@ RELATIONS:
 
 [REQUIREMENT]
 UID: SWR023
-TITLE: 태스크 주기 - 100ms
+TITLE: 태스크 주기 - 50ms / 100ms
 STATEMENT: >>>
-HMI 갱신, 진단 처리는 100ms 주기 태스크에서 수행한다.
+- Task_50ms (QM): HMI 갱신 처리 — CanComm.RE_CanRxGui, HmiManager.RE_BtnDispatch/RE_StatusBuild, CanComm.RE_CanTxGui (GUI_STATUS 0x520 송신).
+- Task_100ms (QM): 진단 보고 처리 — Diagnostics.RE_DtcReport.
 <<<
 ASIL: QM
 CATEGORY: 타이밍
@@ -558,6 +565,54 @@ SWC: All
 RELATIONS:
 - TYPE: Parent
   VALUE: SYS023
+
+[[/SECTION]]
+
+[[SECTION]]
+TITLE: MotorControl
+
+[REQUIREMENT]
+UID: SWR032
+TITLE: MotorControl SWC 구현
+STATEMENT: >>>
+MotorControl SWC는 RE_MotorCtrlStep(10ms, Task_10ms 끝단) 런너블에서 현재 ACC 상태에 따라 IF_MotorCmd(TargetPwmDuty, CmdValid)를 생성한다.
+
+제어 분기:
+
+- CRUISING / FOLLOWING: RP_CtrlOutput.TargetSpeedCmS를 속도→PWM 선형 변환 (Lookup Table, 실험 튜닝 필요). 출력은 [0, PWM_MAX] 클램핑 (SAF008).
+- STANDBY: RP_HmiBtn.AccelPwmDuty를 직접 TargetPwmDuty로 출력 (SWR033).
+- OFF / FAULT: TargetPwmDuty = 0, CmdValid = false.
+
+포트:
+
+- PP: PP_MotorCmd (IF_MotorCmd → CanCommunication)
+- RP: RP_CtrlOutput (IF_CtrlOutput ← DistanceControl), RP_AccStatus (IF_AccStatus ← AccStateMachine), RP_HmiBtn (IF_HmiBtn ← CanCommunication), RP_WdgM (CS_WdgM)
+<<<
+ASIL: B
+CATEGORY: 기능
+VERIFICATION: T
+SWC: MotorControl
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS016
+- TYPE: Parent
+  VALUE: SYS036
+
+[REQUIREMENT]
+UID: SWR033
+TITLE: STANDBY 수동 액셀 PWM 제어
+STATEMENT: >>>
+STANDBY 상태에서 MotorControl SWC는 RP_HmiBtn.AccelPwmDuty를 읽어 즉시 TargetPwmDuty로 출력한다. 응답 시간 50ms 이내 (10ms Task 주기 + CAN 전달 지연). AccelPwmDuty = 0이면 모터 정지. ACC 활성(CRUISING/FOLLOWING) 상태로 전이 시 DistanceControl 제어 출력으로 전환.
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: T
+SWC: MotorControl
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS033
+- TYPE: Parent
+  VALUE: SYS036
 
 [[/SECTION]]
 

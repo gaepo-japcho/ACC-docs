@@ -438,9 +438,17 @@ RELATIONS:
 UID: SYS016
 TITLE: CAN 통신 - 메인 ECU → 모터 제어기
 STATEMENT: >>>
-메인 ECU(MPC5606B)는 CAN 메시지로 모터 제어 명령을 Arduino 모터 제어 보드에 전송한다: 목표 모터 제어값(PWM duty 또는 속도 명령). 전송 주기: 10ms.
+MotorControl SWC가 산출한 목표 PWM duty(TargetPwmDuty)를 CanCommunication SWC가 CAN 메시지로 Arduino 모터 제어 보드에 전송한다.
+
+MotorControl SWC 제어 분기 (SWR032/033):
+
+- ACC 활성(CRUISING/FOLLOWING): DistanceControl.TargetSpeedCmS를 속도→PWM 변환 후 클램핑 출력
+- STANDBY 수동 제어: GUI AccelPwmDuty를 직접 PWM으로 출력
+- OFF/FAULT: TargetPwmDuty = 0, CmdValid = false
+
+전송 주기: 10ms. DLC: 8 bytes.
 <<<
-ASIL: QM
+ASIL: B
 CATEGORY: 인터페이스
 VERIFICATION: T
 RELATIONS:
@@ -489,9 +497,16 @@ RELATIONS:
 UID: SYS030
 TITLE: CAN 통신 - GUI → 메인 ECU (운전자 입력)
 STATEMENT: >>>
-RPi GUI 애플리케이션은 운전자 입력(버튼 클릭, 페달 신호)을 CAN 메시지로 메인 ECU(MPC5606B)에 전송한다.
-메시지 내용: ACC ON/OFF, SET, RES, 속도+, 속도-, 거리설정(1/2/3), 일시정지, 브레이크 버튼(BTN_BRAKE), 액셀 상태(SET_ACCEL_PWM).
-전송 주기: 20ms.
+RPi GUI 애플리케이션은 운전자 입력(버튼 클릭, 페달 신호)을 CAN 메시지 GUI_CTRL(0x510)로 메인 ECU(MPC5606B)에 전송한다.
+
+메시지 내용:
+
+- 버튼 비트맵(RawBtnBitmap, uint8): ACC ON/OFF, SET, RES, 속도+, 속도-, 거리설정(1/2/3), 일시정지
+- 브레이크 버튼(BTN_BRAKE, 1bit, 디지털 ON/OFF)
+- 액셀 PWM(AccelPwmDuty, PwmDuty/sint16): PyQt GUI 슬라이더에서 직접 설정하는 수동 액셀 duty값. STANDBY 상태에서 MotorControl SWC가 직접 PWM 출력에 사용한다 (SYS033, SWR033).
+- Rolling Counter(GuiSeqCounter, uint8): 메시지 순서 확인용
+
+전송 주기: 50ms.
 <<<
 ASIL: QM
 CATEGORY: 인터페이스
@@ -595,6 +610,46 @@ RELATIONS:
   VALUE: STK021
 
 [[/SECTION]]
+
+[REQUIREMENT]
+UID: SYS036
+TITLE: MotorControl SWC 도입
+STATEMENT: >>>
+메인 ECU 소프트웨어는 MotorControl SWC를 별도로 구성한다.
+
+역할:
+
+- DistanceControl SWC의 목표 속도(TargetSpeedCmS)를 실제 모터 PWM duty로 변환 (ACC 활성 시)
+- GUI AccelPwmDuty를 직접 PWM으로 출력 (STANDBY 수동 제어 시)
+- OFF/FAULT 상태에서 모터 출력을 0으로 강제
+
+MotorControl SWC는 DistanceControl SWC와 분리됨으로써 "PID 계산"과 "PWM 변환/출력 안전 클램핑"의 책임을 분리한다 (단일 책임 원칙, ASIL-B 적용).
+<<<
+ASIL: B
+CATEGORY: 아키텍처
+VERIFICATION: I
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK012
+- TYPE: Parent
+  VALUE: STK013
+
+[REQUIREMENT]
+UID: SYS033
+TITLE: STANDBY 상태 수동 액셀 제어
+STATEMENT: >>>
+STANDBY 상태에서 운전자는 RPi GUI의 액셀 슬라이더(AccelPwmDuty)를 통해 모터를 수동으로 제어할 수 있다. AccelPwmDuty 값은 GUI_CTRL CAN 메시지를 통해 메인 ECU에 전달되고, MotorControl SWC가 즉시 PWM으로 출력한다. 응답 시간 50ms 이내.
+
+ACC 활성(CRUISING/FOLLOWING) 중에는 PID 제어가 우선하며 AccelPwmDuty는 무시된다. AccelPwmDuty가 0 초과인 경우 브레이크 오버라이드(SYS006)와 동일하게 STANDBY 전이 조건으로 간주한다 (SYS007, SWR003).
+<<<
+ASIL: QM
+CATEGORY: 기능
+VERIFICATION: T
+RELATIONS:
+- TYPE: Parent
+  VALUE: STK008
+- TYPE: Parent
+  VALUE: STK019
 
 [[SECTION]]
 TITLE: 비기능 요구사항
