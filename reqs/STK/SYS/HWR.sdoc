@@ -70,7 +70,7 @@ RELATIONS:
 UID: HWR003
 TITLE: 카메라+LiDAR 처리 유닛
 STATEMENT: >>>
-Raspberry Pi 보드를 사용한다. 카메라로 전방 차량 인식, LiDAR로 거리 측정을 수행하고 연산 결과를 CAN 인터페이스로 메인 ECU에 전송한다.
+Raspberry Pi 보드를 사용한다. 카메라로 전방 차량 인식, LiDAR로 거리 측정을 수행하고, 두 센서의 융합 결과(감지 여부, 차간거리)를 CAN 인터페이스로 메인 ECU에 전송한다. 제어 연산은 수행하지 않으며 센서 I/O 역할에 한정된다.
 <<<
 ASIL: QM
 CATEGORY: 기능
@@ -78,8 +78,6 @@ VERIFICATION: T
 RELATIONS:
 - TYPE: Parent
   VALUE: SYS011
-- TYPE: Parent
-  VALUE: SYS013
 - TYPE: Parent
   VALUE: SYS015
 

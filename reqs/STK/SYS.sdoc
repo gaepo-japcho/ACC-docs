@@ -344,7 +344,7 @@ RELATIONS:
 UID: SYS013
 TITLE: 전방 차량 상대속도 산출
 STATEMENT: >>>
-LiDAR 거리 측정값의 시간 미분과 자차 속도를 조합하여 전방 차량의 상대속도를 산출한다. 산출된 상대속도는 CAN 메시지로 메인 ECU에 전송한다.
+메인 ECU(MPC5606B)는 CAN으로 수신한 차간거리(VEH_DIST)의 시간 미분과 자차 속도(인코더 기반)를 조합하여 전방 차량의 상대속도를 내부적으로 산출한다. 산출된 상대속도는 ECU 내부 제어 로직(거리/속도 PID)에서만 사용되며 CAN 버스로 재전송되지 않는다. RPi 및 Arduino는 센서 I/O만 담당하고 상대속도 연산은 수행하지 않는다.
 <<<
 ASIL: QM
 CATEGORY: 기능
@@ -425,7 +425,7 @@ TITLE: CAN 통신
 UID: SYS015
 TITLE: CAN 통신 - 센서 → 메인 ECU
 STATEMENT: >>>
-카메라+LiDAR 처리 유닛(RPi)은 CAN 메시지로 다음 정보를 메인 ECU(MPC5606B)에 전송한다: 전방 차량 감지 여부(1bit), 차간거리(16bit, mm), 상대속도(16bit, 1cm/s). 전송 주기: 20ms.
+카메라+LiDAR 처리 유닛(RPi)은 CAN 메시지 SENSOR_FUSION(0x110)로 다음 정보를 메인 ECU(MPC5606B)에 전송한다: 전방 차량 감지 여부(1bit), 차간거리(16bit, mm, 0~12000), Rolling Counter(4bit), E2E CRC(16bit). 전송 주기: 20ms, DLC: 6 Byte. 상대속도는 메인 ECU에서 내부 산출한다(SYS013 참조).
 <<<
 ASIL: QM
 CATEGORY: 인터페이스

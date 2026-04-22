@@ -457,7 +457,7 @@ TITLE: 인터페이스 요구
 [[SECTION]]
 TITLE: CAN 버스 통신
 STATEMENT: >>>
-- RPi → MPC5606B: 차량 감지 여부, 차간거리, 상대속도 (주기 20ms)
+- RPi → MPC5606B: 차량 감지 여부, 차간거리 (주기 20ms). 상대속도는 MPC5606B 내부에서 산출
 - MPC5606B → Arduino: 모터 제어 명령 — PWM duty / 속도 명령 (주기 10ms)
 - Arduino → MPC5606B: 인코더 기반 실측 속도, 모터 상태 (주기 10ms)
 - RPi GUI → MPC5606B: 운전자 입력 — 버튼, 페달 신호 (주기 20ms)

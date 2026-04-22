@@ -248,7 +248,7 @@ RELATIONS:
 UID: STK012
 TITLE: 통신 인터페이스
 STATEMENT: >>>
-시스템 내부 통신은 CAN 버스를 사용한다. 카메라+LiDAR 처리 유닛에서 연산된 전방 차량 상대속도 값을 CAN 메시지로 전송한다.
+시스템 내부 통신은 CAN 버스를 사용한다. 카메라+LiDAR 처리 유닛은 전방 차량 감지 여부와 차간거리를 CAN 메시지로 메인 ECU에 전송하며, 상대속도 및 그 외 제어 연산은 메인 ECU에서 수행한다.
 <<<
 CATEGORY: 인터페이스
 PRIORITY: 필수
