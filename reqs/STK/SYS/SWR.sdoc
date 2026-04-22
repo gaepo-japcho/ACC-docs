@@ -610,7 +610,7 @@ VERIFICATION: T
 SWC: MotorControl
 RELATIONS:
 - TYPE: Parent
-  VALUE: SYS033
+  VALUE: SYS037
 - TYPE: Parent
   VALUE: SYS036
 
@@ -644,4 +644,3 @@ RELATIONS:
   VALUE: SYS031
 
 [[/SECTION]]
-                   

@@ -503,7 +503,7 @@ RPi GUI 애플리케이션은 운전자 입력(버튼 클릭, 페달 신호)을 
 
 - 버튼 비트맵(RawBtnBitmap, uint8): ACC ON/OFF, SET, RES, 속도+, 속도-, 거리설정(1/2/3), 일시정지
 - 브레이크 버튼(BTN_BRAKE, 1bit, 디지털 ON/OFF)
-- 액셀 PWM(AccelPwmDuty, PwmDuty/sint16): PyQt GUI 슬라이더에서 직접 설정하는 수동 액셀 duty값. STANDBY 상태에서 MotorControl SWC가 직접 PWM 출력에 사용한다 (SYS033, SWR033).
+- 액셀 PWM(AccelPwmDuty, PwmDuty/sint16): PyQt GUI 슬라이더에서 직접 설정하는 수동 액셀 duty값. STANDBY 상태에서 MotorControl SWC가 직접 PWM 출력에 사용한다 (SYS037, SWR033).
 - Rolling Counter(GuiSeqCounter, uint8): 메시지 순서 확인용
 
 전송 주기: 50ms.
@@ -635,7 +635,7 @@ RELATIONS:
   VALUE: STK013
 
 [REQUIREMENT]
-UID: SYS033
+UID: SYS037
 TITLE: STANDBY 상태 수동 액셀 제어
 STATEMENT: >>>
 STANDBY 상태에서 운전자는 RPi GUI의 액셀 슬라이더(AccelPwmDuty)를 통해 모터를 수동으로 제어할 수 있다. AccelPwmDuty 값은 GUI_CTRL CAN 메시지를 통해 메인 ECU에 전달되고, MotorControl SWC가 즉시 PWM으로 출력한다. 응답 시간 50ms 이내.
