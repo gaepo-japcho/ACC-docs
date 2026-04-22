@@ -465,7 +465,7 @@ TITLE: DriverInput
 UID: SWR020
 TITLE: 운전자 입력 처리 (GUI → CAN)
 STATEMENT: >>>
-PyQt GUI 버튼/슬라이더 이벤트를 GUI_CTRL(0x510) CAN 메시지로 변환하여 메인 ECU에 50ms 주기로 전송한다.
+PyQt GUI 버튼/슬라이더 이벤트를 SENSOR_ACC_CMD(0x100) CAN 메시지로 변환하여 메인 ECU에 20ms 주기로 전송한다.
 
 처리 항목:
 
@@ -522,7 +522,7 @@ RELATIONS:
 UID: SWR023
 TITLE: 태스크 주기 - 50ms / 100ms
 STATEMENT: >>>
-- Task_50ms (QM): HMI 갱신 처리 — CanComm.RE_CanRxGui, HmiManager.RE_BtnDispatch/RE_StatusBuild, CanComm.RE_CanTxGui (GUI_STATUS 0x520 송신).
+- Task_50ms (QM): HMI 갱신 처리 — CanComm.RE_CanRxGui, HmiManager.RE_BtnDispatch/RE_StatusBuild, CanComm.RE_CanTxGui (ECU_ACC_STATUS 0x400 송신).
 - Task_100ms (QM): 진단 보고 처리 — Diagnostics.RE_DtcReport.
 <<<
 ASIL: QM
