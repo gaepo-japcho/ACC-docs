@@ -347,7 +347,7 @@ TITLE: CanCommunication
 UID: SWR012
 TITLE: CAN TX - 모터 제어 명령 송신
 STATEMENT: >>>
-MotorControl SWC가 IF_MotorCmd (TargetPwmDuty, CmdValid)를 생성하면, CanCommunication SWC의 RE_CanTxMotor (10ms)가 이를 MTR_CMD(0x210) CAN 메시지로 Arduino CAN 게이트웨이에 전송한다. 게이트웨이는 수신 후 I2C 버스로 모터 노드에 명령을 중계하며, 모터 노드는 좌/우 2채널(앞·뒤 모터 쌍 공유) PWM으로 구동한다. DLC: 8 bytes.
+MotorControl SWC가 IF_MotorCmd (TargetPwmDuty, CmdValid)를 생성하면, CanCommunication SWC의 RE_CanTxMotor (10ms)가 이를 MTR_CMD(0x210) CAN 메시지로 Arduino CAN 게이트웨이에 전송한다. CAN 페이로드는 DBC 정본을 유지해 4휠(앞좌/앞우/뒤좌/뒤우) 시그널을 그대로 싣되 모든 채널에 동일한 TargetPwmDuty 값을 복제해 송신한다. 게이트웨이는 I2C로 모터 노드에 명령을 중계하며, 모터 노드는 대표 바퀴 1개에만 실제 PWM 출력을 적용한다(스케일카 시연 단순화). DLC: 8 bytes.
 <<<
 ASIL: QM
 CATEGORY: 인터페이스
@@ -375,7 +375,7 @@ RELATIONS:
 UID: SWR014
 TITLE: CAN RX - 모터 피드백 수신
 STATEMENT: >>>
-모터 제어기(Arduino CAN 게이트웨이)로부터 실측 속도, 모터 상태 CAN 메시지를 수신한다. 실측값은 모터 노드가 I2C로 게이트웨이에 전달 후 CAN 송신되므로, 30ms 타임아웃은 CAN + I2C 종단간을 포괄한다. 수신 주기: 10ms.
+모터 제어기(Arduino CAN 게이트웨이)로부터 실측 속도, 모터 상태 CAN 메시지를 수신한다. 실측값은 모터 노드가 단일 엔코더로 측정한 대표 바퀴 1개의 속도이며, I2C로 게이트웨이에 전달 후 DBC 정본 포맷(4휠 속도)의 모든 채널에 동일 값으로 복제되어 CAN 송신된다. 30ms 타임아웃은 CAN + I2C 종단간을 포괄한다. 수신 주기: 10ms.
 <<<
 ASIL: QM
 CATEGORY: 인터페이스

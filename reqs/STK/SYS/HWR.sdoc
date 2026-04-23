@@ -55,7 +55,7 @@ RELATIONS:
 UID: HWR002
 TITLE: 모터 제어 보드 - Arduino (2대 구성)
 STATEMENT: >>>
-모터 제어 시스템은 Arduino 2대로 구성된다. 첫 번째 보드(CAN 게이트웨이 노드)는 MCP2515 등 외장 CAN 컨트롤러/트랜시버를 통해 메인 ECU와 CAN 통신하며, 모터 명령 및 피드백을 I2C 버스로 두 번째 보드에 중계한다. 두 번째 보드(모터 노드)는 Motor Shield R3 2장 스택으로 좌/우 2채널 PWM 출력을 구동하고, 엔코더 입력으로 실측 속도를 계측한다. Arduino Uno 단일 보드에서 MCP2515-SPI(D11/D12/D13)와 Motor Shield R3(PWM_B/DIR_A/DIR_B)의 핀 충돌로 인해 2 보드 분리 구성이 필요하다.
+모터 제어 시스템은 Arduino 2대로 구성된다. 첫 번째 보드(CAN 게이트웨이 노드)는 MCP2515 등 외장 CAN 컨트롤러/트랜시버를 통해 메인 ECU와 CAN 통신하며, 모터 명령 및 피드백을 I2C 버스로 두 번째 보드에 중계한다. 두 번째 보드(모터 노드)는 Motor Shield R3 기반으로 대표 바퀴 1개만 PWM 출력을 구동하고, 단일 엔코더 입력으로 실측 속도를 계측한다(스케일카 시연 범위 내 단순화). Arduino Uno 단일 보드에서 MCP2515-SPI(D11/D12/D13)와 Motor Shield R3(PWM_B/DIR_A/DIR_B)의 핀 충돌로 인해 2 보드 분리 구성이 필요하다.
 <<<
 ASIL: QM
 CATEGORY: 기능
