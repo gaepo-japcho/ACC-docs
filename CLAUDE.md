@@ -7,12 +7,13 @@
 | 경로 | 용도 | 주 포맷 |
 |---|---|---|
 | `reqs/` | 요구사항 데이터베이스 (traceability의 근간) | StrictDoc `.sdoc` |
-| `reqs/STK.sdoc` | 이해관계자 요구사항 (STK###) | `.sdoc` |
-| `reqs/STK/SYS.sdoc` | 시스템 요구사항 SYS001–SYS035 | `.sdoc` |
-| `reqs/STK/SYS/SWR.sdoc` | 소프트웨어 요구사항 SWR001–SWR031 | `.sdoc` |
-| `reqs/STK/SYS/SAF.sdoc` | 안전 요구사항 SAF001–SAF017 | `.sdoc` |
+| `reqs/STK.sdoc` | 이해관계자 요구사항 STK001–STK024 (24개, 번호 비연속) | `.sdoc` |
+| `reqs/STK/SYS.sdoc` | 시스템 요구사항 SYS001–SYS037 (37개, 번호 비연속) | `.sdoc` |
+| `reqs/STK/SYS/SWR.sdoc` | 소프트웨어 요구사항 SWR001–SWR033 (30개, 번호 비연속) | `.sdoc` |
+| `reqs/STK/SYS/SAF.sdoc` | 안전 요구사항 SAF001–SAF018 (17개, 번호 비연속) | `.sdoc` |
 | `reqs/STK/SYS/HWR.sdoc` | 하드웨어 요구사항 HWR001–HWR012 | `.sdoc` |
-| (이사됨) ACC-autosar repo 의 `README.md` | 5 SWC · 인터페이스 · 런너블 · 데이터타입 기준 문서. 구 `autosar/ACC_AUTOSAR_Architecture_Sketch.md` 가 `ACC-autosar/README.md` 로 이사 | Markdown + Mermaid |
+| (타 repo) `../ACC-CANDB/` | **CAN 메시지/시그널 정본** (DBC + README). 아키텍처 스케치 값과 다르면 CANDB 우선 | `.dbc` + Markdown |
+| (타 repo) `../ACC-autosar/README.md` | 6 SWC · 인터페이스 · 런너블 · 데이터타입 기준 문서 (구 `autosar/ACC_AUTOSAR_Architecture_Sketch.md` 에서 이사) | Markdown + Mermaid |
 | `ASPICE/` | ASPICE 프로세스 문서 (SYS.1, SYS.2) | `.sdoc` |
 | `ISO26262/` | ISO 26262 안전 아티팩트 (현재 비어 있음, `.docx`는 `guide/` 에 있음) | — |
 | `guide/README.md` | **ASPICE 4.0 + ISO 26262:2018 tailoring 선언** (250+ 라인) | Markdown |
@@ -29,12 +30,14 @@
 상위→하위 트레이스는 `.sdoc` 파일의 `Parent` 관계로 연결된다.
 
 ```
-STK (stakeholder, ~15개)
- └─ SYS (system, SYS001–SYS035)
-     ├─ SWR (software, SWR001–SWR031)
-     ├─ SAF (safety, SAF001–SAF017)
-     └─ HWR (hardware, HWR001–HWR012)
+STK (stakeholder, STK001–STK024, 24개)
+ └─ SYS (system, SYS001–SYS037, 37개)
+     ├─ SWR (software, SWR001–SWR033, 30개)
+     ├─ SAF (safety, SAF001–SAF018, 17개)
+     └─ HWR (hardware, HWR001–HWR012, 12개)
 ```
+
+(번호가 비연속인 이유: `Obsolete` 처리된 UID 는 번호만 비워두고 재활용 금지 — 아래 규칙 참조.)
 
 - **절대로 ID를 재활용하지 말 것** — 삭제된 요구사항은 상태를 `Obsolete` 로 바꾸되 번호는 비워둔다.
 - **UID 중복 금지** — 같은 prefix(SYS/SWR/SAF/HWR/STK) 내에서 같은 번호가 두 번 나오면 StrictDoc 빌드가 실패하고 Parent 트레이스가 엉킨다. 과거 `SYS033` 중복으로 한 번 터진 적 있음(커밋 `43b2c99`).
@@ -83,5 +86,8 @@ strictdoc server .          # localhost:5111 에서 라이브 편집
 
 ## 참조 순서 (다른 레포에서 이 문서를 볼 때)
 
-- 구현자(AUTOSAR/Arduino/RPi)는 별도 repo `ACC-autosar/README.md` (구 `autosar/ACC_AUTOSAR_Architecture_Sketch.md`, 이사됨) 를 1차 레퍼런스로 본다 — 5 SWC 계약, 런너블 주기, 데이터타입. 단, **CAN ID/이름/DLC 는 `ACC-CANDB/acc_db.dbc` 가 진실** (스케치의 제안값과 DBC 가 다를 경우 DBC 우선).
-- 요구사항 문구 원문이 필요하면 `reqs/STK/SYS/*.sdoc` 를 직접 열 것. 코드 주석의 `SWR016` 같은 표시는 이 파일의 UID 와 매칭된다.
+진실의 원천 우선순위는 **CANDB → docs (본 repo) → 아키텍처 스케치** 순이다.
+
+- **CAN 메시지/시그널**: `../ACC-CANDB/acc_db.dbc` + `../ACC-CANDB/README.md` 가 최상위 정본. 본 repo 의 `reqs/` 와 스케치는 2차 — 값 불일치 시 CANDB 가 이긴다.
+- **요구사항 문구**: `reqs/STK/SYS/*.sdoc` 를 직접 열 것. 코드 주석의 `SWR016` 등은 이 파일의 UID 와 1:1 매칭.
+- **SWC/런너블/인터페이스**: 별도 repo `../ACC-autosar/README.md` (6 SWC 계약, 런너블 주기, 데이터타입) 를 1차 레퍼런스로 본다. 구 `autosar/ACC_AUTOSAR_Architecture_Sketch.md` 경로는 이사됨.
