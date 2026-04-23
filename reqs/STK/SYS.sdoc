@@ -438,7 +438,7 @@ RELATIONS:
 UID: SYS016
 TITLE: CAN 통신 - 메인 ECU → 모터 제어기
 STATEMENT: >>>
-MotorControl SWC가 산출한 목표 PWM duty(TargetPwmDuty)를 CanCommunication SWC가 CAN 메시지 ECU_PWM_CMD(0x200)로 Arduino 모터 제어 보드에 전송한다.
+MotorControl SWC가 산출한 목표 PWM duty(TargetPwmDuty)를 CanCommunication SWC가 CAN 메시지 MTR_CMD(0x210)로 Arduino 모터 제어 보드에 전송한다. DLC: 6 byte (PWM 4ch × 1byte + MTR_RC 4bit + MTR_CRC 8bit).
 
 MotorControl SWC 제어 분기 (SWR032/033):
 
@@ -448,7 +448,7 @@ MotorControl SWC 제어 분기 (SWR032/033):
 
 전송 주기: 10ms.
 
-안전 메커니즘: 본 메시지는 액추에이터 직접 제어 경로이므로 AUTOSAR E2E Profile 01(Rolling Counter + CRC) 을 적용한다 (SAF010 참조). 수신 측 Arduino는 CRC/카운터 검증 실패 시 해당 명령을 무효 처리하고 30ms 타임아웃 규정(SWR018)에 따라 모터 출력 0으로 진입한다.
+안전 메커니즘: 본 메시지는 액추에이터 직접 제어 경로이므로 AUTOSAR E2E Profile 01(Rolling Counter 4bit + CRC-8) 을 적용한다 (SAF010 참조). 수신 측 Arduino는 CRC/카운터 검증 실패 시 해당 명령을 무효 처리하고 30ms 타임아웃 규정(SWR018)에 따라 모터 출력 0으로 진입한다.
 <<<
 ASIL: B
 CATEGORY: 인터페이스
@@ -463,7 +463,12 @@ RELATIONS:
 UID: SYS017
 TITLE: CAN 통신 - 모터 제어기 → 메인 ECU
 STATEMENT: >>>
-Arduino 모터 제어 보드는 인코더 기반 실측 속도, 모터 상태를 CAN 메시지로 메인 ECU에 전송한다. 전송 주기: 10ms.
+Arduino 모터 제어 보드는 속도 피드백을 단일 프레임 MTR_SPD_FB(0x300, DLC 8, 주기 10ms)로 송신한다. 프레임은 HMI 표시용 평균 속도와 제어 루프용 4륜 개별 속도를 함께 담으며, 수신자는 시그널별로 분리된다:
+
+- **GET_SPD_AVG** (int16 × 0.02 cm/s, Byte 0-1): 수신자 ECU, SENSOR. RPi HMI 계기판 표시(SYS019). MTR 노드가 자체 엔코더로부터 산출(현 하드웨어는 엔코더 1개, 다중 엔코더 확장 시 MTR 쪽에서 평균 연산).
+- **GET_SPD_LF/RF/LR/RR** (int12 × 0.3 cm/s, Byte 2-7): 수신자 ECU 전용. PID 제어 루프 입력. DLC 8 포화 우회를 위해 int16 → int12 로 축소 (SYS012 분해능 1 cm/s 요건 충족).
+
+차속 데이터 원천은 MTR 한 군데로 일원화 — ECU 는 ACC 상태 피드백(ACC_STATUS) 에 차속을 포함시키지 않는다. 모터 노드 생존/에러는 별도 MTR_HEARTBEAT(0x310, DLC 2, 10ms)로 송신한다.
 <<<
 ASIL: QM
 CATEGORY: 인터페이스
@@ -478,11 +483,11 @@ RELATIONS:
 UID: SYS025
 TITLE: CAN 통신 고장 감지 (→ FAULT)
 STATEMENT: >>>
-CAN 메시지 타임아웃(예: 3주기 연속 미수신) 시 해당 노드 통신 이상으로 판단하고 FAULT 상태로 전이한다. 각 노드는 Heartbeat 및 에러코드를 CAN 메시지로 전송한다:
+CAN 메시지 타임아웃(3주기 연속 미수신) 시 해당 노드 통신 이상으로 판단하고 FAULT 상태로 전이한다. 각 노드는 Heartbeat 및 에러코드를 CAN 메시지로 전송한다:
 
-- RASPI: HB_SENSOR / ERR_SENSOR (SENSOR_HEARTBEAT, 0x111, 500ms)
-- MTR: HB_MTR / ERR_MTR (MTR_HEARTBEAT, 0x310, 500ms) — CAN 게이트웨이 Arduino가 I2C로 연결된 모터 노드의 상태를 대신 송신한다
-- ECU: HB_ECU / ERR_ECU (ECU_HEARTBEAT, 0x410, 500ms)
+- RASPI: HB_SENSOR / ERR_SENSOR (SENSOR_HEARTBEAT, 0x111, 20ms 주기 → 60ms 타임아웃)
+- MTR: HB_MTR / ERR_MTR (MTR_HEARTBEAT, 0x310, 10ms 주기 → 30ms 타임아웃) — CAN 게이트웨이 Arduino가 I2C로 연결된 모터 노드의 상태를 대신 송신한다
+- ECU: HB_ECU / ERR_ECU (ECU_HEARTBEAT, 0x410, 10ms 주기 → 30ms 타임아웃, ASIL-B per SAF018)
 
 ERR 시그널 값이 0이 아닌 경우 해당 노드의 고장으로 판단한다. FAULT 전이 시 모터 출력을 0으로 설정하고 HMI에 경고를 표시한다. 능동 감속은 수행하지 않는다.
 <<<
@@ -499,20 +504,23 @@ RELATIONS:
 UID: SYS030
 TITLE: CAN 통신 - GUI → 메인 ECU (운전자 입력)
 STATEMENT: >>>
-RPi GUI 애플리케이션은 운전자 입력(버튼 클릭, 페달 신호)을 CAN 메시지 SENSOR_ACC_CMD(0x100)로 메인 ECU(MPC5606B)에 전송한다. DLC: 8 Byte.
+RPi GUI 애플리케이션은 운전자 입력을 기능 도메인별 두 CAN 메시지로 분리하여 메인 ECU(MPC5606B)에 전송한다.
 
-메시지 내용:
+**VEH_CTRL(0x120)** — 차량 직접 조작(브레이크/수동 액셀). 안전 critical (SAF004/015 ASIL-B, 50ms 응답 요건) 때문에 고우선 저번호 ID + 20ms 주기로 운용. DLC: 2 Byte.
 
-- SET_ACCEL_PWM (int8, Byte 0): PyQt GUI 슬라이더에서 직접 설정하는 수동 액셀 duty값. STANDBY 상태에서 MotorControl SWC가 직접 PWM 출력에 사용한다 (SYS037, SWR033).
-- BTN_BRAKE (1bit, Byte 1 [0]): 브레이크 버튼. 디지털 ON/OFF, 눌림 유지 시 지속 제동.
-- BTN_ACC_OFF (1bit, Byte 1 [1]): ACC ON/OFF 토글 (엣지 트리거).
-- BTN_ACC_SET (1bit, Byte 1 [2]): SET 버튼 (엣지 트리거, STANDBY 에서만 유효).
-- BTN_ACC_RES (1bit, Byte 1 [3]): RES 버튼 (엣지 트리거, STANDBY 에서만 유효).
-- BTN_ACC_CANCEL (1bit, Byte 1 [4]): 일시정지 버튼 (엣지 트리거, CRUISING/FOLLOWING 에서만 유효).
-- SET_ACC_SPD (int8, Byte 2): 목표 최고속도 절대값 (cm/s). 속도+/- 조정은 GUI 가 현재 설정값 ± 증분 계산해 절대값으로 전송.
+- SET_ACCEL_PWM (int8, Byte 0, -128~127): PyQt GUI 슬라이더에서 직접 설정하는 수동 액셀 duty값. 음수는 후진 PWM(확장 옵션). STANDBY 상태에서 MotorControl SWC가 직접 PWM 출력에 사용한다 (SYS037, SWR033).
+- BTN_BRAKE (1bit, Byte 1 [0]): 브레이크 버튼. 디지털 ON/OFF, 눌림 유지 시 지속 제동(level trigger).
+
+**ACC_CTRL(0x510)** — ACC feature 버튼 + 설정값. DLC: 4 Byte. 전송 주기 50ms.
+
+- BTN_ACC_OFF (1bit, Byte 0 [0]): ACC ON/OFF 토글 (엣지 트리거).
+- BTN_ACC_SET (1bit, Byte 0 [1]): SET 버튼 (엣지 트리거, STANDBY 에서만 유효).
+- BTN_ACC_RES (1bit, Byte 0 [2]): RES 버튼 (엣지 트리거, STANDBY 에서만 유효).
+- BTN_ACC_CANCEL (1bit, Byte 0 [3]): 일시정지 버튼 (엣지 트리거, CRUISING/FOLLOWING 에서만 유효).
+- SET_ACC_SPD (int16, Byte 1-2, -500~500 cm/s): 목표 최고속도 절대값. 속도+/- 조정은 GUI 가 현재 설정값 ± 증분 계산해 절대값으로 전송. 하한 클램프는 수신측 ECU(SWR031, 최소 5 cm/s)에서 수행.
 - SET_ACC_LVL (uint8, Byte 3): 거리 단계 절대값 (1=CLOSE, 2=MEDIUM, 3=FAR). 거리 버튼 클릭 시 해당 단계 값 전송.
 
-전송 주기: 20ms.
+분할 근거: 브레이크/액셀 오버라이드는 SAF004/SAF015 ASIL-B, 50ms 응답 요건이라 20ms 고속 주기 필요. ACC 버튼은 300ms 디바운싱·엣지 트리거라 50ms 주기로 충분하며, 안전 path 와 feature path 를 분리해 혼재를 피한다.
 <<<
 ASIL: QM
 CATEGORY: 인터페이스
@@ -529,8 +537,10 @@ RELATIONS:
 UID: SYS031
 TITLE: CAN 통신 - 메인 ECU → GUI (HMI 표시 데이터)
 STATEMENT: >>>
-메인 ECU(MPC5606B)는 HMI 표시용 데이터를 CAN 메시지 ECU_ACC_STATUS(0x400)로 RPi GUI에 전송한다. DLC: 5 Byte.
-메시지 내용: 현재 자차 속도 GET_SPD_AVG(Byte 0-1, cm/s, factor 0.01), 현재 ACC 상태 GET_ACC_STATUS(Byte 2, 0=OFF/1=STANDBY/2=CRUISING/3=FOLLOWING/4=FAULT), 설정 최고속도 GET_ACC_SPD(Byte 3, int8 cm/s), 현재 거리설정 단계 GET_ACC_LVL(Byte 4, 1/2/3). ECU 에러 상태는 별도 ECU_HEARTBEAT(0x410)의 ERR_ECU 시그널로 전송한다.
+메인 ECU(MPC5606B)는 ACC 상태 피드백을 CAN 메시지 ACC_STATUS(0x520)로 RPi GUI에 전송한다. DLC: 4 Byte.
+메시지 내용: 현재 ACC 상태 GET_ACC_STATE(Byte 0, 0=OFF/1=STANDBY/2=CRUISING/3=FOLLOWING/4=FAULT), 설정 최고속도 GET_ACC_SPD(Byte 1-2, int16 cm/s, -500~500), 현재 거리설정 단계 GET_ACC_LVL(Byte 3, 1/2/3).
+자차 속도는 본 메시지에 포함하지 않는다. RPi 는 MTR_SPD_FB(0x300) 프레임의 GET_SPD_AVG 시그널을 직접 수신한다(SYS017/SYS019) — 속도 데이터 원천 단일화.
+ECU 에러 상태는 별도 ECU_HEARTBEAT(0x410)의 ERR_ECU 시그널로 전송한다.
 전송 주기: 50ms.
 <<<
 ASIL: QM
@@ -578,11 +588,11 @@ TITLE: HMI 출력 인터페이스 (GUI 클러스터)
 STATEMENT: >>>
 RPi GUI가 HMI 클러스터 역할을 수행하며 다음을 표시한다:
 
-- 현재 자차 속도
-- ACC 상태 (OFF / STANDBY / CRUISING / FOLLOWING / FAULT)
-- 현재 설정된 최고속도
-- 현재 거리설정 단계 (1/2/3)
-- FAULT 발생 시 경고 표시 (시간 여유 시 경고음)
+- 현재 자차 속도 — MTR_SPD_FB(0x300, 10ms) GET_SPD_AVG 시그널 직접 수신 (HMI 는 50ms 타이머로 decimation)
+- ACC 상태 (OFF / STANDBY / CRUISING / FOLLOWING / FAULT) — ACC_STATUS(0x520) GET_ACC_STATE
+- 현재 설정된 최고속도 — ACC_STATUS GET_ACC_SPD
+- 현재 거리설정 단계 (1/2/3) — ACC_STATUS GET_ACC_LVL
+- FAULT 발생 시 경고 표시 (시간 여유 시 경고음) — ERR_ECU (ECU_HEARTBEAT 0x410)
 
 상태에 따라 비활성 버튼은 그레이아웃 처리한다.
 <<<
@@ -644,7 +654,7 @@ RELATIONS:
 UID: SYS037
 TITLE: STANDBY 상태 수동 액셀 제어
 STATEMENT: >>>
-STANDBY 상태에서 운전자는 RPi GUI의 액셀 슬라이더(SET_ACCEL_PWM)를 통해 모터를 수동으로 제어할 수 있다. SET_ACCEL_PWM 값은 SENSOR_ACC_CMD(0x100) CAN 메시지를 통해 메인 ECU에 전달되고, MotorControl SWC가 즉시 PWM으로 출력한다. 응답 시간 50ms 이내.
+STANDBY 상태에서 운전자는 RPi GUI의 액셀 슬라이더(SET_ACCEL_PWM)를 통해 모터를 수동으로 제어할 수 있다. SET_ACCEL_PWM 값은 VEH_CTRL(0x120, 20ms 주기) CAN 메시지를 통해 메인 ECU에 전달되고, MotorControl SWC가 즉시 PWM으로 출력한다. 응답 시간 50ms 이내.
 
 ACC 활성(CRUISING/FOLLOWING) 중에는 PID 제어가 우선하며 AccelPwmDuty는 무시된다. AccelPwmDuty가 0 초과인 경우 브레이크 오버라이드(SYS006)와 동일하게 STANDBY 전이 조건으로 간주한다 (SYS007, SWR003).
 <<<

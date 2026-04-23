@@ -243,9 +243,9 @@ TITLE: Technical Safety Requirements (TSR)
 UID: SAF010
 TITLE: TSR-02: MTR_CMD E2E 보호 (선택적 적용)
 STATEMENT: >>>
-[ASIL B] 액추에이터 직접 제어 경로인 ECU_PWM_CMD(0x200, 메인 ECU → Arduino) 메시지에 AUTOSAR E2E Profile 01 방식의 Rolling Counter(4bit) + CRC(8bit)를 포함한다. 수신 측(Arduino)은 카운터 순서 및 CRC 검증에 실패한 메시지를 무효 처리하고 타임아웃 규정에 따라 안전 정지(모터 출력 0)로 진입한다.
+[ASIL B] 액추에이터 직접 제어 경로인 MTR_CMD(0x210, 메인 ECU → Arduino) 메시지에 AUTOSAR E2E Profile 01 방식의 Rolling Counter(MTR_RC, 4bit) + CRC(MTR_CRC, CRC-8)를 포함한다. DLC 6 byte (PWM 4ch × 1byte + RC 4bit + CRC 8bit). 수신 측(Arduino)은 카운터 순서 및 CRC 검증에 실패한 메시지를 무효 처리하고 타임아웃 규정에 따라 안전 정지(모터 출력 0)로 진입한다.
 
-E2E 보호는 단일 결함 지점(액추에이터 직전 명령 경로) 에만 선택적으로 적용한다. 다른 CAN 메시지(SENSOR_FUSION 0x110, SENSOR_ACC_CMD 0x100, MTR_SPD_FB 0x300, ECU_ACC_STATUS 0x400)는 3주기 연속 미수신 타임아웃(SYS025) 및 수신측 플러시블리티 검사로 무결성을 확보한다. 근거는 SYS2-QA-001 잔여 과제 #5 참조.
+E2E 보호는 단일 결함 지점(액추에이터 직전 명령 경로) 에만 선택적으로 적용한다. 다른 CAN 메시지(SENSOR_FUSION 0x110, VEH_CTRL 0x120, ACC_CTRL 0x510, MTR_SPD_FB 0x300, ACC_STATUS 0x520)는 3주기 연속 미수신 타임아웃(SYS025) 및 수신측 플러시블리티 검사로 무결성을 확보한다. VEH_CTRL 은 ASIL-B 경로이지만 20ms 주기 + 수신측 레벨 트리거 재확인(BTN_BRAKE) / 범위 검증(SET_ACCEL_PWM)으로 커버된다. 근거는 SYS2-QA-001 잔여 과제 #5 참조.
 <<<
 ASIL: >>>
 B
