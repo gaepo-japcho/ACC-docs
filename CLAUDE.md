@@ -12,7 +12,7 @@
 | `reqs/STK/SYS/SWR.sdoc` | 소프트웨어 요구사항 SWR001–SWR031 | `.sdoc` |
 | `reqs/STK/SYS/SAF.sdoc` | 안전 요구사항 SAF001–SAF017 | `.sdoc` |
 | `reqs/STK/SYS/HWR.sdoc` | 하드웨어 요구사항 HWR001–HWR012 | `.sdoc` |
-| `autosar/ACC_AUTOSAR_Architecture_Sketch.md` | 5 SWC · 인터페이스 · 런너블 · 데이터타입 기준 문서 | Markdown + Mermaid |
+| (이사됨) ACC-autosar repo 의 `README.md` | 5 SWC · 인터페이스 · 런너블 · 데이터타입 기준 문서. 구 `autosar/ACC_AUTOSAR_Architecture_Sketch.md` 가 `ACC-autosar/README.md` 로 이사 | Markdown + Mermaid |
 | `ASPICE/` | ASPICE 프로세스 문서 (SYS.1, SYS.2) | `.sdoc` |
 | `ISO26262/` | ISO 26262 안전 아티팩트 (현재 비어 있음, `.docx`는 `guide/` 에 있음) | — |
 | `guide/README.md` | **ASPICE 4.0 + ISO 26262:2018 tailoring 선언** (250+ 라인) | Markdown |
@@ -83,5 +83,5 @@ strictdoc server .          # localhost:5111 에서 라이브 편집
 
 ## 참조 순서 (다른 레포에서 이 문서를 볼 때)
 
-- 구현자(AUTOSAR/Arduino/RPi)는 `autosar/ACC_AUTOSAR_Architecture_Sketch.md` 를 1차 레퍼런스로 본다 — CAN DB, 5 SWC 계약, 런너블 주기, 데이터타입이 모두 여기에 있음.
+- 구현자(AUTOSAR/Arduino/RPi)는 별도 repo `ACC-autosar/README.md` (구 `autosar/ACC_AUTOSAR_Architecture_Sketch.md`, 이사됨) 를 1차 레퍼런스로 본다 — 5 SWC 계약, 런너블 주기, 데이터타입. 단, **CAN ID/이름/DLC 는 `ACC-CANDB/acc_db.dbc` 가 진실** (스케치의 제안값과 DBC 가 다를 경우 DBC 우선).
 - 요구사항 문구 원문이 필요하면 `reqs/STK/SYS/*.sdoc` 를 직접 열 것. 코드 주석의 `SWR016` 같은 표시는 이 파일의 UID 와 매칭된다.
