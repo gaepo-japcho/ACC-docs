@@ -481,7 +481,7 @@ STATEMENT: >>>
 CAN 메시지 타임아웃(예: 3주기 연속 미수신) 시 해당 노드 통신 이상으로 판단하고 FAULT 상태로 전이한다. 각 노드는 Heartbeat 및 에러코드를 CAN 메시지로 전송한다:
 
 - RASPI: HB_SENSOR / ERR_SENSOR (SENSOR_HEARTBEAT, 0x111, 500ms)
-- MTR: HB_MTR / ERR_MTR (MTR_HEARTBEAT, 0x310, 500ms)
+- MTR: HB_MTR / ERR_MTR (MTR_HEARTBEAT, 0x310, 500ms) — CAN 게이트웨이 Arduino가 I2C로 연결된 모터 노드의 상태를 대신 송신한다
 - ECU: HB_ECU / ERR_ECU (ECU_HEARTBEAT, 0x410, 500ms)
 
 ERR 시그널 값이 0이 아닌 경우 해당 노드의 고장으로 판단한다. FAULT 전이 시 모터 출력을 0으로 설정하고 HMI에 경고를 표시한다. 능동 감속은 수행하지 않는다.
