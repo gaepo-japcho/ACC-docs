@@ -362,9 +362,16 @@ TITLE: 제어 및 성능
 
 [REQUIREMENT]
 UID: SYS014
-TITLE: PID 속도 제어
+TITLE: PID 속도/거리 제어 (cascaded)
 STATEMENT: >>>
-Simulink MBD로 설계된 PID 제어기를 통해 목표 속도/거리를 추종한다. 제어 주기는 10ms, 정상 상태 오차는 목표 속도의 5% 이내여야 한다.
+Simulink MBD로 설계된 cascaded 제어기를 통해 목표 속도/거리를 추종한다. 정상 상태 오차는 목표 속도의 5% 이내여야 한다.
+
+cascaded 구조:
+
+- **바깥 루프 (20ms, DistanceControl SWC)**: 거리 PID — FwdDistance 와 SafeDistance 의 오차로부터 목표 속도 TargetSpeedCmS 산출. CRUISING 모드에서는 TargetSpeedCmS = SetSpeedCmS 로 직접 전달 (PID 비활성).
+- **안쪽 루프 (10ms, MotorControl SWC)**: 속도 PI — TargetSpeedCmS 와 실제 속도 EgoSpeedCmS(MTR_SPD_FB.GET_SPD_AVG) 의 오차로부터 PWM duty 산출. FF Lookup + PI, SAF008 클램핑 포함.
+
+두 루프 주기 비율 2× 로 대역폭 분리 — cascaded 안정성 마진 확보. SENSOR_FUSION 수신 주기(20ms, SYS015) 와 바깥 루프 주기 일치.
 <<<
 ASIL: QM
 CATEGORY: 성능
@@ -440,11 +447,11 @@ TITLE: CAN 통신 - 메인 ECU → 모터 제어기
 STATEMENT: >>>
 MotorControl SWC가 산출한 목표 PWM duty(TargetPwmDuty)를 CanCommunication SWC가 CAN 메시지 MTR_CMD(0x210)로 Arduino 모터 제어 보드에 전송한다. DLC: 6 byte (PWM 4ch × 1byte + MTR_RC 4bit + MTR_CRC 8bit).
 
-MotorControl SWC 제어 분기 (SWR032/033):
+MotorControl SWC 제어 분기 (SWR032/033/034):
 
-- ACC 활성(CRUISING/FOLLOWING): DistanceControl.TargetSpeedCmS를 속도→PWM 변환 후 클램핑 출력
-- STANDBY 수동 제어: GUI SET_ACCEL_PWM을 직접 PWM으로 출력
-- OFF/FAULT: TargetPwmDuty = 0, CmdValid = false
+- ACC 활성(CRUISING/FOLLOWING): inner-loop 속도 PI (SWR034) — TargetSpeedCmS 와 EgoSpeedCmS(MTR_SPD_FB.GET_SPD_AVG) 오차로 PWM 산출, SAF008 클램핑
+- STANDBY 수동 제어: GUI SET_ACCEL_PWM을 직접 PWM으로 출력 (PI 적분기 리셋)
+- OFF/FAULT: TargetPwmDuty = 0, CmdValid = false (PI 적분기 리셋)
 
 전송 주기: 10ms.
 
@@ -463,10 +470,10 @@ RELATIONS:
 UID: SYS017
 TITLE: CAN 통신 - 모터 제어기 → 메인 ECU
 STATEMENT: >>>
-Arduino 모터 제어 보드는 속도 피드백을 단일 프레임 MTR_SPD_FB(0x300, DLC 8, 주기 10ms)로 송신한다. 프레임은 HMI 표시용 평균 속도와 제어 루프용 4륜 개별 속도를 함께 담으며, 수신자는 시그널별로 분리된다:
+Arduino 모터 제어 보드는 속도 피드백을 단일 프레임 MTR_SPD_FB(0x300, DLC 8, 주기 10ms)로 송신한다. 프레임은 대표 속도(HMI 표시 + 제어 입력 겸용)와 4륜 개별 속도(로깅/확장용)를 함께 담으며, 수신자는 시그널별로 분리된다:
 
-- **GET_SPD_AVG** (int16 × 0.02 cm/s, Byte 0-1): 수신자 ECU, SENSOR. RPi HMI 계기판 표시(SYS019). MTR 노드가 자체 엔코더로부터 산출(현 하드웨어는 엔코더 1개, 다중 엔코더 확장 시 MTR 쪽에서 평균 연산).
-- **GET_SPD_LF/RF/LR/RR** (int12 × 0.3 cm/s, Byte 2-7): 수신자 ECU 전용. PID 제어 루프 입력. DLC 8 포화 우회를 위해 int16 → int12 로 축소 (SYS012 분해능 1 cm/s 요건 충족).
+- **GET_SPD_AVG** (int16 × 0.02 cm/s, Byte 0-1): 수신자 ECU, SENSOR. **대표 차속** — ECU MotorControl SWC 의 inner-loop 속도 PI 입력 (SWR034, IF_SensorData.EgoSpeedCmS) + RPi HMI 계기판 표시 (SYS019). MTR 노드가 자체 엔코더로부터 산출 (현 하드웨어는 엔코더 1개 broadcast, 다중 엔코더 확장 시 MTR 쪽에서 평균 연산).
+- **GET_SPD_LF/RF/LR/RR** (int12 × 0.3 cm/s, Byte 2-7): 수신자 ECU. **현재 미사용** — 4륜 개별 제어 확장 또는 로깅/디버그용 예약. DLC 8 포화 우회를 위해 int16 → int12 로 축소 (SYS012 분해능 1 cm/s 요건 충족).
 
 차속 데이터 원천은 MTR 한 군데로 일원화 — ECU 는 ACC 상태 피드백(ACC_STATUS) 에 차속을 포함시키지 않는다. 모터 노드 생존/에러는 별도 MTR_HEARTBEAT(0x310, DLC 2, 10ms)로 송신한다.
 <<<
@@ -629,17 +636,18 @@ RELATIONS:
 
 [REQUIREMENT]
 UID: SYS036
-TITLE: MotorControl SWC 도입
+TITLE: MotorControl SWC 도입 (inner-loop 속도 PI)
 STATEMENT: >>>
 메인 ECU 소프트웨어는 MotorControl SWC를 별도로 구성한다.
 
 역할:
 
-- DistanceControl SWC의 목표 속도(TargetSpeedCmS)를 실제 모터 PWM duty로 변환 (ACC 활성 시)
-- GUI AccelPwmDuty를 직접 PWM으로 출력 (STANDBY 수동 제어 시)
-- OFF/FAULT 상태에서 모터 출력을 0으로 강제
+- DistanceControl SWC의 목표 속도(TargetSpeedCmS)와 실제 속도(EgoSpeedCmS, MTR_SPD_FB.GET_SPD_AVG) 오차로 inner-loop 속도 PI 제어를 수행하여 PWM duty 산출 (ACC 활성 시, SWR034)
+- PWM 출력 범위 클램핑 (SAF008)
+- GUI AccelPwmDuty를 직접 PWM으로 출력 (STANDBY 수동 제어 시, PI 적분기 리셋)
+- OFF/FAULT 상태에서 모터 출력을 0으로 강제 (PI 적분기 리셋)
 
-MotorControl SWC는 DistanceControl SWC와 분리됨으로써 "PID 계산"과 "PWM 변환/출력 안전 클램핑"의 책임을 분리한다 (단일 책임 원칙, ASIL-B 적용).
+MotorControl SWC는 DistanceControl SWC와 분리됨으로써 "바깥 거리 PID (DistanceControl, 20ms)"와 "안쪽 속도 PI + PWM 클램핑 (MotorControl, 10ms)"의 책임을 분리한다 (cascaded 제어, 단일 책임 원칙, ASIL-B 적용).
 <<<
 ASIL: B
 CATEGORY: 아키텍처

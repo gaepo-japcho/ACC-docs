@@ -292,9 +292,11 @@ RELATIONS:
 
 [REQUIREMENT]
 UID: SWR009
-TITLE: PID 제어기 구현
+TITLE: DistanceControl outer-loop 제어 (거리 PID)
 STATEMENT: >>>
-Simulink MBD에서 생성된 PID 제어 코드를 실행한다. 입력: 목표 거리/속도와 실측값의 오차. 출력: IF_CtrlOutput (TargetSpeedCmS, CtrlMode, CmdValid) — MotorControl SWC로 전달. 제어 주기: 10ms. Anti-windup 기능을 포함한다.
+Simulink MBD에서 생성된 PID 제어 코드를 실행한다. 출력: IF_CtrlOutput (TargetSpeedCmS, CtrlMode, CmdValid) — MotorControl SWC로 전달. 제어 주기: 20ms (Task_20ms, SWR022). FOLLOWING 모드에서 거리 오차에 대한 이산 PID + back-calculation anti-windup 을 수행하고, CRUISING 모드에서는 TargetSpeedCmS = SetSpeedCmS 로 직접 전달한다(outer-loop 불필요). 속도 inner-loop PI 는 MotorControl SWC 가 담당 (SWR034).
+
+cascaded 구조: DistanceControl(20ms, 거리→목표속도) → MotorControl(10ms, 목표속도→PWM). 두 루프 주기 2× 분리로 대역폭 간섭 최소화.
 <<<
 ASIL: QM
 CATEGORY: 기능
@@ -308,9 +310,9 @@ RELATIONS:
 
 [REQUIREMENT]
 UID: SWR010
-TITLE: CRUISE 모드 속도 제어
+TITLE: CRUISE 모드 목표속도 직접 전달
 STATEMENT: >>>
-CRUISE 상태에서 설정 속도를 목표로 PID 속도 제어를 수행한다. 전방 차량 감지 시 FOLLOWING 전환 트리거를 StateMachine에 전달한다.
+CRUISE 상태에서는 DistanceControl 이 outer-loop PID 를 수행하지 않고 TargetSpeedCmS = SetSpeedCmS 로 직접 전달한다. 속도 추종은 MotorControl SWC 의 inner-loop 속도 PI (SWR034) 가 담당한다. 전방 차량 감지 시 FOLLOWING 전환 트리거를 StateMachine에 전달한다.
 <<<
 ASIL: QM
 CATEGORY: 기능
@@ -324,9 +326,13 @@ RELATIONS:
 
 [REQUIREMENT]
 UID: SWR011
-TITLE: FOLLOWING 모드 거리 제어
+TITLE: FOLLOWING 모드 거리 제어 (outer-loop)
 STATEMENT: >>>
-FOLLOWING 상태에서 목표 차간거리를 유지하도록 PID 거리 제어를 수행한다. 전방 차량 소멸 시 CRUISE 전환 트리거를 StateMachine에 전달한다.
+FOLLOWING 상태에서 목표 차간거리(SWR008)를 유지하도록 거리 PID 를 수행하여 TargetSpeedCmS 를 산출한다.
+
+알고리즘: TargetSpeedCmS = clamp( SetSpeedCmS + DistPID(FwdDistance − SafeDistance), 0, SetSpeedCmS ). 거리가 부족하면 감속하고 SetSpeedCmS 이상으로 증속하지 않으며, 하한은 0 (후진 금지).
+
+출력 단위는 속도 (cm/s) — MotorControl SWC 의 inner-loop (SWR034) 가 이를 받아 PWM 으로 변환. 전방 차량 소멸 시 CRUISE 전환 트리거를 StateMachine에 전달한다.
 <<<
 ASIL: B
 CATEGORY: 기능
@@ -502,7 +508,9 @@ TITLE: AUTOSAR OS 태스크
 UID: SWR021
 TITLE: 태스크 주기 - 10ms
 STATEMENT: >>>
-제어 루프(PID 계산, 모터 명령 출력, 브레이크/액셀 감시)는 10ms 주기 태스크에서 수행한다.
+10ms 주기 태스크에서 다음을 수행한다: AccStateMachine FSM 전이 평가, MotorControl inner-loop 속도 PI (SWR034), CanCommunication 모터 송수신 (MTR_CMD/MTR_SPD_FB), ECU_HEARTBEAT 송신, Diagnostics 고장 감지. 브레이크/액셀 감시는 FSM 내부에서 10ms tick 으로 수행.
+
+cascaded 제어 구조에서 10ms 는 안쪽 (속도) 루프, 20ms 는 바깥 (거리) 루프 (SWR022). 두 루프 주기 비율 2× 로 대역폭 간섭 최소화.
 <<<
 ASIL: B
 CATEGORY: 타이밍
@@ -518,7 +526,13 @@ RELATIONS:
 UID: SWR022
 TITLE: 태스크 주기 - 20ms
 STATEMENT: >>>
-20ms 주기 태스크에서 다음을 수행한다: 센서 데이터 수신 처리(SENSOR_FUSION 0x110 — LiDAR+카메라 융합 결과), 차량 직접 조작 입력 수신 처리(VEH_CTRL 0x120 — 브레이크/수동 액셀). VEH_CTRL 은 SAF004/SAF015 ASIL-B 경로이며 50ms 응답 요건 때문에 20ms 주기 태스크에 배치.
+20ms 주기 태스크에서 다음을 수행한다: DistanceControl outer-loop 거리 PID (SWR009/011), 센서 데이터 수신 처리(SENSOR_FUSION 0x110 — LiDAR+카메라 융합 결과), 차량 직접 조작 입력 수신 처리(VEH_CTRL 0x120 — 브레이크/수동 액셀).
+
+DistanceControl 을 20ms 로 배치한 이유:
+- SENSOR_FUSION 입력 갱신 주기(20ms)와 일치 — Rte_Read 가 stale 하지 않음
+- cascaded 제어에서 바깥 루프를 안쪽 (10ms, MotorControl PI) 의 2× 주기로 분리 — 대역폭 간섭 최소화 (SWR034 참조)
+
+VEH_CTRL 은 SAF004/SAF015 ASIL-B 경로이며 50ms 응답 요건 때문에 20ms 주기 태스크에 배치.
 <<<
 ASIL: QM
 CATEGORY: 타이밍
@@ -583,20 +597,20 @@ TITLE: MotorControl
 
 [REQUIREMENT]
 UID: SWR032
-TITLE: MotorControl SWC 구현
+TITLE: MotorControl SWC 구현 (상태별 제어 분기)
 STATEMENT: >>>
-MotorControl SWC는 RE_MotorCtrlStep(10ms, Task_10ms 끝단) 런너블에서 현재 ACC 상태에 따라 IF_MotorCmd(TargetPwmDuty, CmdValid)를 생성한다.
+MotorControl SWC는 RE_MotorCtrlStep(10ms, Task_10ms) 런너블에서 현재 ACC 상태에 따라 IF_MotorCmd(TargetPwmDuty, CmdValid)를 생성한다.
 
 제어 분기:
 
-- CRUISING / FOLLOWING: RP_CtrlOutput.TargetSpeedCmS를 속도→PWM 선형 변환 (Lookup Table, 실험 튜닝 필요). 출력은 [0, PWM_MAX] 클램핑 (SAF008).
-- STANDBY: RP_HmiBtn.AccelPwmDuty를 직접 TargetPwmDuty로 출력 (SWR033).
-- OFF / FAULT: TargetPwmDuty = 0, CmdValid = false.
+- CRUISING / FOLLOWING: inner-loop 속도 PI (SWR034) 를 수행. 입력: RP_CtrlOutput.TargetSpeedCmS (DistanceControl 산출) + RP_SensorData.EgoSpeedCmS (MTR_SPD_FB.GET_SPD_AVG). 출력: PWM = FF_Lookup(target) + PI(target − ego), SAF008 [-PWM_MAX, +PWM_MAX] 클램핑. FF_Lookup 은 벤치 튜닝 전까지 0 (순수 PI).
+- STANDBY: RP_HmiBtn.AccelPwmDuty를 직접 TargetPwmDuty로 출력 (SWR033), PI 적분기 리셋.
+- OFF / FAULT: TargetPwmDuty = 0, CmdValid = false, PI 적분기 리셋.
 
 포트:
 
 - PP: PP_MotorCmd (IF_MotorCmd → CanCommunication)
-- RP: RP_CtrlOutput (IF_CtrlOutput ← DistanceControl), RP_AccStatus (IF_AccStatus ← AccStateMachine), RP_HmiBtn (IF_HmiBtn ← CanCommunication), RP_WdgM (CS_WdgM)
+- RP: RP_CtrlOutput (IF_CtrlOutput ← DistanceControl), RP_SensorData (IF_SensorData ← CanCommunication, EgoSpeedCmS 만 사용), RP_AccStatus (IF_AccStatus ← AccStateMachine), RP_HmiBtn (IF_HmiBtn ← CanCommunication), RP_WdgM (CS_WdgM)
 <<<
 ASIL: B
 CATEGORY: 기능
@@ -612,7 +626,7 @@ RELATIONS:
 UID: SWR033
 TITLE: STANDBY 수동 액셀 PWM 제어
 STATEMENT: >>>
-STANDBY 상태에서 MotorControl SWC는 RP_HmiBtn.AccelPwmDuty를 읽어 즉시 TargetPwmDuty로 출력한다. 응답 시간 50ms 이내 (10ms Task 주기 + CAN 전달 지연). AccelPwmDuty = 0이면 모터 정지. ACC 활성(CRUISING/FOLLOWING) 상태로 전이 시 DistanceControl 제어 출력으로 전환.
+STANDBY 상태에서 MotorControl SWC는 RP_HmiBtn.AccelPwmDuty를 읽어 즉시 TargetPwmDuty로 출력한다. 응답 시간 50ms 이내 (10ms Task 주기 + CAN 전달 지연). AccelPwmDuty = 0이면 모터 정지. ACC 활성(CRUISING/FOLLOWING) 상태로 전이 시 DistanceControl 제어 출력으로 전환. STANDBY 진입 시 inner-loop PI 적분기를 리셋하여 ACC 재진입 시 bump 방지 (SWR034).
 <<<
 ASIL: QM
 CATEGORY: 기능
@@ -621,6 +635,44 @@ SWC: MotorControl
 RELATIONS:
 - TYPE: Parent
   VALUE: SYS037
+- TYPE: Parent
+  VALUE: SYS036
+
+[REQUIREMENT]
+UID: SWR034
+TITLE: MotorControl inner-loop 속도 PI 제어
+STATEMENT: >>>
+MotorControl SWC 는 CRUISING/FOLLOWING 상태에서 목표 속도(TargetSpeedCmS)와 실제 속도(EgoSpeedCmS, 대표 속도로 MTR_SPD_FB.GET_SPD_AVG 시그널 사용)의 오차를 입력으로 이산 PI 제어를 수행하여 PWM duty 를 산출한다.
+
+알고리즘:
+
+- err = TargetSpeedCmS − EgoSpeedCmS
+- u_unsat = FF_Lookup(TargetSpeedCmS) + Kp·err + integ
+- u_sat = clamp(u_unsat, −PWM_MAX, +PWM_MAX)  (SAF008)
+- integ ← integ + Ki·err·Ts + KB_AW·(u_sat − u_unsat)  (back-calculation anti-windup)
+- TargetPwmDuty = u_sat
+
+제어 주기: 10ms (Task_10ms, SWR021).
+
+Anti-windup 및 모드 전환 처리:
+
+- STANDBY/OFF/FAULT 진입 시 integ 및 prev_error 를 0 으로 리셋 (bump-less 전환)
+- 적분기 포화 [−INTEG_MAX, +INTEG_MAX] 클램프
+- 포화 상태에서 back-calculation 으로 integ wind-up 방지
+
+FF_Lookup (feedforward): 벤치 테스트로 PWM→정상속도 매핑이 확보되기 전까지 0 (순수 PI). 확보 후 속도→PWM 선형 또는 구간별 lookup 으로 교체 (SAF008 클램핑은 유지).
+
+cascaded 구조: 바깥 거리 PID (SWR011, 20ms, DistanceControl) → TargetSpeedCmS → 안쪽 속도 PI (본 SWR, 10ms, MotorControl) → PWM. 두 루프 주기 비율 2× 로 대역폭 분리.
+
+게인 Kp/Ki 및 FF_Lookup 은 HIL 단계에서 TODO_TUNE.
+<<<
+ASIL: B
+CATEGORY: 기능
+VERIFICATION: T
+SWC: MotorControl
+RELATIONS:
+- TYPE: Parent
+  VALUE: SYS014
 - TYPE: Parent
   VALUE: SYS036
 

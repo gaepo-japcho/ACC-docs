@@ -180,7 +180,9 @@ RELATIONS:
 UID: SAF008
 TITLE: FSR-05: 제어 출력 범위 제한
 STATEMENT: >>>
-[ASIL B] PID 제어기 출력은 물리적으로 허용 가능한 범위로 클램핑한다. 최대 가속도 및 최대 감속도 제한값을 초과하는 명령을 출력하지 않는다.
+[ASIL B] MotorControl SWC 의 inner-loop 속도 PI (SWR034) 최종 출력(TargetPwmDuty)은 물리적으로 허용 가능한 범위 [−PWM_MAX, +PWM_MAX] 로 클램핑한다. 최대 가속도 및 최대 감속도 제한값을 초과하는 PWM 명령을 출력하지 않는다. Anti-windup back-calculation 과 연동하여 포화 구간에서 적분기 wind-up 을 방지한다.
+
+cascaded 구조에서 클램핑 책임은 PWM 출력단(MotorControl) 에 있으며, DistanceControl 의 outer-loop 출력(TargetSpeedCmS) 은 속도 범위 [0, SetSpeedCmS] 로 별도 clamp (SWR011).
 <<<
 ASIL: B
 CATEGORY: FSR
