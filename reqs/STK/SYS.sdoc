@@ -660,9 +660,9 @@ RELATIONS:
 
 [REQUIREMENT]
 UID: SYS037
-TITLE: STANDBY 상태 수동 액셀 제어
+TITLE: OFF/STANDBY 상태 수동 액셀 제어
 STATEMENT: >>>
-STANDBY 상태에서 운전자는 RPi GUI의 액셀 슬라이더(SET_ACCEL_PWM)를 통해 모터를 수동으로 제어할 수 있다. SET_ACCEL_PWM 값은 VEH_CTRL(0x120, 20ms 주기) CAN 메시지를 통해 메인 ECU에 전달되고, MotorControl SWC가 즉시 PWM으로 출력한다. 응답 시간 50ms 이내.
+OFF 또는 STANDBY 상태에서 운전자는 RPi GUI의 액셀 슬라이더(SET_ACCEL_PWM)를 통해 모터를 수동으로 제어할 수 있다. SET_ACCEL_PWM 값은 VEH_CTRL(0x120, 20ms 주기) CAN 메시지를 통해 메인 ECU에 전달되고, MotorControl SWC가 즉시 PWM으로 출력한다. 응답 시간 50ms 이내.
 
 ACC 활성(CRUISING/FOLLOWING) 중에는 PID 제어가 우선하며 AccelPwmDuty는 무시된다. AccelPwmDuty가 0 초과인 경우 브레이크 오버라이드(SYS006)와 동일하게 STANDBY 전이 조건으로 간주한다 (SYS007, SWR003).
 <<<

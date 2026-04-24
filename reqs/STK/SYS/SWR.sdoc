@@ -624,9 +624,9 @@ RELATIONS:
 
 [REQUIREMENT]
 UID: SWR033
-TITLE: STANDBY 수동 액셀 PWM 제어
+TITLE: OFF/STANDBY 수동 액셀 PWM 제어
 STATEMENT: >>>
-STANDBY 상태에서 MotorControl SWC는 RP_HmiBtn.AccelPwmDuty를 읽어 즉시 TargetPwmDuty로 출력한다. 응답 시간 50ms 이내 (10ms Task 주기 + CAN 전달 지연). AccelPwmDuty = 0이면 모터 정지. ACC 활성(CRUISING/FOLLOWING) 상태로 전이 시 DistanceControl 제어 출력으로 전환. STANDBY 진입 시 inner-loop PI 적분기를 리셋하여 ACC 재진입 시 bump 방지 (SWR034).
+OFF 또는 STANDBY 상태에서 MotorControl SWC는 RP_HmiBtn.AccelPwmDuty를 읽어 즉시 TargetPwmDuty로 출력한다. 응답 시간 50ms 이내 (10ms Task 주기 + CAN 전달 지연). AccelPwmDuty = 0이면 모터 정지. ACC 활성(CRUISING/FOLLOWING) 상태로 전이 시 DistanceControl 제어 출력으로 전환. STANDBY 진입 시 inner-loop PI 적분기를 리셋하여 ACC 재진입 시 bump 방지 (SWR034). FAULT 상태에서는 안전을 위해 강제 PWM=0 을 출력한다.
 <<<
 ASIL: QM
 CATEGORY: 기능
