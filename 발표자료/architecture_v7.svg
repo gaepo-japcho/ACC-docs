@@ -1,0 +1,465 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="940" viewBox="0 0 1600 940">
+<defs>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+    <feOffset dx="0" dy="2"/>
+    <feComponentTransfer><feFuncA type="linear" slope="0.18"/></feComponentTransfer>
+    <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <linearGradient id="pcb-green" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#0E7C42"/>
+    <stop offset="100%" stop-color="#085C30"/>
+  </linearGradient>
+  <linearGradient id="pcb-blue" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#1F6AAB"/>
+    <stop offset="100%" stop-color="#16527E"/>
+  </linearGradient>
+  <linearGradient id="pcb-red" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#C0392B"/>
+    <stop offset="100%" stop-color="#8B2A20"/>
+  </linearGradient>
+  <linearGradient id="motor-body" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#A8AFB8"/>
+    <stop offset="50%" stop-color="#7C848E"/>
+    <stop offset="100%" stop-color="#5A6068"/>
+  </linearGradient>
+</defs>
+
+<!-- Background -->
+<rect width="1600" height="940" fill="#F5F7FB"/>
+
+<!-- Title -->
+<text x="40" y="55" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="30" font-weight="800">ACC 전체 시스템 아키텍처 (v0.8 / DBC v3.3)</text>
+<text x="40" y="82" fill="#3B4469" font-family="Malgun Gothic, sans-serif" font-size="13" font-weight="400">MPC5606B 기반 ACC · 직진 전용 · AEB 미포함 · 4륜 구동 (드라이버 ×2 + 모터 ×4) · 2-Arduino 토폴로지 (CAN 게이트웨이 + 모터 노드, I2C 중계)</text>
+
+<!-- ─── Legend (top-right) ─── -->
+<rect x="1280" y="30" width="290" height="100" rx="8" ry="8" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1" filter="url(#shadow)"/>
+<text x="1295" y="50" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="12" font-weight="700">연결선 범례</text>
+<line x1="1295" y1="68" x2="1325" y2="68" stroke="#1E88E5" stroke-width="3" stroke-linecap="round"/>
+<text x="1332" y="72" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="11">CAN / SPI / USB</text>
+<line x1="1295" y1="86" x2="1325" y2="86" stroke="#9B59B6" stroke-width="3" stroke-linecap="round"/>
+<text x="1332" y="90" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="11">I2C (Arduino 중계)</text>
+<line x1="1295" y1="104" x2="1325" y2="104" stroke="#22B573" stroke-width="3" stroke-linecap="round"/>
+<text x="1332" y="108" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="11">PWM / DIR / EN</text>
+<line x1="1295" y1="122" x2="1325" y2="122" stroke="#F2A900" stroke-width="3" stroke-linecap="round"/>
+<text x="1332" y="126" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="11">전력 (Power)</text>
+
+<!-- ─── 120Ω terminator (top center-left) ─── -->
+<rect x="640" y="135" width="120" height="80" rx="8" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1" filter="url(#shadow)"/>
+<text x="700" y="158" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="13" font-weight="700" text-anchor="middle">CAN 종단저항</text>
+<text x="700" y="185" fill="#1E88E5" font-family="Consolas, monospace" font-size="18" font-weight="700" text-anchor="middle">120 Ω × 2</text>
+<polyline points="660,205 672,196 686,213 700,196 714,213 728,196 740,205" fill="none" stroke="#3B4469" stroke-width="1.8"/>
+<line x1="700" y1="215" x2="700" y2="290" stroke="#1E88E5" stroke-width="2.5"/>
+
+<!-- ─── FAULT LED (top center-right) ─── -->
+<rect x="800" y="135" width="120" height="80" rx="8" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1" filter="url(#shadow)"/>
+<text x="860" y="158" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="13" font-weight="700" text-anchor="middle">FAULT 표시</text>
+<circle cx="860" cy="190" r="12" fill="#C9302C" stroke="#7A1F1B" stroke-width="1.5"/>
+<circle cx="857" cy="187" r="3" fill="#FF8A80" opacity="0.7"/>
+<text x="860" y="208" fill="#475266" font-family="Malgun Gothic, sans-serif" font-size="9" text-anchor="middle">RED LED · GPIO</text>
+<line x1="860" y1="215" x2="860" y2="290" stroke="#22B573" stroke-width="2.5"/>
+
+<!-- ═════════════════ MPC5606B (CENTER) ═════════════════ -->
+<rect x="600" y="290" width="320" height="270" rx="10" fill="#FFFFFF" stroke="#C9302C" stroke-width="3" filter="url(#shadow)"/>
+<!-- chip outer package -->
+<rect x="640" y="320" width="240" height="170" rx="5" fill="#1A1A1A" stroke="#0A0A0A" stroke-width="1.5"/>
+<rect x="645" y="325" width="230" height="160" rx="3" fill="none" stroke="#333" stroke-width="0.5"/>
+<!-- corner indicator dots -->
+<circle cx="650" cy="330" r="3" fill="#CC8844"/>
+<circle cx="870" cy="330" r="3" fill="#CC8844"/>
+<circle cx="650" cy="480" r="3" fill="#CC8844"/>
+<circle cx="870" cy="480" r="3" fill="#CC8844"/>
+<!-- inner die -->
+<rect x="715" y="370" width="90" height="70" fill="#2A2A2A" stroke="#111" stroke-width="1"/>
+<text x="760" y="395" fill="#E74C3C" font-family="Arial, sans-serif" font-size="13" font-weight="800" text-anchor="middle">NXP</text>
+<text x="760" y="415" fill="#EEE" font-family="Arial, sans-serif" font-size="9" font-weight="600" text-anchor="middle">MPC5606B</text>
+<text x="760" y="430" fill="#888" font-family="Arial, sans-serif" font-size="7" text-anchor="middle">32-bit MCU</text>
+<!-- yellow pins on top -->
+<g fill="#FFD75A">
+  <rect x="660" y="316" width="4" height="10"/>
+  <rect x="675" y="316" width="4" height="10"/>
+  <rect x="690" y="316" width="4" height="10"/>
+  <rect x="705" y="316" width="4" height="10"/>
+  <rect x="720" y="316" width="4" height="10"/>
+  <rect x="735" y="316" width="4" height="10"/>
+  <rect x="750" y="316" width="4" height="10"/>
+  <rect x="765" y="316" width="4" height="10"/>
+  <rect x="780" y="316" width="4" height="10"/>
+  <rect x="795" y="316" width="4" height="10"/>
+  <rect x="810" y="316" width="4" height="10"/>
+  <rect x="825" y="316" width="4" height="10"/>
+  <rect x="840" y="316" width="4" height="10"/>
+  <rect x="855" y="316" width="4" height="10"/>
+</g>
+<!-- yellow pins on bottom -->
+<g fill="#FFD75A">
+  <rect x="660" y="484" width="4" height="10"/>
+  <rect x="675" y="484" width="4" height="10"/>
+  <rect x="690" y="484" width="4" height="10"/>
+  <rect x="705" y="484" width="4" height="10"/>
+  <rect x="720" y="484" width="4" height="10"/>
+  <rect x="735" y="484" width="4" height="10"/>
+  <rect x="750" y="484" width="4" height="10"/>
+  <rect x="765" y="484" width="4" height="10"/>
+  <rect x="780" y="484" width="4" height="10"/>
+  <rect x="795" y="484" width="4" height="10"/>
+  <rect x="810" y="484" width="4" height="10"/>
+  <rect x="825" y="484" width="4" height="10"/>
+  <rect x="840" y="484" width="4" height="10"/>
+  <rect x="855" y="484" width="4" height="10"/>
+</g>
+<!-- yellow pins on left -->
+<g fill="#FFD75A">
+  <rect x="635" y="335" width="10" height="4"/>
+  <rect x="635" y="350" width="10" height="4"/>
+  <rect x="635" y="365" width="10" height="4"/>
+  <rect x="635" y="380" width="10" height="4"/>
+  <rect x="635" y="395" width="10" height="4"/>
+  <rect x="635" y="410" width="10" height="4"/>
+  <rect x="635" y="425" width="10" height="4"/>
+  <rect x="635" y="440" width="10" height="4"/>
+  <rect x="635" y="455" width="10" height="4"/>
+  <rect x="635" y="470" width="10" height="4"/>
+</g>
+<!-- yellow pins on right -->
+<g fill="#FFD75A">
+  <rect x="875" y="335" width="10" height="4"/>
+  <rect x="875" y="350" width="10" height="4"/>
+  <rect x="875" y="365" width="10" height="4"/>
+  <rect x="875" y="380" width="10" height="4"/>
+  <rect x="875" y="395" width="10" height="4"/>
+  <rect x="875" y="410" width="10" height="4"/>
+  <rect x="875" y="425" width="10" height="4"/>
+  <rect x="875" y="440" width="10" height="4"/>
+  <rect x="875" y="455" width="10" height="4"/>
+  <rect x="875" y="470" width="10" height="4"/>
+</g>
+<!-- top quad LEDs -->
+<rect x="710" y="330" width="100" height="22" fill="#111" stroke="#333" stroke-width="0.5"/>
+<rect x="715" y="335" width="14" height="14" fill="none" stroke="#E74C3C" stroke-width="1"/>
+<rect x="735" y="335" width="14" height="14" fill="none" stroke="#E74C3C" stroke-width="1"/>
+<rect x="755" y="335" width="14" height="14" fill="none" stroke="#E74C3C" stroke-width="1"/>
+<rect x="775" y="335" width="14" height="14" fill="none" stroke="#E74C3C" stroke-width="1"/>
+<rect x="795" y="335" width="14" height="14" fill="none" stroke="#E74C3C" stroke-width="1"/>
+
+<text x="760" y="515" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="17" font-weight="700" text-anchor="middle">MPC5606B</text>
+<text x="760" y="538" fill="#7A83A8" font-family="Malgun Gothic, sans-serif" font-size="11" text-anchor="middle">Main ECU · FlexCAN + TJA1042 · AUTOSAR</text>
+<text x="760" y="554" fill="#475266" font-family="Malgun Gothic, sans-serif" font-size="10" text-anchor="middle">6 SWC · Cascaded (DC 20ms outer + MC 10ms inner)</text>
+<text x="760" y="284" fill="#C9302C" font-family="Malgun Gothic, sans-serif" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="1.5">● 메인 컨트롤러 (ECU1)</text>
+
+<!-- ═════════════════ Raspberry Pi 5 (LEFT) ═════════════════ -->
+<rect x="50" y="290" width="260" height="180" rx="10" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1.2" filter="url(#shadow)"/>
+<rect x="75" y="310" width="210" height="135" rx="6" fill="url(#pcb-green)" stroke="#033D22" stroke-width="1.5"/>
+<!-- corner mounting holes -->
+<circle cx="83" cy="318" r="3.5" fill="#F5D76E" stroke="#888" stroke-width="0.5"/>
+<circle cx="277" cy="318" r="3.5" fill="#F5D76E" stroke="#888" stroke-width="0.5"/>
+<circle cx="83" cy="437" r="3.5" fill="#F5D76E" stroke="#888" stroke-width="0.5"/>
+<circle cx="277" cy="437" r="3.5" fill="#F5D76E" stroke="#888" stroke-width="0.5"/>
+<!-- GPIO pin headers (top) -->
+<rect x="100" y="320" width="160" height="14" fill="#1A1A1A" stroke="#000" stroke-width="0.5"/>
+<g fill="#C9A227">
+  <rect x="103" y="323" width="3" height="8"/><rect x="111" y="323" width="3" height="8"/>
+  <rect x="119" y="323" width="3" height="8"/><rect x="127" y="323" width="3" height="8"/>
+  <rect x="135" y="323" width="3" height="8"/><rect x="143" y="323" width="3" height="8"/>
+  <rect x="151" y="323" width="3" height="8"/><rect x="159" y="323" width="3" height="8"/>
+  <rect x="167" y="323" width="3" height="8"/><rect x="175" y="323" width="3" height="8"/>
+  <rect x="183" y="323" width="3" height="8"/><rect x="191" y="323" width="3" height="8"/>
+  <rect x="199" y="323" width="3" height="8"/><rect x="207" y="323" width="3" height="8"/>
+  <rect x="215" y="323" width="3" height="8"/><rect x="223" y="323" width="3" height="8"/>
+  <rect x="231" y="323" width="3" height="8"/><rect x="239" y="323" width="3" height="8"/>
+  <rect x="247" y="323" width="3" height="8"/><rect x="255" y="323" width="3" height="8"/>
+</g>
+<!-- RP1 chip -->
+<rect x="105" y="355" width="50" height="50" fill="#1A1A1A" stroke="#000" stroke-width="0.5"/>
+<text x="130" y="378" fill="#FFF" font-family="Arial" font-size="9" font-weight="700" text-anchor="middle">RP1</text>
+<text x="130" y="392" fill="#888" font-family="Arial" font-size="6" text-anchor="middle">SoC</text>
+<!-- Broadcom main SoC -->
+<rect x="170" y="355" width="55" height="50" fill="#2A2A2A" stroke="#000" stroke-width="0.5"/>
+<text x="197" y="380" fill="#FFF" font-family="Arial" font-size="8" font-weight="700" text-anchor="middle">BCM2712</text>
+<text x="197" y="392" fill="#888" font-family="Arial" font-size="6" text-anchor="middle">ARM A76</text>
+<!-- USB ports (right) -->
+<rect x="240" y="355" width="35" height="20" fill="#B0B0B0" stroke="#888" stroke-width="0.5"/>
+<rect x="244" y="358" width="27" height="14" fill="#333"/>
+<rect x="240" y="380" width="35" height="20" fill="#B0B0B0" stroke="#888" stroke-width="0.5"/>
+<rect x="244" y="383" width="27" height="14" fill="#333"/>
+<!-- HDMI/USB connectors -->
+<rect x="80" y="355" width="18" height="22" fill="#404040" stroke="#000" stroke-width="0.5"/>
+<rect x="80" y="383" width="18" height="22" fill="#404040" stroke="#000" stroke-width="0.5"/>
+<!-- silkscreen capacitors -->
+<circle cx="150" cy="420" r="4" fill="#F2C94C" stroke="#888" stroke-width="0.5"/>
+<circle cx="170" cy="420" r="4" fill="#F2C94C" stroke="#888" stroke-width="0.5"/>
+<circle cx="195" cy="420" r="3" fill="#444"/>
+<circle cx="210" cy="420" r="3" fill="#444"/>
+
+<text x="180" y="460" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="15" font-weight="700" text-anchor="middle">Raspberry Pi 5</text>
+<text x="180" y="478" fill="#7A83A8" font-family="Malgun Gothic, sans-serif" font-size="10" text-anchor="middle">HMI · Camera/LiDAR Fusion · CanInterface</text>
+<text x="180" y="282" fill="#22B573" font-family="Malgun Gothic, sans-serif" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="1.5">● SENSOR 노드</text>
+
+<!-- ─── Camera (below RPi, left) ─── -->
+<rect x="50" y="490" width="120" height="100" rx="8" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1" filter="url(#shadow)"/>
+<rect x="60" y="500" width="100" height="65" rx="4" fill="url(#pcb-green)" stroke="#033D22" stroke-width="1"/>
+<!-- camera lens housing -->
+<rect x="92" y="510" width="36" height="36" rx="4" fill="#1A1A1A" stroke="#000" stroke-width="0.5"/>
+<circle cx="110" cy="528" r="13" fill="#0A0A0A" stroke="#444" stroke-width="1"/>
+<circle cx="110" cy="528" r="9" fill="#0066AA" stroke="#000" stroke-width="0.5"/>
+<circle cx="110" cy="528" r="5" fill="#003B7A"/>
+<circle cx="108" cy="526" r="2" fill="#66BBE6" opacity="0.6"/>
+<!-- silkscreen LED -->
+<circle cx="68" cy="510" r="2" fill="#22B573"/>
+<text x="110" y="580" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="11" font-weight="700" text-anchor="middle">RPi Camera</text>
+
+<!-- ─── LiDAR (below RPi, right) ─── -->
+<rect x="190" y="490" width="120" height="100" rx="8" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1" filter="url(#shadow)"/>
+<!-- LiDAR puck — top ellipse -->
+<ellipse cx="250" cy="513" rx="42" ry="9" fill="#3B4859" stroke="#1A2733" stroke-width="1"/>
+<rect x="208" y="513" width="84" height="32" fill="#3B4859" stroke="#1A2733" stroke-width="1"/>
+<!-- red laser slot -->
+<rect x="208" y="528" width="84" height="5" fill="#C9302C"/>
+<rect x="208" y="528" width="84" height="2" fill="#FF6B5E" opacity="0.7"/>
+<!-- bottom ellipse -->
+<ellipse cx="250" cy="545" rx="42" ry="9" fill="#1A2733" stroke="#0E1A24" stroke-width="1"/>
+<!-- USB cable hint -->
+<rect x="246" y="552" width="8" height="10" fill="#222"/>
+<text x="250" y="580" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="11" font-weight="700" text-anchor="middle">RPLiDAR</text>
+
+<!-- MIPI/USB pills RPi → sensors -->
+<rect x="98" y="473" width="40" height="14" rx="7" fill="#FFFFFF" stroke="#22B573" stroke-width="1"/>
+<text x="118" y="483" fill="#22B573" font-family="Arial" font-size="9" font-weight="700" text-anchor="middle">MIPI</text>
+<line x1="110" y1="490" x2="110" y2="487" stroke="#1E88E5" stroke-width="1.5"/>
+<rect x="232" y="473" width="36" height="14" rx="7" fill="#FFFFFF" stroke="#22B573" stroke-width="1"/>
+<text x="250" y="483" fill="#22B573" font-family="Arial" font-size="9" font-weight="700" text-anchor="middle">USB</text>
+<line x1="250" y1="490" x2="250" y2="487" stroke="#1E88E5" stroke-width="1.5"/>
+
+<!-- ═════════════════ Arduino #1 (CAN Gateway, top right) ═════════════════ -->
+<rect x="990" y="280" width="220" height="135" rx="10" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1.2" filter="url(#shadow)"/>
+<rect x="1010" y="300" width="180" height="100" rx="5" fill="url(#pcb-blue)" stroke="#0E3B5C" stroke-width="1.5"/>
+<!-- pin headers -->
+<rect x="1015" y="305" width="170" height="8" fill="#1A1A1A"/>
+<g fill="#222"><rect x="1018" y="307" width="3" height="4"/><rect x="1026" y="307" width="3" height="4"/><rect x="1034" y="307" width="3" height="4"/><rect x="1042" y="307" width="3" height="4"/><rect x="1050" y="307" width="3" height="4"/><rect x="1058" y="307" width="3" height="4"/><rect x="1066" y="307" width="3" height="4"/><rect x="1074" y="307" width="3" height="4"/><rect x="1082" y="307" width="3" height="4"/><rect x="1090" y="307" width="3" height="4"/><rect x="1098" y="307" width="3" height="4"/><rect x="1106" y="307" width="3" height="4"/><rect x="1114" y="307" width="3" height="4"/><rect x="1122" y="307" width="3" height="4"/><rect x="1130" y="307" width="3" height="4"/><rect x="1138" y="307" width="3" height="4"/><rect x="1146" y="307" width="3" height="4"/><rect x="1154" y="307" width="3" height="4"/><rect x="1162" y="307" width="3" height="4"/><rect x="1170" y="307" width="3" height="4"/></g>
+<rect x="1015" y="385" width="170" height="8" fill="#1A1A1A"/>
+<!-- ATmega328P -->
+<rect x="1040" y="330" width="60" height="40" fill="#1A1A1A" stroke="#000" stroke-width="0.5"/>
+<text x="1070" y="347" fill="#FFF" font-family="Arial" font-size="8" font-weight="700" text-anchor="middle">ATmega</text>
+<text x="1070" y="358" fill="#FFF" font-family="Arial" font-size="8" font-weight="700" text-anchor="middle">328P</text>
+<!-- MCP2515 -->
+<rect x="1115" y="330" width="55" height="40" fill="#1A1A1A" stroke="#000" stroke-width="0.5"/>
+<text x="1142" y="347" fill="#FFF" font-family="Arial" font-size="8" font-weight="700" text-anchor="middle">MCP2515</text>
+<text x="1142" y="358" fill="#888" font-family="Arial" font-size="6" text-anchor="middle">CAN ctrl</text>
+<!-- USB connector -->
+<rect x="1014" y="335" width="18" height="22" fill="#B0B0B0" stroke="#666"/>
+<rect x="1016" y="338" width="14" height="16" fill="#333"/>
+<text x="1100" y="378" fill="#22B573" font-family="Arial" font-size="6" font-weight="700">TX</text>
+<text x="1112" y="378" fill="#22B573" font-family="Arial" font-size="6" font-weight="700">RX</text>
+<text x="1100" y="385" fill="#FFD75A" font-family="Arial" font-size="6" font-weight="700">L</text>
+<text x="1108" y="385" fill="#FFD75A" font-family="Arial" font-size="6" font-weight="700">PWR</text>
+
+<text x="1100" y="430" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="13" font-weight="700" text-anchor="middle">Arduino UNO #1 (CAN Gateway)</text>
+<text x="1100" y="445" fill="#7A83A8" font-family="Malgun Gothic, sans-serif" font-size="10" text-anchor="middle">acc_can_node · MCP2515 SPI · I2C Master · 30ms safe</text>
+
+<!-- ═════════════════ Arduino #2 (Motor Node, bottom right) ═════════════════ -->
+<rect x="990" y="450" width="220" height="135" rx="10" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1.2" filter="url(#shadow)"/>
+<rect x="1010" y="470" width="180" height="100" rx="5" fill="url(#pcb-blue)" stroke="#0E3B5C" stroke-width="1.5"/>
+<rect x="1015" y="475" width="170" height="8" fill="#1A1A1A"/>
+<g fill="#222"><rect x="1018" y="477" width="3" height="4"/><rect x="1030" y="477" width="3" height="4"/><rect x="1042" y="477" width="3" height="4"/><rect x="1054" y="477" width="3" height="4"/><rect x="1066" y="477" width="3" height="4"/><rect x="1078" y="477" width="3" height="4"/><rect x="1090" y="477" width="3" height="4"/><rect x="1102" y="477" width="3" height="4"/><rect x="1114" y="477" width="3" height="4"/><rect x="1126" y="477" width="3" height="4"/><rect x="1138" y="477" width="3" height="4"/><rect x="1150" y="477" width="3" height="4"/><rect x="1162" y="477" width="3" height="4"/><rect x="1174" y="477" width="3" height="4"/></g>
+<rect x="1015" y="555" width="170" height="8" fill="#1A1A1A"/>
+<rect x="1060" y="500" width="80" height="40" fill="#1A1A1A" stroke="#000" stroke-width="0.5"/>
+<text x="1100" y="517" fill="#FFF" font-family="Arial" font-size="9" font-weight="700" text-anchor="middle">ATmega328P</text>
+<text x="1100" y="530" fill="#888" font-family="Arial" font-size="7" text-anchor="middle">I2C Slave</text>
+<!-- USB conn -->
+<rect x="1014" y="505" width="18" height="22" fill="#B0B0B0" stroke="#666"/>
+<rect x="1016" y="508" width="14" height="16" fill="#333"/>
+
+<text x="1100" y="600" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="13" font-weight="700" text-anchor="middle">Arduino UNO #2 (Motor Node)</text>
+<text x="1100" y="615" fill="#7A83A8" font-family="Malgun Gothic, sans-serif" font-size="10" text-anchor="middle">acc_motor_node · Encoder PPR=140 · L298N x2 PWM</text>
+
+<!-- ═════════════════ L298N Driver #1 (top) + Motors LF/RF ═════════════════ -->
+<rect x="1290" y="290" width="100" height="100" rx="6" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1" filter="url(#shadow)"/>
+<rect x="1298" y="300" width="84" height="80" rx="3" fill="url(#pcb-red)" stroke="#5C1A14" stroke-width="1"/>
+<!-- heatsink -->
+<rect x="1308" y="312" width="64" height="40" fill="#888" stroke="#444"/>
+<g stroke="#444" stroke-width="0.5">
+  <line x1="1308" y1="320" x2="1372" y2="320"/>
+  <line x1="1308" y1="328" x2="1372" y2="328"/>
+  <line x1="1308" y1="336" x2="1372" y2="336"/>
+  <line x1="1308" y1="344" x2="1372" y2="344"/>
+</g>
+<!-- terminal blocks -->
+<rect x="1304" y="358" width="20" height="16" fill="#005ACC" stroke="#003B85" stroke-width="0.5"/>
+<rect x="1356" y="358" width="20" height="16" fill="#005ACC" stroke="#003B85" stroke-width="0.5"/>
+<text x="1340" y="395" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="11" font-weight="700" text-anchor="middle">L298N #1</text>
+<text x="1340" y="408" fill="#7A83A8" font-family="Malgun Gothic, sans-serif" font-size="9" text-anchor="middle">LF + RF</text>
+
+<!-- LF motor -->
+<g transform="translate(1430, 295)">
+  <rect x="0" y="0" width="120" height="40" rx="4" fill="#FFFFFF" stroke="#D5DCEC"/>
+  <rect x="6" y="10" width="50" height="22" fill="url(#motor-body)" stroke="#444" stroke-width="0.5"/>
+  <ellipse cx="56" cy="21" rx="4" ry="11" fill="#5A6068"/>
+  <rect x="60" y="18" width="14" height="6" fill="#444"/>
+  <!-- wires -->
+  <path d="M 0 13 L 6 14" stroke="#C9302C" stroke-width="1.5" fill="none"/>
+  <path d="M 0 22 L 6 22" stroke="#1A1A1A" stroke-width="1.5" fill="none"/>
+  <text x="90" y="20" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="13" font-weight="700">LF</text>
+  <text x="78" y="34" fill="#7A83A8" font-family="Malgun Gothic, sans-serif" font-size="8">DC + Encoder</text>
+</g>
+
+<!-- RF motor -->
+<g transform="translate(1430, 345)">
+  <rect x="0" y="0" width="120" height="40" rx="4" fill="#FFFFFF" stroke="#D5DCEC"/>
+  <rect x="6" y="10" width="50" height="22" fill="url(#motor-body)" stroke="#444" stroke-width="0.5"/>
+  <ellipse cx="56" cy="21" rx="4" ry="11" fill="#5A6068"/>
+  <rect x="60" y="18" width="14" height="6" fill="#444"/>
+  <path d="M 0 13 L 6 14" stroke="#C9302C" stroke-width="1.5" fill="none"/>
+  <path d="M 0 22 L 6 22" stroke="#1A1A1A" stroke-width="1.5" fill="none"/>
+  <text x="90" y="20" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="13" font-weight="700">RF</text>
+  <text x="78" y="34" fill="#7A83A8" font-family="Malgun Gothic, sans-serif" font-size="8">DC + Encoder</text>
+</g>
+
+<!-- ═════════════════ L298N Driver #2 (bottom) + Motors LR/RR ═════════════════ -->
+<rect x="1290" y="450" width="100" height="100" rx="6" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1" filter="url(#shadow)"/>
+<rect x="1298" y="460" width="84" height="80" rx="3" fill="url(#pcb-red)" stroke="#5C1A14" stroke-width="1"/>
+<rect x="1308" y="472" width="64" height="40" fill="#888" stroke="#444"/>
+<g stroke="#444" stroke-width="0.5">
+  <line x1="1308" y1="480" x2="1372" y2="480"/>
+  <line x1="1308" y1="488" x2="1372" y2="488"/>
+  <line x1="1308" y1="496" x2="1372" y2="496"/>
+  <line x1="1308" y1="504" x2="1372" y2="504"/>
+</g>
+<rect x="1304" y="518" width="20" height="16" fill="#005ACC" stroke="#003B85" stroke-width="0.5"/>
+<rect x="1356" y="518" width="20" height="16" fill="#005ACC" stroke="#003B85" stroke-width="0.5"/>
+<text x="1340" y="555" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="11" font-weight="700" text-anchor="middle">L298N #2</text>
+<text x="1340" y="568" fill="#7A83A8" font-family="Malgun Gothic, sans-serif" font-size="9" text-anchor="middle">LR + RR</text>
+
+<!-- LR motor -->
+<g transform="translate(1430, 460)">
+  <rect x="0" y="0" width="120" height="40" rx="4" fill="#FFFFFF" stroke="#D5DCEC"/>
+  <rect x="6" y="10" width="50" height="22" fill="url(#motor-body)" stroke="#444" stroke-width="0.5"/>
+  <ellipse cx="56" cy="21" rx="4" ry="11" fill="#5A6068"/>
+  <rect x="60" y="18" width="14" height="6" fill="#444"/>
+  <path d="M 0 13 L 6 14" stroke="#C9302C" stroke-width="1.5" fill="none"/>
+  <path d="M 0 22 L 6 22" stroke="#1A1A1A" stroke-width="1.5" fill="none"/>
+  <text x="90" y="20" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="13" font-weight="700">LR</text>
+  <text x="78" y="34" fill="#7A83A8" font-family="Malgun Gothic, sans-serif" font-size="8">DC + Encoder</text>
+</g>
+
+<!-- RR motor -->
+<g transform="translate(1430, 510)">
+  <rect x="0" y="0" width="120" height="40" rx="4" fill="#FFFFFF" stroke="#D5DCEC"/>
+  <rect x="6" y="10" width="50" height="22" fill="url(#motor-body)" stroke="#444" stroke-width="0.5"/>
+  <ellipse cx="56" cy="21" rx="4" ry="11" fill="#5A6068"/>
+  <rect x="60" y="18" width="14" height="6" fill="#444"/>
+  <path d="M 0 13 L 6 14" stroke="#C9302C" stroke-width="1.5" fill="none"/>
+  <path d="M 0 22 L 6 22" stroke="#1A1A1A" stroke-width="1.5" fill="none"/>
+  <text x="90" y="20" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="13" font-weight="700">RR</text>
+  <text x="78" y="34" fill="#7A83A8" font-family="Malgun Gothic, sans-serif" font-size="8">DC + Encoder</text>
+</g>
+
+<!-- ═════════════════ CONNECTIONS ═════════════════ -->
+
+<!-- RPi → MPC (CAN, blue) -->
+<line x1="310" y1="380" x2="600" y2="380" stroke="#1E88E5" stroke-width="2.5"/>
+<rect x="430" y="370" width="50" height="20" rx="10" fill="#FFFFFF" stroke="#1E88E5" stroke-width="1.2"/>
+<text x="455" y="384" fill="#1E88E5" font-family="Arial" font-size="11" font-weight="700" text-anchor="middle">CAN</text>
+
+<!-- MPC → Arduino #1 (CAN, blue) -->
+<line x1="920" y1="350" x2="990" y2="350" stroke="#1E88E5" stroke-width="2.5"/>
+<rect x="930" y="340" width="50" height="20" rx="10" fill="#FFFFFF" stroke="#1E88E5" stroke-width="1.2"/>
+<text x="955" y="354" fill="#1E88E5" font-family="Arial" font-size="11" font-weight="700" text-anchor="middle">CAN</text>
+
+<!-- Arduino #1 → Arduino #2 (I2C, purple) -->
+<line x1="1100" y1="415" x2="1100" y2="450" stroke="#9B59B6" stroke-width="2.5"/>
+<rect x="1080" y="420" width="40" height="20" rx="10" fill="#FFFFFF" stroke="#9B59B6" stroke-width="1.2"/>
+<text x="1100" y="434" fill="#9B59B6" font-family="Arial" font-size="11" font-weight="700" text-anchor="middle">I2C</text>
+
+<!-- Arduino #2 → L298N #1 (PWM/DIR, green) -->
+<line x1="1210" y1="500" x2="1290" y2="340" stroke="#22B573" stroke-width="2"/>
+<rect x="1228" y="395" width="60" height="18" rx="9" fill="#FFFFFF" stroke="#22B573" stroke-width="1.2"/>
+<text x="1258" y="408" fill="#22B573" font-family="Arial" font-size="10" font-weight="700" text-anchor="middle">PWM/DIR</text>
+
+<!-- Arduino #2 → L298N #2 (PWM/DIR, green) -->
+<line x1="1210" y1="510" x2="1290" y2="500" stroke="#22B573" stroke-width="2"/>
+
+<!-- L298N #1 → LF, RF (green) -->
+<line x1="1390" y1="320" x2="1430" y2="312" stroke="#22B573" stroke-width="2"/>
+<line x1="1390" y1="350" x2="1430" y2="362" stroke="#22B573" stroke-width="2"/>
+
+<!-- L298N #2 → LR, RR (green) -->
+<line x1="1390" y1="480" x2="1430" y2="475" stroke="#22B573" stroke-width="2"/>
+<line x1="1390" y1="520" x2="1430" y2="525" stroke="#22B573" stroke-width="2"/>
+
+<!-- ═════════════════ Power Distribution Row (BOTTOM) ═════════════════ -->
+<rect x="40" y="640" width="1530" height="180" rx="10" fill="#FFFFFF" stroke="#F2A900" stroke-width="2" filter="url(#shadow)"/>
+<text x="60" y="668" fill="#F2A900" font-family="Malgun Gothic, sans-serif" font-size="14" font-weight="700">⚡ 전원 분배 (Power Distribution)</text>
+<text x="60" y="685" fill="#7A83A8" font-family="Malgun Gothic, sans-serif" font-size="11">단일 11.1V LiPo → 각 노드 전원 트리 (모터 ↔ MCU 분리)</text>
+
+<!-- LiPo Battery -->
+<g transform="translate(60, 700)">
+  <rect x="0" y="0" width="160" height="100" rx="8" fill="#FFFFFF" stroke="#F2A900" stroke-width="2"/>
+  <rect x="10" y="15" width="140" height="55" fill="#1A2332" stroke="#000"/>
+  <text x="80" y="42" fill="#F2A900" font-family="Arial" font-size="22" font-weight="800" text-anchor="middle">11.1 V</text>
+  <text x="80" y="62" fill="#888" font-family="Arial" font-size="11" text-anchor="middle">6000 mAh · 3S</text>
+  <text x="80" y="89" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="12" font-weight="700" text-anchor="middle">LiPo Battery</text>
+</g>
+
+<!-- Power Distribution box -->
+<g transform="translate(240, 700)">
+  <rect x="0" y="0" width="180" height="100" rx="8" fill="#F2A900" stroke="#A87400"/>
+  <text x="90" y="40" fill="#FFF" font-family="Malgun Gothic, sans-serif" font-size="15" font-weight="800" text-anchor="middle">Power</text>
+  <text x="90" y="60" fill="#FFF" font-family="Malgun Gothic, sans-serif" font-size="15" font-weight="800" text-anchor="middle">Distribution</text>
+  <text x="90" y="84" fill="#FFF" font-family="Malgun Gothic, sans-serif" font-size="9" text-anchor="middle">DC-DC + Fuses</text>
+</g>
+
+<!-- Output rails -->
+<g transform="translate(440, 700)">
+  <rect x="0" y="0" width="220" height="100" rx="8" fill="#FFFFFF" stroke="#F2A900" stroke-width="1.5"/>
+  <text x="110" y="28" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="13" font-weight="700" text-anchor="middle">Motor x4</text>
+  <text x="110" y="58" fill="#F2A900" font-family="Arial" font-size="22" font-weight="800" text-anchor="middle">11.1 V</text>
+  <text x="110" y="84" fill="#7A83A8" font-family="Malgun Gothic, sans-serif" font-size="10" text-anchor="middle">L298N · 4륜</text>
+</g>
+
+<g transform="translate(680, 700)">
+  <rect x="0" y="0" width="220" height="100" rx="8" fill="#FFFFFF" stroke="#F2A900" stroke-width="1.5"/>
+  <text x="110" y="28" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="13" font-weight="700" text-anchor="middle">Raspberry Pi 5</text>
+  <text x="110" y="58" fill="#F2A900" font-family="Arial" font-size="22" font-weight="800" text-anchor="middle">5 V / 5 A</text>
+  <text x="110" y="84" fill="#7A83A8" font-family="Malgun Gothic, sans-serif" font-size="10" text-anchor="middle">USB-C PD</text>
+</g>
+
+<g transform="translate(920, 700)">
+  <rect x="0" y="0" width="220" height="100" rx="8" fill="#FFFFFF" stroke="#F2A900" stroke-width="1.5"/>
+  <text x="110" y="28" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="13" font-weight="700" text-anchor="middle">MPC5606B</text>
+  <text x="110" y="58" fill="#F2A900" font-family="Arial" font-size="22" font-weight="800" text-anchor="middle">5 V / 1 A</text>
+  <text x="110" y="84" fill="#7A83A8" font-family="Malgun Gothic, sans-serif" font-size="10" text-anchor="middle">DC jack · TRK 보드</text>
+</g>
+
+<g transform="translate(1160, 700)">
+  <rect x="0" y="0" width="220" height="100" rx="8" fill="#FFFFFF" stroke="#F2A900" stroke-width="1.5"/>
+  <text x="110" y="28" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="13" font-weight="700" text-anchor="middle">Arduino x2</text>
+  <text x="110" y="58" fill="#F2A900" font-family="Arial" font-size="22" font-weight="800" text-anchor="middle">5 V / 3 A</text>
+  <text x="110" y="84" fill="#7A83A8" font-family="Malgun Gothic, sans-serif" font-size="10" text-anchor="middle">VIN · MCP2515 + L298N 로직</text>
+</g>
+
+<g transform="translate(1400, 700)">
+  <rect x="0" y="0" width="160" height="100" rx="8" fill="#FFFFFF" stroke="#F2A900" stroke-width="1.5"/>
+  <text x="80" y="28" fill="#1A1F36" font-family="Malgun Gothic, sans-serif" font-size="13" font-weight="700" text-anchor="middle">기타</text>
+  <text x="80" y="55" fill="#F2A900" font-family="Arial" font-size="14" font-weight="700" text-anchor="middle">5V / 0.5A</text>
+  <text x="80" y="73" fill="#7A83A8" font-family="Malgun Gothic, sans-serif" font-size="10" text-anchor="middle">LiDAR · Camera</text>
+  <text x="80" y="89" fill="#7A83A8" font-family="Malgun Gothic, sans-serif" font-size="10" text-anchor="middle">FAULT LED</text>
+</g>
+
+<!-- power lines -->
+<line x1="220" y1="750" x2="240" y2="750" stroke="#F2A900" stroke-width="2.5"/>
+<line x1="420" y1="750" x2="440" y2="750" stroke="#F2A900" stroke-width="2.5"/>
+<line x1="660" y1="750" x2="680" y2="750" stroke="#F2A900" stroke-width="2"/>
+<line x1="900" y1="750" x2="920" y2="750" stroke="#F2A900" stroke-width="2"/>
+<line x1="1140" y1="750" x2="1160" y2="750" stroke="#F2A900" stroke-width="2"/>
+<line x1="1380" y1="750" x2="1400" y2="750" stroke="#F2A900" stroke-width="2"/>
+
+<!-- bottom info bar -->
+<rect x="40" y="850" width="1530" height="70" rx="8" fill="#1A2332" stroke="#0E1A24"/>
+<text x="55" y="878" fill="#22B573" font-family="Malgun Gothic, sans-serif" font-size="13" font-weight="700">● CAN Bus · 500 kbps · 9 messages · ASIL-B (E2E P01 on 0x210 MTR_CMD · ECU_HB 0x480 ASIL-B)</text>
+<g font-family="Consolas, monospace" font-size="11" fill="#B7C2D6">
+  <text x="55" y="900">RX/TX:  0x110 SENSOR_FUSION (20)  ·  0x111 SENSOR_HB (20)  ·  0x120 VEH_CTRL ⚠B (20)  ·  0x210 MTR_CMD +E2E ⚠B (10)  ·  0x310 MTR_SPD_FB ◎ (10)</text>
+  <text x="55" y="915">         0x320 MTR_HEARTBEAT (10)  ·  0x480 ECU_HEARTBEAT ⚠B (10)  ·  0x510 ACC_CTRL (50)  ·  0x520 ACC_STATUS (50)</text>
+</g>
+
+<text x="1560" y="930" text-anchor="end" font-family="Malgun Gothic, sans-serif" font-size="10" fill="#7A83A8" letter-spacing="2" font-style="italic">SeSAC · ACC Project · Architecture v0.7 · 2026.04</text>
+</svg>

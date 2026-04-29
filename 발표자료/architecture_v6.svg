@@ -1,0 +1,402 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="920" viewBox="0 0 1600 920">
+<defs>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+  <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+  <feOffset dx="0" dy="2"/>
+  <feComponentTransfer><feFuncA type="linear" slope="0.18"/></feComponentTransfer>
+  <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+</defs>
+<rect width="1600" height="920" fill="#F5F7FB"/>
+<text x="40" y="55" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="30" font-weight="800">전체 시스템 아키텍처</text>
+<text x="40" y="82" fill="#3B4469" font-family="Malgun Gothic, Arial" font-size="13" font-weight="400">MPC5606B 기반 ACC — 직진 전용 · AEB 미포함 · 4륜 구동 (드라이버×2 + 모터×4)</text>
+<rect x="1320" y="30" width="250" height="80" rx="8" ry="8" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1" filter="url(#shadow)"/>
+<line x1="1332" y1="55" x2="1357" y2="55" stroke="#1E88E5" stroke-width="3" stroke-linecap="round"/>
+<text x="1364" y="59" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="10">통신 (CAN/SPI/USB)</text>
+<line x1="1452" y1="55" x2="1477" y2="55" stroke="#9B59B6" stroke-width="3" stroke-linecap="round"/>
+<text x="1484" y="59" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="10">I2C</text>
+<line x1="1332" y1="83" x2="1357" y2="83" stroke="#F2A900" stroke-width="3" stroke-linecap="round"/>
+<text x="1364" y="87" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="10">전력</text>
+<line x1="1452" y1="83" x2="1477" y2="83" stroke="#22B573" stroke-width="3" stroke-linecap="round"/>
+<text x="1484" y="87" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="10">센서/액추에이터</text>
+<rect x="600.0" y="290" width="300" height="250" rx="10" ry="10" fill="#FFFFFF" stroke="#F96167" stroke-width="3" filter="url(#shadow)"/>
+<rect x="640.0" y="313.0" width="220.00000000000003" height="154.0" rx="5" fill="#1A1A1A" stroke="#0A0A0A" stroke-width="1.5"/>
+<rect x="645.0" y="318.0" width="210.00000000000003" height="144.0" rx="3" fill="none" stroke="#333" stroke-width="0.5"/>
+<circle cx="648.0" cy="321.0" r="3" fill="#CC8844" stroke="#444" stroke-width="0.5"/>
+<circle cx="852.0" cy="321.0" r="3" fill="#CC8844" stroke="#444" stroke-width="0.5"/>
+<circle cx="648.0" cy="459.0" r="3" fill="#CC8844" stroke="#444" stroke-width="0.5"/>
+<circle cx="852.0" cy="459.0" r="3" fill="#CC8844" stroke="#444" stroke-width="0.5"/>
+<rect x="719.75" y="354.25" width="60.50000000000001" height="60.50000000000001" fill="#2A2A2A" stroke="#111" stroke-width="1"/>
+<text x="750.0" y="381.2" fill="#E74C3C" font-family="Arial" font-size="9.9" font-weight="800" text-anchor="middle">NXP</text>
+<text x="750.0" y="393.3" fill="#EEE" font-family="Arial" font-size="6.6000000000000005" font-weight="600" text-anchor="middle">MPC5606B</text>
+<text x="750.0" y="404.3" fill="#888" font-family="Arial" font-size="5.5" text-anchor="middle">32-bit MCU</text>
+<rect x="656.5" y="316.3" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="667.5" y="316.3" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="678.5" y="316.3" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="689.5" y="316.3" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="700.5" y="316.3" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="711.5" y="316.3" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="722.5" y="316.3" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="733.5" y="316.3" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="744.5" y="316.3" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="755.5" y="316.3" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="766.5" y="316.3" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="777.5" y="316.3" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="788.5" y="316.3" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="799.5" y="316.3" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="810.5" y="316.3" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="821.5" y="316.3" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="656.5" y="456.0" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="667.5" y="456.0" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="678.5" y="456.0" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="689.5" y="456.0" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="700.5" y="456.0" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="711.5" y="456.0" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="722.5" y="456.0" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="733.5" y="456.0" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="744.5" y="456.0" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="755.5" y="456.0" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="766.5" y="456.0" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="777.5" y="456.0" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="788.5" y="456.0" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="799.5" y="456.0" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="810.5" y="456.0" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="821.5" y="456.0" width="3.3000000000000003" height="7.700000000000001" fill="#FFD75A"/>
+<rect x="643.3" y="329.5" width="7.700000000000001" height="3.3000000000000003" fill="#FFD75A"/>
+<rect x="643.3" y="340.5" width="7.700000000000001" height="3.3000000000000003" fill="#FFD75A"/>
+<rect x="643.3" y="351.5" width="7.700000000000001" height="3.3000000000000003" fill="#FFD75A"/>
+<rect x="643.3" y="362.5" width="7.700000000000001" height="3.3000000000000003" fill="#FFD75A"/>
+<rect x="643.3" y="373.5" width="7.700000000000001" height="3.3000000000000003" fill="#FFD75A"/>
+<rect x="643.3" y="384.5" width="7.700000000000001" height="3.3000000000000003" fill="#FFD75A"/>
+<rect x="643.3" y="395.5" width="7.700000000000001" height="3.3000000000000003" fill="#FFD75A"/>
+<rect x="643.3" y="406.5" width="7.700000000000001" height="3.3000000000000003" fill="#FFD75A"/>
+<rect x="643.3" y="417.5" width="7.700000000000001" height="3.3000000000000003" fill="#FFD75A"/>
+<rect x="643.3" y="428.5" width="7.700000000000001" height="3.3000000000000003" fill="#FFD75A"/>
+<rect x="849.0" y="329.5" width="7.700000000000001" height="3.3000000000000003" fill="#FFD75A"/>
+<rect x="849.0" y="340.5" width="7.700000000000001" height="3.3000000000000003" fill="#FFD75A"/>
+<rect x="849.0" y="351.5" width="7.700000000000001" height="3.3000000000000003" fill="#FFD75A"/>
+<rect x="849.0" y="362.5" width="7.700000000000001" height="3.3000000000000003" fill="#FFD75A"/>
+<rect x="849.0" y="373.5" width="7.700000000000001" height="3.3000000000000003" fill="#FFD75A"/>
+<rect x="849.0" y="384.5" width="7.700000000000001" height="3.3000000000000003" fill="#FFD75A"/>
+<rect x="849.0" y="395.5" width="7.700000000000001" height="3.3000000000000003" fill="#FFD75A"/>
+<rect x="849.0" y="406.5" width="7.700000000000001" height="3.3000000000000003" fill="#FFD75A"/>
+<rect x="849.0" y="417.5" width="7.700000000000001" height="3.3000000000000003" fill="#FFD75A"/>
+<rect x="849.0" y="428.5" width="7.700000000000001" height="3.3000000000000003" fill="#FFD75A"/>
+<rect x="717.0" y="324.0" width="66.0" height="17.6" fill="#111" stroke="#333" stroke-width="0.5"/>
+<rect x="720.3" y="327.3" width="11.0" height="11.0" fill="none" stroke="#E74C3C" stroke-width="1"/>
+<rect x="735.6999999999999" y="327.3" width="11.0" height="11.0" fill="none" stroke="#E74C3C" stroke-width="1"/>
+<rect x="751.0999999999999" y="327.3" width="11.0" height="11.0" fill="none" stroke="#E74C3C" stroke-width="1"/>
+<rect x="766.5" y="327.3" width="11.0" height="11.0" fill="none" stroke="#E74C3C" stroke-width="1"/>
+<text x="750.0" y="485.0" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="15" font-weight="700" text-anchor="middle">MPC5606B</text>
+<text x="750.0" y="520.0" fill="#7A83A8" font-family="Malgun Gothic, Arial" font-size="10" text-anchor="middle">Main ECU · FlexCAN + TJA1042 · AUTOSAR</text>
+<text x="750.0" y="282" fill="#F96167" font-family="Malgun Gothic, Arial" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="2">● 메인 컨트롤러</text>
+<rect x="660.0" y="150" width="180" height="95" rx="10" ry="10" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1" filter="url(#shadow)"/>
+<text x="750.0" y="176" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="13" font-weight="700" text-anchor="middle">CAN 종단저항</text>
+<text x="750.0" y="205" fill="#1E88E5" font-family="Consolas, monospace" font-size="20" font-weight="700" text-anchor="middle">120 Ω × 2</text>
+<polyline points="700.0,228 715.0,219 732.0,237 749.0,219 766.0,237 783.0,219 800.0,228" fill="none" stroke="#3B4469" stroke-width="1.5"/>
+<rect x="30" y="310" width="240" height="200" rx="10" ry="10" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1.2" filter="url(#shadow)"/>
+<rect x="56.499999999999986" y="326.75" width="187.00000000000003" height="126.50000000000001" rx="6" ry="6" fill="#067D42" stroke="#033D22" stroke-width="1.5"/>
+<circle cx="64.49999999999999" cy="334.75" r="3" fill="#F5D76E" stroke="#888" stroke-width="0.5"/>
+<circle cx="235.5" cy="334.75" r="3" fill="#F5D76E" stroke="#888" stroke-width="0.5"/>
+<circle cx="64.49999999999999" cy="445.25" r="3" fill="#F5D76E" stroke="#888" stroke-width="0.5"/>
+<circle cx="235.5" cy="445.25" r="3" fill="#F5D76E" stroke="#888" stroke-width="0.5"/>
+<rect x="132.4" y="350.95" width="35.2" height="35.2" rx="3" fill="#2C2C2C" stroke="#555" stroke-width="0.5"/>
+<text x="150.0" y="368.55" fill="#EEE" font-family="Arial" font-size="7.700000000000001" font-weight="700" text-anchor="middle">RP1</text>
+<rect x="219.3" y="343.25" width="24.200000000000003" height="19.8" fill="#888" stroke="#333" stroke-width="0.5"/>
+<rect x="222.6" y="346.55" width="16.5" height="13.200000000000001" fill="#1E1E1E"/>
+<rect x="219.3" y="367.45" width="24.200000000000003" height="19.8" fill="#888" stroke="#333" stroke-width="0.5"/>
+<rect x="222.6" y="370.75" width="16.5" height="13.200000000000001" fill="#1E1E1E"/>
+<rect x="58.69999999999999" y="346.55" width="22.0" height="17.6" fill="#444" stroke="#222" stroke-width="0.5"/>
+<rect x="83.99999999999999" y="433.45" width="19.8" height="9.9" fill="#222" stroke="#000" stroke-width="0.5"/>
+<rect x="114.79999999999998" y="433.45" width="19.8" height="9.9" fill="#222" stroke="#000" stroke-width="0.5"/>
+<rect x="91.69999999999999" y="332.25" width="3.3000000000000003" height="6.6000000000000005" fill="#FFD75A"/>
+<rect x="97.19999999999999" y="332.25" width="3.3000000000000003" height="6.6000000000000005" fill="#FFD75A"/>
+<rect x="102.69999999999999" y="332.25" width="3.3000000000000003" height="6.6000000000000005" fill="#FFD75A"/>
+<rect x="108.19999999999999" y="332.25" width="3.3000000000000003" height="6.6000000000000005" fill="#FFD75A"/>
+<rect x="113.69999999999999" y="332.25" width="3.3000000000000003" height="6.6000000000000005" fill="#FFD75A"/>
+<rect x="119.19999999999999" y="332.25" width="3.3000000000000003" height="6.6000000000000005" fill="#FFD75A"/>
+<rect x="124.69999999999999" y="332.25" width="3.3000000000000003" height="6.6000000000000005" fill="#FFD75A"/>
+<rect x="130.2" y="332.25" width="3.3000000000000003" height="6.6000000000000005" fill="#FFD75A"/>
+<rect x="135.7" y="332.25" width="3.3000000000000003" height="6.6000000000000005" fill="#FFD75A"/>
+<rect x="141.2" y="332.25" width="3.3000000000000003" height="6.6000000000000005" fill="#FFD75A"/>
+<rect x="146.7" y="332.25" width="3.3000000000000003" height="6.6000000000000005" fill="#FFD75A"/>
+<rect x="152.2" y="332.25" width="3.3000000000000003" height="6.6000000000000005" fill="#FFD75A"/>
+<rect x="157.7" y="332.25" width="3.3000000000000003" height="6.6000000000000005" fill="#FFD75A"/>
+<rect x="163.2" y="332.25" width="3.3000000000000003" height="6.6000000000000005" fill="#FFD75A"/>
+<rect x="168.7" y="332.25" width="3.3000000000000003" height="6.6000000000000005" fill="#FFD75A"/>
+<rect x="174.2" y="332.25" width="3.3000000000000003" height="6.6000000000000005" fill="#FFD75A"/>
+<rect x="179.7" y="332.25" width="3.3000000000000003" height="6.6000000000000005" fill="#FFD75A"/>
+<rect x="185.2" y="332.25" width="3.3000000000000003" height="6.6000000000000005" fill="#FFD75A"/>
+<rect x="190.7" y="332.25" width="3.3000000000000003" height="6.6000000000000005" fill="#FFD75A"/>
+<rect x="196.2" y="332.25" width="3.3000000000000003" height="6.6000000000000005" fill="#FFD75A"/>
+<text x="150.0" y="466.0" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="15" font-weight="700" text-anchor="middle">라즈베리파이 5</text>
+<text x="150.0" y="494.0" fill="#7A83A8" font-family="Malgun Gothic, Arial" font-size="10" text-anchor="middle">HMI · 카메라+LiDAR Fusion · MCP2515</text>
+<rect x="30" y="535" width="115" height="110" rx="8" ry="8" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1" filter="url(#shadow)"/>
+<rect x="42.5" y="546.8" width="90.0" height="60.0" rx="3" fill="#0B9E45" stroke="#054A25" stroke-width="1"/>
+<circle cx="87.5" cy="576.8" r="18.0" fill="#1A1A1A" stroke="#000" stroke-width="1"/>
+<circle cx="87.5" cy="576.8" r="12.0" fill="#0A0A0A"/>
+<circle cx="85.5" cy="574.8" r="3.0" fill="#4488CC" opacity="0.7"/>
+<rect x="124.5" y="561.8" width="6.0" height="30.0" fill="#EEE" stroke="#888" stroke-width="0.5"/>
+<text x="87.5" y="620.8" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="11" font-weight="700" text-anchor="middle">카메라</text>
+<text x="87.5" y="637.3" fill="#7A83A8" font-family="Malgun Gothic, Arial" font-size="9" text-anchor="middle">RPi Camera</text>
+<rect x="155" y="535" width="115" height="110" rx="8" ry="8" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1" filter="url(#shadow)"/>
+<ellipse cx="212.5" cy="584.8" rx="35.0" ry="10.5" fill="#2C3E50" stroke="#1B2631" stroke-width="1"/>
+<rect x="177.5" y="566.8" width="70.0" height="18.0" fill="#34495E" stroke="#1B2631" stroke-width="1"/>
+<ellipse cx="212.5" cy="566.8" rx="35.0" ry="10.5" fill="#4A627A" stroke="#1B2631" stroke-width="1"/>
+<ellipse cx="212.5" cy="558.8" rx="31.5" ry="9.8" fill="#1B2631" stroke="#000" stroke-width="1"/>
+<rect x="188.0" y="563.8" width="49.0" height="5.0" fill="#E74C3C" opacity="0.7"/>
+<text x="212.5" y="620.8" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="11" font-weight="700" text-anchor="middle">LiDAR</text>
+<text x="212.5" y="637.3" fill="#7A83A8" font-family="Malgun Gothic, Arial" font-size="9" text-anchor="middle">RPLiDAR</text>
+<rect x="900" y="150" width="240" height="200" rx="10" ry="10" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1.2" filter="url(#shadow)"/>
+<rect x="937.5" y="169.5" width="165.0" height="121.00000000000001" rx="4" fill="#00A2B4" stroke="#006577" stroke-width="1.5"/>
+<circle cx="943.5" cy="175.5" r="3" fill="#F5D76E" stroke="#888" stroke-width="0.5"/>
+<circle cx="1096.5" cy="175.5" r="3" fill="#F5D76E" stroke="#888" stroke-width="0.5"/>
+<circle cx="943.5" cy="284.5" r="3" fill="#F5D76E" stroke="#888" stroke-width="0.5"/>
+<circle cx="1096.5" cy="284.5" r="3" fill="#F5D76E" stroke="#888" stroke-width="0.5"/>
+<rect x="928.7" y="202.5" width="22.0" height="26.400000000000002" fill="#B0B0B0" stroke="#555" stroke-width="0.5"/>
+<rect x="934.2" y="246.5" width="19.8" height="15.400000000000002" fill="#111" stroke="#000" stroke-width="0.5"/>
+<circle cx="944.1" cy="254.2" r="4.4" fill="#333"/>
+<rect x="995.25" y="222.3" width="49.50000000000001" height="15.400000000000002" fill="#1A1A1A" stroke="#000" stroke-width="0.5"/>
+<text x="1020.0" y="233.3" fill="#DDD" font-family="Arial" font-size="6.6000000000000005" font-weight="700" text-anchor="middle">ATmega328P</text>
+<rect x="965.0" y="172.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="972.7" y="172.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="980.4" y="172.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="988.1" y="172.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="995.8" y="172.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1003.5" y="172.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1011.2" y="172.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1018.9" y="172.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1026.6" y="172.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1034.3" y="172.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1042.0" y="172.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1049.7" y="172.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1057.4" y="172.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1065.1" y="172.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="965.0" y="279.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="972.7" y="279.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="980.4" y="279.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="988.1" y="279.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="995.8" y="279.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1003.5" y="279.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1011.2" y="279.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1018.9" y="279.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1026.6" y="279.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1034.3" y="279.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1042.0" y="279.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1049.7" y="279.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<circle cx="1080.5" cy="219.0" r="2.5" fill="#E74C3C"/>
+<circle cx="1088.2" cy="219.0" r="2.5" fill="#27AE60"/>
+<rect x="1047.5" y="266.3" width="46.2" height="13.200000000000001" fill="#FFFFFF" stroke="#006577" stroke-width="0.5" rx="2"/>
+<text x="1070.6" y="277.3" fill="#006577" font-family="Arial" font-size="6.050000000000001" font-weight="700" text-anchor="middle">MCP2515</text>
+<text x="1020.0" y="306.0" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="15" font-weight="700" text-anchor="middle">아두이노 ① 게이트웨이</text>
+<text x="1020.0" y="334.0" fill="#7A83A8" font-family="Malgun Gothic, Arial" font-size="10" text-anchor="middle">MCP2515 (SPI) · I2C Master</text>
+<rect x="900" y="380" width="240" height="200" rx="10" ry="10" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1.2" filter="url(#shadow)"/>
+<rect x="937.5" y="399.5" width="165.0" height="121.00000000000001" rx="4" fill="#00A2B4" stroke="#006577" stroke-width="1.5"/>
+<circle cx="943.5" cy="405.5" r="3" fill="#F5D76E" stroke="#888" stroke-width="0.5"/>
+<circle cx="1096.5" cy="405.5" r="3" fill="#F5D76E" stroke="#888" stroke-width="0.5"/>
+<circle cx="943.5" cy="514.5" r="3" fill="#F5D76E" stroke="#888" stroke-width="0.5"/>
+<circle cx="1096.5" cy="514.5" r="3" fill="#F5D76E" stroke="#888" stroke-width="0.5"/>
+<rect x="928.7" y="432.5" width="22.0" height="26.400000000000002" fill="#B0B0B0" stroke="#555" stroke-width="0.5"/>
+<rect x="934.2" y="476.5" width="19.8" height="15.400000000000002" fill="#111" stroke="#000" stroke-width="0.5"/>
+<circle cx="944.1" cy="484.2" r="4.4" fill="#333"/>
+<rect x="995.25" y="452.3" width="49.50000000000001" height="15.400000000000002" fill="#1A1A1A" stroke="#000" stroke-width="0.5"/>
+<text x="1020.0" y="463.3" fill="#DDD" font-family="Arial" font-size="6.6000000000000005" font-weight="700" text-anchor="middle">ATmega328P</text>
+<rect x="965.0" y="402.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="972.7" y="402.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="980.4" y="402.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="988.1" y="402.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="995.8" y="402.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1003.5" y="402.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1011.2" y="402.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1018.9" y="402.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1026.6" y="402.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1034.3" y="402.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1042.0" y="402.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1049.7" y="402.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1057.4" y="402.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1065.1" y="402.8" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="965.0" y="509.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="972.7" y="509.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="980.4" y="509.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="988.1" y="509.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="995.8" y="509.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1003.5" y="509.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1011.2" y="509.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1018.9" y="509.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1026.6" y="509.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1034.3" y="509.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1042.0" y="509.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<rect x="1049.7" y="509.5" width="4.4" height="7.700000000000001" fill="#1A1A1A"/>
+<circle cx="1080.5" cy="449.0" r="2.5" fill="#E74C3C"/>
+<circle cx="1088.2" cy="449.0" r="2.5" fill="#27AE60"/>
+<rect x="1047.5" y="496.3" width="46.2" height="13.200000000000001" fill="#FFFFFF" stroke="#006577" stroke-width="0.5" rx="2"/>
+<text x="1070.6" y="507.3" fill="#006577" font-family="Arial" font-size="6.050000000000001" font-weight="700" text-anchor="middle">I2C+PWM</text>
+<text x="1020.0" y="536.0" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="15" font-weight="700" text-anchor="middle">아두이노 ② 모터 노드</text>
+<text x="1020.0" y="564.0" fill="#7A83A8" font-family="Malgun Gothic, Arial" font-size="10" text-anchor="middle">I2C Slave · 듀얼 H-bridge × 2</text>
+<rect x="1190" y="390" width="150" height="95" rx="8" ry="8" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1" filter="url(#shadow)"/>
+<rect x="1215.0" y="396.1" width="100.0" height="60.0" rx="3" fill="#A93226" stroke="#641E16" stroke-width="1"/>
+<rect x="1250.0" y="414.1" width="30.0" height="24.0" rx="2" fill="#1A1A1A" stroke="#000" stroke-width="0.5"/>
+<text x="1265.0" y="429.1" fill="#EEE" font-family="Arial" font-size="6.0" font-weight="700" text-anchor="middle">L298N</text>
+<rect x="1220.0" y="401.1" width="15.0" height="50.0" fill="#7F8C8D" stroke="#34495E" stroke-width="0.5"/>
+<rect x="1303.0" y="406.1" width="10.0" height="40.0" fill="#2980B9" stroke="#1B4F72" stroke-width="0.5"/>
+<text x="1265.0" y="464.1" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="11" font-weight="700" text-anchor="middle">드라이버 #1</text>
+<text x="1265.0" y="478.35" fill="#7A83A8" font-family="Malgun Gothic, Arial" font-size="9" text-anchor="middle">L298N · LF + RF</text>
+<rect x="1190" y="475" width="150" height="95" rx="8" ry="8" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1" filter="url(#shadow)"/>
+<rect x="1215.0" y="481.1" width="100.0" height="60.0" rx="3" fill="#A93226" stroke="#641E16" stroke-width="1"/>
+<rect x="1250.0" y="499.1" width="30.0" height="24.0" rx="2" fill="#1A1A1A" stroke="#000" stroke-width="0.5"/>
+<text x="1265.0" y="514.1" fill="#EEE" font-family="Arial" font-size="6.0" font-weight="700" text-anchor="middle">L298N</text>
+<rect x="1220.0" y="486.1" width="15.0" height="50.0" fill="#7F8C8D" stroke="#34495E" stroke-width="0.5"/>
+<rect x="1303.0" y="491.1" width="10.0" height="40.0" fill="#2980B9" stroke="#1B4F72" stroke-width="0.5"/>
+<text x="1265.0" y="549.1" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="11" font-weight="700" text-anchor="middle">드라이버 #2</text>
+<text x="1265.0" y="563.35" fill="#7A83A8" font-family="Malgun Gothic, Arial" font-size="9" text-anchor="middle">L298N · LR + RR</text>
+<rect x="1380" y="353.5" width="100" height="80" rx="8" ry="8" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1" filter="url(#shadow)"/>
+<rect x="1398.0" y="365.9" width="64.0" height="36.0" rx="4" fill="#B0B7C3" stroke="#606878" stroke-width="1"/>
+<rect x="1403.0" y="369.9" width="54.0" height="28.0" rx="2" fill="#8A94A7" stroke="none"/>
+<circle cx="1393.2" cy="383.9" r="9.600000000000001" fill="#1A1A1A" stroke="#000" stroke-width="0.5"/>
+<circle cx="1393.2" cy="383.9" r="6.4" fill="#333"/>
+<rect x="1462.0" y="381.5" width="16.0" height="4.800000000000001" fill="#666"/>
+<path d="M 1386.0 377.5 Q 1378.0 379.9 1378.0 383.9" fill="none" stroke="#E74C3C" stroke-width="2"/>
+<path d="M 1386.0 390.29999999999995 Q 1375.6 387.9 1375.6 383.9" fill="none" stroke="#111" stroke-width="2"/>
+<text x="1430.0" y="415.9" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="11" font-weight="700" text-anchor="middle">LF</text>
+<text x="1430.0" y="427.9" fill="#7A83A8" font-family="Malgun Gothic, Arial" font-size="9" text-anchor="middle">DC + Enc</text>
+<rect x="1380" y="441.5" width="100" height="80" rx="8" ry="8" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1" filter="url(#shadow)"/>
+<rect x="1398.0" y="453.9" width="64.0" height="36.0" rx="4" fill="#B0B7C3" stroke="#606878" stroke-width="1"/>
+<rect x="1403.0" y="457.9" width="54.0" height="28.0" rx="2" fill="#8A94A7" stroke="none"/>
+<circle cx="1393.2" cy="471.9" r="9.600000000000001" fill="#1A1A1A" stroke="#000" stroke-width="0.5"/>
+<circle cx="1393.2" cy="471.9" r="6.4" fill="#333"/>
+<rect x="1462.0" y="469.5" width="16.0" height="4.800000000000001" fill="#666"/>
+<path d="M 1386.0 465.5 Q 1378.0 467.9 1378.0 471.9" fill="none" stroke="#E74C3C" stroke-width="2"/>
+<path d="M 1386.0 478.29999999999995 Q 1375.6 475.9 1375.6 471.9" fill="none" stroke="#111" stroke-width="2"/>
+<text x="1430.0" y="503.9" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="11" font-weight="700" text-anchor="middle">RF</text>
+<text x="1430.0" y="515.9" fill="#7A83A8" font-family="Malgun Gothic, Arial" font-size="9" text-anchor="middle">DC + Enc</text>
+<rect x="1380" y="438.5" width="100" height="80" rx="8" ry="8" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1" filter="url(#shadow)"/>
+<rect x="1398.0" y="450.9" width="64.0" height="36.0" rx="4" fill="#B0B7C3" stroke="#606878" stroke-width="1"/>
+<rect x="1403.0" y="454.9" width="54.0" height="28.0" rx="2" fill="#8A94A7" stroke="none"/>
+<circle cx="1393.2" cy="468.9" r="9.600000000000001" fill="#1A1A1A" stroke="#000" stroke-width="0.5"/>
+<circle cx="1393.2" cy="468.9" r="6.4" fill="#333"/>
+<rect x="1462.0" y="466.5" width="16.0" height="4.800000000000001" fill="#666"/>
+<path d="M 1386.0 462.5 Q 1378.0 464.9 1378.0 468.9" fill="none" stroke="#E74C3C" stroke-width="2"/>
+<path d="M 1386.0 475.29999999999995 Q 1375.6 472.9 1375.6 468.9" fill="none" stroke="#111" stroke-width="2"/>
+<text x="1430.0" y="500.9" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="11" font-weight="700" text-anchor="middle">LR</text>
+<text x="1430.0" y="512.9" fill="#7A83A8" font-family="Malgun Gothic, Arial" font-size="9" text-anchor="middle">DC + Enc</text>
+<rect x="1380" y="526.5" width="100" height="80" rx="8" ry="8" fill="#FFFFFF" stroke="#D5DCEC" stroke-width="1" filter="url(#shadow)"/>
+<rect x="1398.0" y="538.9" width="64.0" height="36.0" rx="4" fill="#B0B7C3" stroke="#606878" stroke-width="1"/>
+<rect x="1403.0" y="542.9" width="54.0" height="28.0" rx="2" fill="#8A94A7" stroke="none"/>
+<circle cx="1393.2" cy="556.9" r="9.600000000000001" fill="#1A1A1A" stroke="#000" stroke-width="0.5"/>
+<circle cx="1393.2" cy="556.9" r="6.4" fill="#333"/>
+<rect x="1462.0" y="554.5" width="16.0" height="4.800000000000001" fill="#666"/>
+<path d="M 1386.0 550.5 Q 1378.0 552.9 1378.0 556.9" fill="none" stroke="#E74C3C" stroke-width="2"/>
+<path d="M 1386.0 563.3 Q 1375.6 560.9 1375.6 556.9" fill="none" stroke="#111" stroke-width="2"/>
+<text x="1430.0" y="588.9" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="11" font-weight="700" text-anchor="middle">RR</text>
+<text x="1430.0" y="600.9" fill="#7A83A8" font-family="Malgun Gothic, Arial" font-size="9" text-anchor="middle">DC + Enc</text>
+<line x1="270" y1="410.0" x2="600.0" y2="415.0" stroke="#1E88E5" stroke-width="2.8" stroke-linecap="round"/>
+<rect x="416.5" y="388.5" width="37" height="20" rx="10" ry="10" fill="#F5F7FB" stroke="#1E88E5" stroke-width="1.5"/>
+<text x="435.0" y="402.5" fill="#1E88E5" font-family="Consolas, monospace" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1">CAN</text>
+<line x1="900.0" y1="350" x2="900" y2="250.0" stroke="#1E88E5" stroke-width="2.8" stroke-linecap="round"/>
+<rect x="881.5" y="276.0" width="37" height="20" rx="10" ry="10" fill="#F5F7FB" stroke="#1E88E5" stroke-width="1.5"/>
+<text x="900.0" y="290.0" fill="#1E88E5" font-family="Consolas, monospace" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1">CAN</text>
+<line x1="750.0" y1="245" x2="750.0" y2="290" stroke="#1E88E5" stroke-width="2.8" stroke-linecap="round"/>
+<line x1="1020.0" y1="350" x2="1020.0" y2="380" stroke="#9B59B6" stroke-width="2.8" stroke-linecap="round"/>
+<rect x="1001.5" y="341.0" width="37" height="20" rx="10" ry="10" fill="#F5F7FB" stroke="#9B59B6" stroke-width="1.5"/>
+<text x="1020.0" y="355.0" fill="#9B59B6" font-family="Consolas, monospace" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1">I2C</text>
+<line x1="1140" y1="430" x2="1190" y2="437.5" stroke="#22B573" stroke-width="2.8" stroke-linecap="round"/>
+<rect x="1132.5" y="409.75" width="65" height="20" rx="10" ry="10" fill="#F5F7FB" stroke="#22B573" stroke-width="1.5"/>
+<text x="1165.0" y="423.75" fill="#22B573" font-family="Consolas, monospace" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1">PWM/DIR</text>
+<line x1="1140" y1="530" x2="1190" y2="522.5" stroke="#22B573" stroke-width="2.8" stroke-linecap="round"/>
+<line x1="1340" y1="423.25" x2="1380" y2="393.5" stroke="#22B573" stroke-width="2.8" stroke-linecap="round"/>
+<line x1="1340" y1="451.75" x2="1380" y2="481.5" stroke="#22B573" stroke-width="2.8" stroke-linecap="round"/>
+<line x1="1340" y1="508.25" x2="1380" y2="478.5" stroke="#22B573" stroke-width="2.8" stroke-linecap="round"/>
+<line x1="1340" y1="536.75" x2="1380" y2="566.5" stroke="#22B573" stroke-width="2.8" stroke-linecap="round"/>
+<line x1="80" y1="510" x2="87.5" y2="535" stroke="#22B573" stroke-width="2.8" stroke-linecap="round"/>
+<rect x="61.75" y="502.5" width="44" height="20" rx="10" ry="10" fill="#F5F7FB" stroke="#22B573" stroke-width="1.5"/>
+<text x="83.75" y="516.5" fill="#22B573" font-family="Consolas, monospace" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1">MIPI</text>
+<line x1="220" y1="510" x2="212.5" y2="535" stroke="#22B573" stroke-width="2.8" stroke-linecap="round"/>
+<rect x="197.75" y="502.5" width="37" height="20" rx="10" ry="10" fill="#F5F7FB" stroke="#22B573" stroke-width="1.5"/>
+<text x="216.25" y="516.5" fill="#22B573" font-family="Consolas, monospace" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1">USB</text>
+<rect x="30" y="700" width="900" height="175" rx="10" ry="10" fill="#FFFFFF" stroke="#1E88E5" stroke-width="1.5" filter="url(#shadow)"/>
+<rect x="30" y="700" width="900" height="30" rx="10" ry="10" fill="#1E88E5"/>
+<rect x="30" y="715" width="900" height="15" fill="#1E88E5"/>
+<text x="48" y="720" fill="#FFFFFF" font-family="Malgun Gothic, Arial" font-size="12" font-weight="800" letter-spacing="2">● CAN Bus · 500 kbps · 9 messages · ASIL-B (E2E P01 on MTR_CMD)</text>
+<text x="912" y="720" fill="#FFFFFF" font-family="Consolas, monospace" font-size="11" font-weight="700" text-anchor="end">120Ω × 2</text>
+<rect x="42" y="745" width="280" height="115" rx="6" fill="#EEF4FF" stroke="#1E88E5" stroke-width="1"/>
+<rect x="56" y="763" width="38" height="38" rx="3" fill="#1A1A1A" stroke="#000" stroke-width="0.8"/>
+<rect x="52" y="766" width="4" height="2" fill="#CCC"/>
+<rect x="94" y="766" width="4" height="2" fill="#CCC"/>
+<rect x="52" y="770" width="4" height="2" fill="#CCC"/>
+<rect x="94" y="770" width="4" height="2" fill="#CCC"/>
+<rect x="52" y="774" width="4" height="2" fill="#CCC"/>
+<rect x="94" y="774" width="4" height="2" fill="#CCC"/>
+<rect x="52" y="778" width="4" height="2" fill="#CCC"/>
+<rect x="94" y="778" width="4" height="2" fill="#CCC"/>
+<rect x="52" y="782" width="4" height="2" fill="#CCC"/>
+<rect x="94" y="782" width="4" height="2" fill="#CCC"/>
+<rect x="52" y="786" width="4" height="2" fill="#CCC"/>
+<rect x="94" y="786" width="4" height="2" fill="#CCC"/>
+<rect x="52" y="790" width="4" height="2" fill="#CCC"/>
+<rect x="94" y="790" width="4" height="2" fill="#CCC"/>
+<rect x="52" y="794" width="4" height="2" fill="#CCC"/>
+<rect x="94" y="794" width="4" height="2" fill="#CCC"/>
+<rect x="52" y="798" width="4" height="2" fill="#CCC"/>
+<rect x="94" y="798" width="4" height="2" fill="#CCC"/>
+<text x="75" y="785" fill="#EEE" font-family="Arial" font-size="8" font-weight="700" text-anchor="middle">MCP2515</text>
+<text x="106" y="763" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="13" font-weight="700">MCP2515 × 2</text>
+<text x="106" y="783" fill="#3B4469" font-family="Malgun Gothic, Arial" font-size="11">RPi · Arduino 게이트웨이</text>
+<text x="106" y="803" fill="#1E88E5" font-family="Consolas, monospace" font-size="10" font-weight="700">SPI 연결</text>
+<text x="106" y="823" fill="#7A83A8" font-family="Malgun Gothic, Arial" font-size="9">CAN 컨트롤러+트랜시버</text>
+<text x="106" y="841" fill="#7A83A8" font-family="Malgun Gothic, Arial" font-size="9">통합 모듈</text>
+<rect x="332" y="745" width="230" height="115" rx="6" fill="#FFF0E0" stroke="#F96167" stroke-width="1"/>
+<rect x="346" y="767" width="38" height="30" rx="2" fill="#1A1A1A" stroke="#000" stroke-width="0.8"/>
+<rect x="353" y="764" width="2" height="3" fill="#CCC"/>
+<rect x="353" y="797" width="2" height="3" fill="#CCC"/>
+<rect x="360" y="764" width="2" height="3" fill="#CCC"/>
+<rect x="360" y="797" width="2" height="3" fill="#CCC"/>
+<rect x="367" y="764" width="2" height="3" fill="#CCC"/>
+<rect x="367" y="797" width="2" height="3" fill="#CCC"/>
+<rect x="374" y="764" width="2" height="3" fill="#CCC"/>
+<rect x="374" y="797" width="2" height="3" fill="#CCC"/>
+<text x="365" y="786" fill="#EEE" font-family="Arial" font-size="7" font-weight="700" text-anchor="middle">TJA1042</text>
+<text x="396" y="763" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="13" font-weight="700">TJA1042 × 1</text>
+<text x="396" y="783" fill="#3B4469" font-family="Malgun Gothic, Arial" font-size="11">MPC5606B EVB</text>
+<text x="396" y="803" fill="#F96167" font-family="Consolas, monospace" font-size="10" font-weight="700">FlexCAN (내장)</text>
+<text x="396" y="823" fill="#7A83A8" font-family="Malgun Gothic, Arial" font-size="9">트랜시버만 외부</text>
+<rect x="572" y="745" width="346" height="115" rx="6" fill="#FAFBFE" stroke="#D5DCEC" stroke-width="1"/>
+<text x="582" y="763" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="11" font-weight="700">9 메시지 · 10/20/50/500 ms</text>
+<text x="582.0" y="787" fill="#1E88E5" font-family="Consolas, monospace" font-size="9" font-weight="700">0x110</text>
+<text x="620.0" y="787" fill="#1A1F36" font-family="Consolas, monospace" font-size="9" font-weight="600">SENSOR_FUSION</text>
+<text x="690.6666666666666" y="787" fill="#1E88E5" font-family="Consolas, monospace" font-size="9" font-weight="700">0x111</text>
+<text x="728.6666666666666" y="787" fill="#1A1F36" font-family="Consolas, monospace" font-size="9" font-weight="600">HEARTBEAT</text>
+<text x="799.3333333333334" y="787" fill="#1E88E5" font-family="Consolas, monospace" font-size="9" font-weight="700">0x120</text>
+<text x="837.3333333333334" y="787" fill="#1A1F36" font-family="Consolas, monospace" font-size="9" font-weight="600">VEH_CTRL</text>
+<text x="582.0" y="809" fill="#1E88E5" font-family="Consolas, monospace" font-size="9" font-weight="700">0x210</text>
+<text x="620.0" y="809" fill="#1A1F36" font-family="Consolas, monospace" font-size="9" font-weight="600">MTR_CMD ★E2E</text>
+<text x="690.6666666666666" y="809" fill="#1E88E5" font-family="Consolas, monospace" font-size="9" font-weight="700">0x300</text>
+<text x="728.6666666666666" y="809" fill="#1A1F36" font-family="Consolas, monospace" font-size="9" font-weight="600">MTR_SPD_FB</text>
+<text x="799.3333333333334" y="809" fill="#1E88E5" font-family="Consolas, monospace" font-size="9" font-weight="700">0x310</text>
+<text x="837.3333333333334" y="809" fill="#1A1F36" font-family="Consolas, monospace" font-size="9" font-weight="600">MTR_HB</text>
+<text x="582.0" y="831" fill="#1E88E5" font-family="Consolas, monospace" font-size="9" font-weight="700">0x410</text>
+<text x="620.0" y="831" fill="#1A1F36" font-family="Consolas, monospace" font-size="9" font-weight="600">ECU_HB</text>
+<text x="690.6666666666666" y="831" fill="#1E88E5" font-family="Consolas, monospace" font-size="9" font-weight="700">0x510</text>
+<text x="728.6666666666666" y="831" fill="#1A1F36" font-family="Consolas, monospace" font-size="9" font-weight="600">ACC_CTRL</text>
+<text x="799.3333333333334" y="831" fill="#1E88E5" font-family="Consolas, monospace" font-size="9" font-weight="700">0x520</text>
+<text x="837.3333333333334" y="831" fill="#1A1F36" font-family="Consolas, monospace" font-size="9" font-weight="600">ACC_STATUS</text>
+<rect x="950" y="700" width="620" height="175" rx="10" ry="10" fill="#FFFFFF" stroke="#F2A900" stroke-width="1.5" filter="url(#shadow)"/>
+<rect x="950" y="700" width="620" height="30" rx="10" ry="10" fill="#F2A900"/>
+<rect x="950" y="715" width="620" height="15" fill="#F2A900"/>
+<text x="968" y="720" fill="#FFFFFF" font-family="Malgun Gothic, Arial" font-size="12" font-weight="800" letter-spacing="2">⚡ 전원 분배 · Lithium 11.1V / 6000mAh</text>
+<rect x="972.75" y="763.875" width="104.5" height="52.25" rx="6" fill="#1F2937" stroke="#111" stroke-width="1.5"/>
+<rect x="977.75" y="768.875" width="94.5" height="42.25" rx="3" fill="#374151"/>
+<text x="1025" y="788.1" fill="#FBBF24" font-family="Arial" font-size="10.45" font-weight="800" text-anchor="middle">11.1V</text>
+<text x="1025" y="799.5" fill="#D1D5DB" font-family="Arial" font-size="7.6" text-anchor="middle">6000 mAh</text>
+<text x="1025" y="835" fill="#7A83A8" font-family="Malgun Gothic, Arial" font-size="9" font-weight="600" text-anchor="middle">Lithium Battery</text>
+<rect x="1115" y="745" width="445" height="22" rx="3" fill="#F7F9FF" stroke="#D5DCEC" stroke-width="0.8"/>
+<text x="1123" y="760" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="10" font-weight="600">모터/드라이버: 11.1V (직접)</text>
+<rect x="1115" y="770" width="445" height="22" rx="3" fill="#F7F9FF" stroke="#D5DCEC" stroke-width="0.8"/>
+<text x="1123" y="785" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="10" font-weight="600">RPi 5: 5V / 5A</text>
+<rect x="1115" y="795" width="445" height="22" rx="3" fill="#F7F9FF" stroke="#D5DCEC" stroke-width="0.8"/>
+<text x="1123" y="810" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="10" font-weight="600">MPC5606B: 보드 전원</text>
+<rect x="1115" y="820" width="445" height="22" rx="3" fill="#F7F9FF" stroke="#D5DCEC" stroke-width="0.8"/>
+<text x="1123" y="835" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="10" font-weight="600">Arduino × 2: 5V / 3A</text>
+<rect x="1115" y="845" width="445" height="22" rx="3" fill="#F7F9FF" stroke="#D5DCEC" stroke-width="0.8"/>
+<text x="1123" y="860" fill="#1A1F36" font-family="Malgun Gothic, Arial" font-size="10" font-weight="600">LiDAR / Camera: 5V</text>
+<text x="1570" y="908" fill="#7A83A8" font-family="Malgun Gothic, Arial" font-size="9" text-anchor="end" letter-spacing="2">SeSAC · ACC Project · Architecture v0.6 · 2026.04.24</text>
+</svg>
